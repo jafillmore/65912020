@@ -54,13 +54,13 @@ public class RobotContainer {
   private void configureButtonBindings() {
     //ArcadeDriveSubsystem Joysticks  arcadeDriveSubsystem.setDefaultCommand(new RunCommand(
 
-      () -> arcadeDriveSubsystem.arcadeDrive(leftJoystick.getY(), leftJoystick.getZ(), arcadeDriveSubsystem);
+     // () -> arcadeDriveSubsystem.arcadeDrive(leftJoystick.getY(), leftJoystick.getZ(), arcadeDriveSubsystem);
 
       //Intake stuffs
-    new JoystickButton(leftJoystick, Constants.shootButton).whileHeld -> (IntakeSubsystem.liftspeed(IntConst.liftShootSpeed)
-    .whenReleased(() -> IntakeSubsystem.intliftSP(0.0));
+   // new JoystickButton(leftJoystick, Constants.shootButton).whileHeld(() -> (intakeSubsystem.liftSpeed(IntConst.liftShootSpeed)
+   // .whenReleased(() -> IntakeSubsystem.intliftSP(0.0));
 
-  Shuffleboard.getTab("Shooter value").add("rpm", intakeSubsystem.shooterButton.getAppliedOutput());
+  //Shuffleboard.getTab("Shooter value").add("rpm", intakeSubsystem.shooterButton.getAppliedOutput());
 
   }
   /**
