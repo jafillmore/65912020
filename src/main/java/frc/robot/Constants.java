@@ -33,6 +33,9 @@ public static final int frontRight = 4;
 public static final int midRight = 5;
 public static final int backRight = 6;
 
+//climb arm motor
+public static final int strafeLeftRight = 8;
+
 //Shooter Motor
 public static final int shootMotor = 7; 
 
@@ -50,6 +53,7 @@ public static final int backLeftMotor = 3;
 public static final int frontRightMotor = 4;
 public static final int midRightMotor = 5;
 public static final int backRightMotor = 6; 
+
 
 }
 // Intake Constants
@@ -97,6 +101,9 @@ public final class PnemuaticConst{
     public static final int intakeA = 5;
     public static final int intakeB = 6;
    
+   public static final int deployIntakeTrigger = 1;     
 }
+
+
 
 }
