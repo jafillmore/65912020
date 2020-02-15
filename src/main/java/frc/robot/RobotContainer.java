@@ -61,7 +61,7 @@ public class RobotContainer {
       () -> arcadeDriveSubsystem.arcadeDrive(leftJoystick.getY(), leftJoystick.getZ(), arcadeDriveSubsystem);
 
       //Intake stuffs
-    new JoystickButton(Joe, Constants.shootButtom).whileHeld -> (IntakeSubsystem.shoot(leftJoystick.getRawAxis(3)))
+    new JoystickButton(Joe, Constants.shootButton).whileHeld -> (IntakeSubsystem.shoot(leftJoystick.getRawAxis(3)))
     .whenReleased(() -> IntakeSubsystem.primeSpeed(0.0));
 
   Shuffleboard.getTab("Shooter value").add("rpm", intakeSubsystem.shooterButton.getAppliedOutput());

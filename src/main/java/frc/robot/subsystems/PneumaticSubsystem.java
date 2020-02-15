@@ -32,18 +32,33 @@ public DoubleSolenoid extendArmSolenoid = new DoubleSolenoid(7, 0);
   private DoubleSolenoid deployIntakeDouble = new DoubleSolenoid(PnemuaticConst.intakeA, PnemuaticConst.intakeB);
 
 
-
-
+//deploy the climb
   public void deployArms() {
     deployArmsDouble.set(Value.kForward);
     deployArmsDouble.set(Value.kOff);   
   } 
-  public void extandArms(){
+
+//extand climb arms
+  public void extendArms(){
     extendArmsDouble.set(Value.kForward);
     extendArmsDouble.set(Value.kOff);
   }
+
+// deploy intake
+
   public void deployIntake(){
     deployIntakeDouble.set(Value.kForward);
+    deployIntakeDouble.set(Value.kOff);
+  }
+
+
+  public void stowArms(){
+    deployArmsDouble.set(Value.kReverse);
+    deployArmsDouble.set(Value.kOff);
+  }
+
+  public void stowIntake(){
+    deployIntakeDouble.set(Value.kReverse);
     deployIntakeDouble.set(Value.kOff);
   }
   
