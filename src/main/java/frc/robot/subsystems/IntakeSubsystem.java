@@ -17,7 +17,7 @@ import frc.robot.Constants.IntakeConst;
 
 
 // Intake System
-public class Intakesubsystem extends SubsystemBase {
+public class IntakeSubsystem extends SubsystemBase {
   /**
    * Creates a new Intakesubsystem.
    */
@@ -36,7 +36,7 @@ public class Intakesubsystem extends SubsystemBase {
   public void shoot ()  {
   liftMotor.set(ControlMode.PercentOutput, IntakeConst.liftPrimeSpeed); 
 }
-  public Intakesubsystem() {
+  public IntakeSubsystem() {
 
 
   }
