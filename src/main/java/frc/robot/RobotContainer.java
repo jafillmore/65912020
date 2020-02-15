@@ -17,10 +17,6 @@ import frc.robot.subsystems.ArcadeDriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 
-// Test from New Programming Laptop
-// Test from Middle Programming Laptop
-// Test from crappy Programming Laptop
-
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -62,8 +58,8 @@ public class RobotContainer {
       () -> arcadeDriveSubsystem.arcadeDrive(leftJoystick.getY(), leftJoystick.getZ(), arcadeDriveSubsystem);
 
       //Intake stuffs
-    new JoystickButton(leftJoystick, Constants.shootButton).whileHeld -> (IntakeSubsystem.shoot(leftJoystick())
-    .whenReleased(() -> IntakeSubsystem.primeSpeed());
+    new JoystickButton(leftJoystick, Constants.shootButton).whileHeld -> (IntakeSubsystem.intliftSP(IntConst.liftShootSpeed)
+    .whenReleased(() -> IntakeSubsystem.intliftSP(0.0));
 
   Shuffleboard.getTab("Shooter value").add("rpm", intakeSubsystem.shooterButton.getAppliedOutput());
 
