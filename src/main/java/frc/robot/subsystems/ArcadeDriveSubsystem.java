@@ -43,7 +43,7 @@ public class ArcadeDriveSubsystem extends SubsystemBase {
   public Joystick mainJoystick = new Joystick(0);
 
   public void arcadeDrive(double fwd, double rot) {
-  robotdrive.arcadeDrive(fwd, rot);
+  robotdrive.arcadeDrive(-fwd, rot);
   }
 
   @Override
