@@ -86,7 +86,6 @@ public static final int spinPanelButtonNum = 5;
 public static final int detectColorButtonNum = 6;
 public static I2C.Port colorSensorPort = I2C.Port.kOnboard;
 
-
 //Pnematic's
 public final class PnemuaticConst{
     public static final int deployA = 1;

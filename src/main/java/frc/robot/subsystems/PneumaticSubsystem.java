@@ -15,7 +15,7 @@ import frc.robot.Constants.PnemuaticConst;
 
 public class PneumaticSubsystem extends SubsystemBase {
   public static Object deployClimbArmsSolenoid;
-
+  
 
 
 

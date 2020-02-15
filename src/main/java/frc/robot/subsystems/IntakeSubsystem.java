@@ -31,10 +31,10 @@ public class IntakeSubsystem extends SubsystemBase {
     intakeMotor.set(IntakeConst.intakeSpeed);
   }
   public void lift()  {
-    liftMotor.set(ControlMode.PercentOutput, IntakeConst.liftPrimeSpeed);
+    liftMotor.set(ControlMode.PercentOutput, IntakeConst.liftShootSpeed);
   }
   public void shoot ()  {
-  liftMotor.set(ControlMode.PercentOutput, IntakeConst.liftPrimeSpeed); 
+  liftMotor.set(ControlMode.PercentOutput, IntakeConst.liftShootSpeed); 
 }
   public IntakeSubsystem() {
 
