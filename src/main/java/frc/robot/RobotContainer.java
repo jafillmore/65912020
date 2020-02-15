@@ -16,7 +16,6 @@ import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ArcadeDriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.Constants.*;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
