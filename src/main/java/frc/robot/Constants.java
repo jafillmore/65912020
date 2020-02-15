@@ -26,12 +26,12 @@ public final class Constants {
 
 
 // Drive Motor's 
-public static final int frontLeft = 1;
-public static final int midLeft = 2; 
-public static final int backLeft = 3;
-public static final int frontRight = 4;
-public static final int midRight = 5;
-public static final int backRight = 6;
+public static final int frontLeft = 4;
+public static final int midLeft = 5; 
+public static final int backLeft = 6;
+public static final int frontRight = 1;
+public static final int midRight = 2;
+public static final int backRight = 3;
 
 //climb arm motor
 public static final int strafeLeftRight = 8;

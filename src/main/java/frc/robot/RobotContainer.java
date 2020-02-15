@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ArcadeDriveSubsystem;
@@ -27,11 +28,12 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final IntakeSubsystem intakesubsystem = new IntakeSubsystem();
-  private final ArcadeDriveSubsystem arcadedrivesubsystem = new ArcadeDriveSubsystem();
+  private final ArcadeDriveSubsystem arcadeDriveSubsystem = new ArcadeDriveSubsystem();
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
 
-
+  Joystick leftJoystick = new Joystick(Constants.leftJoystickPort);
+  Joystick rightJoystick = new Joystick(Constants.rightJoystickPort);
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -39,10 +41,10 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
-    Joystick leftJoystick = new Joystick(Constants.leftJoystickPort);
+    
     JoystickButton intakeButton = new JoystickButton(leftJoystick, Constants.intakeNumber);
 
-    Joystick rightJoystick = new Joystick(Constants.rightJoystickPort);
+    
     JoystickButton deployIntakeButton = new JoystickButton(rightJoystick, Constants.intakeNumber);
   }
   /**
@@ -52,9 +54,12 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    //ArcadeDriveSubsystem Joysticks  arcadeDriveSubsystem.setDefaultCommand(new RunCommand(
-
-     // () -> arcadeDriveSubsystem.arcadeDrive(leftJoystick.getY(), leftJoystick.getZ(), arcadeDriveSubsystem);
+    //ArcadeDriveSubsystem Joysticks  
+    
+    arcadeDriveSubsystem.setDefaultCommand(
+      new RunCommand(() -> arcadeDriveSubsystem
+          .arcadeDrive(leftJoystick.getY(), 
+                       leftJoystick.getZ()), arcadeDriveSubsystem));
 
       //Intake stuffs
    // new JoystickButton(leftJoystick, Constants.shootButton).whileHeld(() -> (intakeSubsystem.liftSpeed(IntConst.liftShootSpeed)
