@@ -36,6 +36,9 @@ public class IntakeSubsystem extends SubsystemBase {
   public void shoot ()  {
   liftMotor.set(ControlMode.PercentOutput, IntakeConst.liftShootSpeed); 
 }
+  public void stop ()  {
+  liftMotor.set(ControlMode.PercentOutput, 0.0);
+  }
   public IntakeSubsystem() {
 
 
