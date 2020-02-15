@@ -43,8 +43,8 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
-    Joystick Joe = new Joystick(Constants.leftJoystickPort);
-    JoystickButton intakeButton = new JoystickButton(Joe, Constants.intakeNumber);
+    Joystick leftJoystick = new Joystick(Constants.leftJoystickPort);
+    JoystickButton intakeButton = new JoystickButton(leftJoystick, Constants.intakeNumber);
 
     Joystick rightJoystick = new Joystick(Constants.rightJoystickPort);
     JoystickButton deployIntakeButton = new JoystickButton(rightJoystick, Constants.intakeNumber);
@@ -61,7 +61,7 @@ public class RobotContainer {
       () -> arcadeDriveSubsystem.arcadeDrive(leftJoystick.getY(), leftJoystick.getZ(), arcadeDriveSubsystem);
 
       //Intake stuffs
-    new JoystickButton(Joe, Constants.shootButton).whileHeld -> (IntakeSubsystem.shoot(leftJoystick.getRawAxis(3)))
+    new JoystickButton(leftJoystick, Constants.shootButton).whileHeld -> (IntakeSubsystem.shoot(leftJoystick.getRawAxis(3)))
     .whenReleased(() -> IntakeSubsystem.primeSpeed(0.0));
 
   Shuffleboard.getTab("Shooter value").add("rpm", intakeSubsystem.shooterButton.getAppliedOutput());
