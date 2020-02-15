@@ -45,6 +45,9 @@ public class RobotContainer {
     configureButtonBindings();
     Joystick Joe = new Joystick(Constants.leftJoystickPort);
     JoystickButton intakeButton = new JoystickButton(Joe, Constants.intakeNumber);
+
+    Joystick rightJoystick = new Joystick(Constants.rightJoystickPort);
+    JoystickButton deployIntakeButton = new JoystickButton(rightJoystick, Constants.intakeNumber);
   }
   /**
    * Use this method to define your button->command mappings.  Buttons can be created by
@@ -53,15 +56,16 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    //ArcadeDriveSubsystem Joysticks  ac0adeDriveSubsystem.setDefaultCommand(new RunCommand(
+    //ArcadeDriveSubsystem Joysticks  arcadeDriveSubsystem.setDefaultCommand(new RunCommand(
 
-      () -> arcadeDriveSubsystem.arcadeDrive(leftJoystick.getY(), leftJoystick.getZ()), arcadeDriveSubsystem));
+      () -> arcadeDriveSubsystem.arcadeDrive(leftJoystick.getY(), leftJoystick.getZ(), arcadeDriveSubsystem);
 
       //Intake stuffs
     new JoystickButton(Joe, Constants.shootButtom).whileHeld -> (IntakeSubsystem.shoot(leftJoystick.getRawAxis(3)))
     .whenReleased(() -> IntakeSubsystem.primeSpeed(0.0));
 
   Shuffleboard.getTab("Shooter value").add("rpm", intakeSubsystem.shooterButton.getAppliedOutput());
+
   }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

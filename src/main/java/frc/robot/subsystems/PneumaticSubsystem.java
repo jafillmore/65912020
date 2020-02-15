@@ -29,7 +29,7 @@ public DoubleSolenoid extendArmSolenoid = new DoubleSolenoid(7, 0);
 
   private DoubleSolenoid deployArmsDouble = new DoubleSolenoid(PnemuaticConst.deployA, PnemuaticConst.deployB);
   private DoubleSolenoid extendArmsDouble = new DoubleSolenoid(PnemuaticConst.extandA, PnemuaticConst.extandB);
-  private DoubleSolenoid intakeDouble = new DoubleSolenoid(PnemuaticConst.intakeA, PnemuaticConst.intakeB);
+  private DoubleSolenoid deployIntakeDouble = new DoubleSolenoid(PnemuaticConst.intakeA, PnemuaticConst.intakeB);
 
 
 
@@ -39,7 +39,12 @@ public DoubleSolenoid extendArmSolenoid = new DoubleSolenoid(7, 0);
     deployArmsDouble.set(Value.kOff);   
   } 
   public void extandArms(){
-    
+    extendArmsDouble.set(Value.kForward);
+    extendArmsDouble.set(Value.kOff);
+  }
+  public void deployIntake(){
+    deployIntakeDouble.set(Value.kForward);
+    deployIntakeDouble.set(Value.kOff);
   }
   
 
