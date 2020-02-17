@@ -25,16 +25,12 @@ import edu.wpi.first.wpilibj.util.Color;
 public final class Constants {
 
 
-// Drive Motor's 
-public static final int frontLeft = 4;
-public static final int midLeft = 5; 
-public static final int backLeft = 6;
-public static final int frontRight = 1;
-public static final int midRight = 2;
-public static final int backRight = 3;
 
 //Shooter Motor
-public static final int shootMotor = 7; 
+public final class ShooterConst{
+    public static final int shootMotor = 7; 
+
+}  
 
 //climb arm motor
 public static final int strafeLeftRight = 8;
@@ -75,12 +71,12 @@ public final class JoystickConst {
 
 // Drive Constants CAN IDs
 public final class DriveConst {
-    public static final int frontLeftMotor = 1;
-    public static final int midLeftMotor = 2;
-    public static final int backLeftMotor = 3;
-    public static final int frontRightMotor = 4;
-    public static final int midRightMotor = 5;
-    public static final int backRightMotor = 6; 
+    public static final int frontLeftMotor = 4;
+    public static final int midLeftMotor = 5;
+    public static final int backLeftMotor = 6;
+    public static final int frontRightMotor = 1;
+    public static final int midRightMotor = 2;
+    public static final int backRightMotor = 3; 
 
 }
 
