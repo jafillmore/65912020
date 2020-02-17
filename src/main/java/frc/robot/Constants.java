@@ -103,6 +103,11 @@ public final class PnemuaticConst{
    
    public static final int deployIntakeTrigger = 1;     
 }
+   //Shooter Motor
+   public static final class ShooterConst{
+    public static final int Shooter = 0;
+    public static final int Targeting = 1;
+}
 
 
 
