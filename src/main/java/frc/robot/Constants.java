@@ -33,11 +33,11 @@ public static final int frontRight = 1;
 public static final int midRight = 2;
 public static final int backRight = 3;
 
-//climb arm motor
-public static final int strafeLeftRight = 8;
-
 //Shooter Motor
 public static final int shootMotor = 7; 
+
+//climb arm motor
+public static final int strafeLeftRight = 8;
 
 //Joystick Stuff
 public static final int leftJoystickPort = 0;
