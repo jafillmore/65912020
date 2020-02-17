@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
+import frc.robot.Constants.DriveConst;
 
 public class ArcadeDriveSubsystem extends SubsystemBase {
   public static final String robotDrive = null;
@@ -22,15 +22,14 @@ public class ArcadeDriveSubsystem extends SubsystemBase {
    * Creates a new ArcadeDriveSubsystem.
    */
   // Motor Types
-  public CANSparkMax frontLeft = new CANSparkMax(Constants.frontLeft, MotorType.kBrushless);
-  public CANSparkMax midLeft = new CANSparkMax(Constants.midLeft, MotorType.kBrushless);
-  public CANSparkMax backLeft = new CANSparkMax(Constants.backLeft, MotorType.kBrushless);
-  public CANSparkMax frontRight = new CANSparkMax(Constants.frontRight, MotorType.kBrushless);
-  public CANSparkMax midRight = new CANSparkMax(Constants.midRight, MotorType.kBrushless);
-  public CANSparkMax backRight = new CANSparkMax(Constants.backRight, MotorType.kBrushless);
+  public CANSparkMax frontLeft = new CANSparkMax(DriveConst.frontLeftMotor, MotorType.kBrushless);
+  public CANSparkMax midLeft = new CANSparkMax(DriveConst.midLeftMotor, MotorType.kBrushless);
+  public CANSparkMax backLeft = new CANSparkMax(DriveConst.backLeftMotor, MotorType.kBrushless);
+  public CANSparkMax frontRight = new CANSparkMax(DriveConst.frontRightMotor, MotorType.kBrushless);
+  public CANSparkMax midRight = new CANSparkMax(DriveConst.midRightMotor, MotorType.kBrushless);
+  public CANSparkMax backRight = new CANSparkMax(DriveConst.backRightMotor, MotorType.kBrushless);
   
-  //Shooter Motor's 
-  public CANSparkMax shooterMoter = new CANSparkMax(Constants.shootMotor, MotorType.kBrushless);
+ 
 
   // Speed Controller Group's 
   public SpeedControllerGroup leftMotors = new SpeedControllerGroup(frontLeft, midLeft, backLeft);
