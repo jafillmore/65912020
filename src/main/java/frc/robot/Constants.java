@@ -25,13 +25,6 @@ import edu.wpi.first.wpilibj.util.Color;
 public final class Constants {
 
 
-
-//Shooter Motor
-public final class ShooterConst{
-    public static final int shootMotor = 7; 
-
-}  
-
 //climb arm motor
 public static final int strafeLeftRight = 8;
 
@@ -92,32 +85,35 @@ public final class IntakeConst {
 
 }
 
+ public static final class ControlPannelConst{
+    // Wheel Spinning Motor CAN ID
+    public static final int spinningMotor = 12;
 
-// Color Sensor's
-
-private static final double yellowRVal = .300;
-private static final double yellowGVal = .600;
-private static final double yellowBVal = .100;
-private static final double redRVal = .500;
-private static final double redGVal = .300;
-private static final double redBVal = .100;
-private static final double greenRVal = .100;
-private static final double greenGVal = .600;
-private static final double greenBVal = .300;
-private static final double blueRVal = .100;
-private static final double blueGVal = .400;
-private static final double blueBVal = .500;
-public static final Color blueTarget = ColorMatch.makeColor(blueRVal, blueGVal, blueBVal);
-public static final Color greenTarget = ColorMatch.makeColor(greenRVal, greenGVal, greenBVal);
-public static final Color redTarget = ColorMatch.makeColor(redRVal, redGVal, redBVal);
-public static final Color yellowTarget = ColorMatch.makeColor(yellowRVal, yellowGVal, yellowBVal);
-public static final int blueTargetButNum = 1;
-public static final int greenTargetButtonNum = 2;
-public static final int redTargetButtonNum = 3;
-public static final int yellowTargetButtonNum = 4;
-public static final int spinPanelButtonNum = 5;
-public static final int detectColorButtonNum = 6;
-public static I2C.Port colorSensorPort = I2C.Port.kOnboard;
+    // Color Sensor's
+    public static final double yellowRVal = .300;
+    public static final double yellowGVal = .600;
+    public static final double yellowBVal = .100;
+    public static final double redRVal = .500;
+    public static final double redGVal = .300;
+    public static final double redBVal = .100;
+    public static final double greenRVal = .100;
+    public static final double greenGVal = .600;
+    public static final double greenBVal = .300;
+    public static final double blueRVal = .100;
+    public static final double blueGVal = .400;
+    public static final double blueBVal = .500;
+    public static final Color blueTarget = ColorMatch.makeColor(blueRVal, blueGVal, blueBVal);
+    public static final Color greenTarget = ColorMatch.makeColor(greenRVal, greenGVal, greenBVal);
+    public static final Color redTarget = ColorMatch.makeColor(redRVal, redGVal, redBVal);
+    public static final Color yellowTarget = ColorMatch.makeColor(yellowRVal, yellowGVal, yellowBVal);
+    public static final int blueTargetButNum = 1;
+    public static final int greenTargetButtonNum = 2;
+    public static final int redTargetButtonNum = 3;
+    public static final int yellowTargetButtonNum = 4;
+    public static final int spinPanelButtonNum = 5;
+    public static final int detectColorButtonNum = 6;
+    public static I2C.Port colorSensorPort = I2C.Port.kOnboard;
+ }
 
 //Pnematic's
 public static final class PnemuaticConst{

@@ -14,11 +14,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.PnemuaticConst;
 
 public class PneumaticSubsystem extends SubsystemBase {
-  public static Object deployClimbArmsSolenoid;
   
-
-
-
 /**
    * Creates a new PneumaticSubsystem.
    */
@@ -46,7 +42,7 @@ public DoubleSolenoid extendArmSolenoid = new DoubleSolenoid(7, 0);
 
 // deploy intake
 
-  public void deployIntake(){
+  public final void deployIntake(){
     deployIntakeDouble.set(Value.kForward);
     deployIntakeDouble.set(Value.kOff);
   }

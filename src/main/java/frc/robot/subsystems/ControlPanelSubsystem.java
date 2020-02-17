@@ -8,18 +8,38 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.revrobotics.ColorMatch;
+import com.revrobotics.ColorMatchResult;
+import com.revrobotics.ColorSensorV3;
+
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
+import frc.robot.Constants.ControlPannelConst;
+
 
 public class ControlPanelSubsystem extends SubsystemBase {
   /**
-   * Creates a new ControlPanelSubsystem.
+   * Creates a new ColorsensorSubsystem.
    */
-  public VictorSPX control = new VictorSPX(Constants.frontLeft);
-  
+  //ControlPanel Motor
+  public VictorSPX control = new VictorSPX(ControlPannelConst.spinningMotor);
 
+  // Color Sensor's
+  public ColorSensorV3 colorSensor = new ColorSensorV3(ControlPannelConst.colorSensorPort);
+  public ColorMatch colorMatcher = new ColorMatch();
+  public Color detectedColor = colorSensor.getColor();
+
+ /**
+    * Run the color match algorithm on our detected color
+    */
+    public ColorMatchResult match = colorMatcher.matchClosestColor(detectedColor);
+
+  //Color Points
   public ControlPanelSubsystem() {
-
+    colorMatcher.addColorMatch(ControlPannelConst.blueTarget);
+    colorMatcher.addColorMatch(ControlPannelConst.greenTarget);
+    colorMatcher.addColorMatch(ControlPannelConst.redTarget);
+    colorMatcher.addColorMatch(ControlPannelConst.yellowTarget);
   }
 
   @Override
@@ -27,4 +47,3 @@ public class ControlPanelSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 }
-
