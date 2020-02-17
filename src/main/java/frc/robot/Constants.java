@@ -40,33 +40,65 @@ public static final int shootMotor = 7;
 public static final int strafeLeftRight = 8;
 
 //Joystick Stuff
-public static final int leftJoystickPort = 0;
-public static final int rightJoystickPort = 1;
-public static final int intakeButton = 0;
-public static final int intakeNumber = 1;
-public static final int intakeTrigger = 1;
+public final class JoystickConst {
+    
+    //JoystickPort #s
+    public static final int leftJoystickPort = 0;
+    public static final int rightJoystickPort = 1;
+    public static final int shooterJoystickPort = 2;
+
+    //JoystickButton #s for Intake
+    public static final int toggleIntake = 1;
+    public static final int intakeTrigger = 1;
+
+    //JoystickButton #s for ControlPannel
+    public static final int toggleColorArm = 2;
+    public static final int spin3 = 3;
+    public static final int spinToColor = 4;
 
 
-// Drive Constants 
-public final class DriveConst {
-public static final int frontLeftMotor = 1;
-public static final int midLeftMotor = 2;
-public static final int backLeftMotor = 3;
-public static final int frontRightMotor = 4;
-public static final int midRightMotor = 5;
-public static final int backRightMotor = 6; 
+    //Joystick Button #s for Climbing
+    public static final int deployClimbArm = 5;
+    public static final int stowClimbArm = 6;
+    public static final int extendClimbArm = 7;
+    public static final int retractClimbArm = 8;
+    
+    //Joystick Button #s for Shooting
+    public static final int toggleAutoShoot = 9;
+    public static final int fire = 10;
+    public static final int rotateLeft = 11;
+    public static final int rotateRight = 12;
 
 
 }
+
+
+// Drive Constants CAN IDs
+public final class DriveConst {
+    public static final int frontLeftMotor = 1;
+    public static final int midLeftMotor = 2;
+    public static final int backLeftMotor = 3;
+    public static final int frontRightMotor = 4;
+    public static final int midRightMotor = 5;
+    public static final int backRightMotor = 6; 
+
+}
+
+
 // Intake Constants
 public final class IntakeConst {
-public static final int liftMotor = 8;
-public static final int intakeMotor = 9;
-public static final double intakeSpeed = 0.5;
-public static final double liftPrimeSpeed = 0.15;
-public static final double liftShootSpeed = 0.50;
+
+    public static final int liftMotor = 8;
+    public static final int intakeMotor = 9;
+    public static final double intakeSpeed = 0.5;
+    public static final double liftPrimeSpeed = 0.15;
+    public static final double liftShootSpeed = 0.50;
+
 }
+
+
 // Color Sensor's
+
 private static final double yellowRVal = .300;
 private static final double yellowGVal = .600;
 private static final double yellowBVal = .100;
