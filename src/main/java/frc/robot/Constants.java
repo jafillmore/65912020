@@ -121,12 +121,18 @@ public static I2C.Port colorSensorPort = I2C.Port.kOnboard;
 
 //Pnematic's
 public static final class PnemuaticConst{
+
+    //Deploying Climb Arms
     public static final int deployA = 1;
     public static final int deployB = 2;
 
+
+    //Extend Climb Arms
     public static final int extandA = 3;
     public static final int extandB = 4;
 
+
+    //Deploy Intake
     public static final int intakeA = 1;
     public static final int intakeB = 0 ;
    
