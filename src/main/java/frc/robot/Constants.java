@@ -44,6 +44,7 @@ public static final int leftJoystickPort = 0;
 public static final int rightJoystickPort = 1;
 public static final int intakeButton = 0;
 public static final int intakeNumber = 1;
+public static final int intakeTrigger = 1;
 
 // Drive Constants 
 public final class DriveConst {
@@ -60,7 +61,6 @@ public static final int backRightMotor = 6;
 public final class IntakeConst {
 public static final int liftMotor = 8;
 public static final int intakeMotor = 9;
-public static final int intakeTrigger = 1;
 public static final double intakeSpeed = 0.5;
 public static final double liftPrimeSpeed = 0.15;
 public static final double liftShootSpeed = 0.50;
@@ -98,8 +98,8 @@ public static final class PnemuaticConst{
     public static final int extandA = 3;
     public static final int extandB = 4;
 
-    public static final int intakeA = 5;
-    public static final int intakeB = 6;
+    public static final int intakeA = 1;
+    public static final int intakeB = 0 ;
    
    public static final int deployIntakeTrigger = 1;     
 }
