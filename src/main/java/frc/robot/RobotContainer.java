@@ -58,8 +58,17 @@ public class RobotContainer {
     new JoystickButton(leftJoystick, Constants.intakeNumber)
       .whenPressed(new InstantCommand(pneumaticSubsystem::deployIntake));
 
-    new JoystickButton(leftJoystick, Constatnts.intakeNumber)
+    new JoystickButton(leftJoystick, Constants.intakeNumber)
       .whenPressed(new InstantCommand(pneumaticSubsystem::stowIntake));
+
+    new JoystickButton(leftJoystick, Constants.intakeNumber)
+      .whenPressed(new InstantCommand(pneumaticSubsystem::deployArms));
+
+    new JoystickButton(leftJoystick, Constants.intakeNumber)
+      .whenPressed(new InstantCommand(pneumaticSubsystem::deployArms));
+
+    new JoystickButton(leftJoystick, Constants.intakeNumber)
+      .whenPressed(pneumaticSubsystem::stowArms);
 
     arcadeDriveSubsystem.setDefaultCommand(
       new RunCommand(() -> arcadeDriveSubsystem

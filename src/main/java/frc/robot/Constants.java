@@ -46,6 +46,7 @@ public static final int intakeButton = 0;
 public static final int intakeNumber = 1;
 public static final int intakeTrigger = 1;
 
+
 // Drive Constants 
 public final class DriveConst {
 public static final int frontLeftMotor = 1;
