@@ -27,6 +27,7 @@ import frc.robot.subsystems.PneumaticSubsystem;
  * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+  private static final Command m_autoCommand = null;
   // The robot's subsystems and commands are defined here...
   private final IntakeSubsystem intakesubsystem = new IntakeSubsystem();
   private final ArcadeDriveSubsystem arcadeDriveSubsystem = new ArcadeDriveSubsystem();
@@ -75,11 +76,8 @@ public class RobotContainer {
           .arcadeDrive(leftJoystick.getY(), 
                        leftJoystick.getZ()), arcadeDriveSubsystem));
 
+      () -> arcadeDriveSubsystem.arcadeDrive(leftJoystick.getY(), leftJoystick.getZ(), arcadeDriveSubsystem);
 
-<<<<<<< HEAD
-=======
-     //  () -> arcadeDriveSubsystem.arcadeDrive(leftJoystick.getY(), leftJoystick.getZ(), arcadeDriveSubsystem);
->>>>>>> sammie
 
     deployIntakeButton.whenPressed(() -> (pneumaticSubsystem.extendArmSolenoid(IntConst.)))
       //Intake stuffs
