@@ -76,6 +76,10 @@ public class RobotContainer {
                        leftJoystick.getZ()), arcadeDriveSubsystem));
 
 
+<<<<<<< HEAD
+=======
+     //  () -> arcadeDriveSubsystem.arcadeDrive(leftJoystick.getY(), leftJoystick.getZ(), arcadeDriveSubsystem);
+>>>>>>> sammie
 
     deployIntakeButton.whenPressed(() -> (pneumaticSubsystem.extendArmSolenoid(IntConst.)))
       //Intake stuffs
