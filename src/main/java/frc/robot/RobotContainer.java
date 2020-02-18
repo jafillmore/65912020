@@ -44,10 +44,8 @@ public class RobotContainer {
     configureButtonBindings();
     
     JoystickButton intakeButton = new JoystickButton(leftJoystick, Constants.intakeNumber);
-
     
-    
-  }
+  
   /**
    * Use this method to define your button->command mappings.  Buttons can be created by
    * instantiating a {@link GenericHID} or one of its subclasses ({@link
@@ -79,14 +77,15 @@ public class RobotContainer {
       () -> arcadeDriveSubsystem.arcadeDrive(leftJoystick.getY(), leftJoystick.getZ(), arcadeDriveSubsystem);
 
 
-    deployIntakeButton.whenPressed(() -> (pneumaticSubsystem.extendArmSolenoid(IntConst.)))
+    deployIntakeButton.whenPressed(() -> (pneumaticSubsystem.extendArmSolenoid(IntConst())));
+
       //Intake stuffs
-   // new JoystickButton(leftJoystick, Constants.shootButton).whileHeld(() -> (intakeSubsystem.liftSpeed(IntConst.liftShootSpeed)
-   // .whenReleased(() -> IntakeSubsystem.intliftSP(0.0));
+    new JoystickButton(leftJoystick, Constants.shootButton).whileHeld(() -> (intakeSubsystem.liftSpeed(IntConst.liftShootSpeed)
+    .whenReleased(() -> IntakeSubsystem.liftSP(0.0));
 
-  //Shuffleboard.getTab("Shooter value").add("rpm", intakeSubsystem.shooterButton.getAppliedOutput());
-
+    Shuffleboard.getTab("Shooter value").add("rpm", intakeSubsystem.shooterButton.getAppliedOutput());
   }
+
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
