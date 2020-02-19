@@ -40,8 +40,8 @@ public class RobotContainer {
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    // Configure the button bindings
-    configureButtonBindings();
+     Configure the button bindings
+   /configureButtonBindings();
     
     JoystickButton intakeButton = new JoystickButton(leftJoystick, Constants.intakeNumber);
     
@@ -75,7 +75,7 @@ public class RobotContainer {
           .arcadeDrive(leftJoystick.getY(), 
                        leftJoystick.getZ()), arcadeDriveSubsystem));
 
-      () -> arcadeDriveSubsystem.arcadeDrive(leftJoystick.getY(), leftJoystick.getZ(), arcadeDriveSubsystem);
+     () -> arcadeDriveSubsystem.arcadeDrive(leftJoystick.getY(), leftJoystick.getZ(), arcadeDriveSubsystem);
 
 
     deployIntakeButton.whenPressed(() -> (pneumaticSubsystem.extendArmSolenoid(IntConst())));
