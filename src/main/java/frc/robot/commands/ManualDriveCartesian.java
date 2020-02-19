@@ -32,7 +32,7 @@ public class ManualDriveCartesian extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    robotDriveSubsystem.arcadeDrive(robotDriveSubsystem.mainJoystick.getRawAxis(1),robotDriveSubsystem.mainJoystick.getRawAxis(0));
+    robotDriveSubsystem.arcadeDrive(robotDriveSubsystem.leftJoystick.getRawAxis(1),robotDriveSubsystem.rightJoystick.getRawAxis(0));
   }
 
   // Called once the command ends or is interrupted.

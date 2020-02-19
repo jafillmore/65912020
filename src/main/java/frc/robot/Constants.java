@@ -26,9 +26,6 @@ public final class Constants {
 
 
 //climb arm motor
-public static final int strafeLeftRight = 8;
-public static final int leftJoystickPort = 0;
-public static final int rightJoystickPort = 0;
 public static final int intakeNumber = 0;
 public static final int deployNumber = 1;
 

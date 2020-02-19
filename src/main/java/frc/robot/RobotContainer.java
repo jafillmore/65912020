@@ -19,7 +19,7 @@ import frc.robot.commands.DeployIntake;
 import frc.robot.subsystems.ArcadeDriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.PneumaticSubsystem;
-
+import frc.robot.Constants.JoystickConst;
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -33,8 +33,8 @@ public class RobotContainer {
   private final ArcadeDriveSubsystem arcadeDriveSubsystem = new ArcadeDriveSubsystem();
   private final PneumaticSubsystem pneumaticSubsystem = new PneumaticSubsystem();
 
-  Joystick leftJoystick = new Joystick(Constants.leftJoystickPort);
-  Joystick rightJoystick = new Joystick(Constants.rightJoystickPort);
+  Joystick leftJoystick = new Joystick(JoystickConst.leftJoystickPort);
+  Joystick rightJoystick = new Joystick(JoystickConst.rightJoystickPort);
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
