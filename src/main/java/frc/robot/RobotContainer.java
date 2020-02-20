@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.Constants.PnemuaticConst;
 import frc.robot.commands.DeployIntake;
 import frc.robot.subsystems.ArcadeDriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -46,8 +45,7 @@ public class RobotContainer {
    */
   public RobotContainer() {
    configureButtonBindings();
-  
-    JoystickButton intakeButton = new JoystickButton(leftJoystick, Constants.intakeNumber);
+     
   }
   /**
    * Use this method to define your button->command mappings.  Buttons can be created by
