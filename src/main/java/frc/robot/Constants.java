@@ -156,6 +156,17 @@ public static final class PnemuaticConst{
     public static final int primeMotor = 11;
 }
 
+public static final class PIDConst{
 
+    public static final double P = 6e-5; 
+    public static final double I = 0;
+    public static final double D = 0; 
+    public static final double Iz = 0; 
+    public static final double FF = 0.000015; 
+    public static final double MaxOutput = 1; 
+    public static final double MinOutput = -1;
+    public static final double maxRPM = 5700;
+
+    }
 
 }
