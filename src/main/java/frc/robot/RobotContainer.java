@@ -63,8 +63,7 @@ public class RobotContainer {
           .arcadeDrive(leftJoystick.getY(), 
                        rightJoystick.getZ()), arcadeDriveSubsystem));
 
-
-    // Deploy Intake while left trigger is held, retract when it is release
+                       
     new JoystickButton(leftJoystick, Constants.intakeNumber)
       .whileHeld(new InstantCommand(pneumaticSubsystem::deployIntake))
       .whenReleased(new InstantCommand(pneumaticSubsystem::stowIntake));
@@ -79,11 +78,7 @@ public class RobotContainer {
       .whenReleased(new InstantCommand(intakeSubsystem::turnOffIntake));
     
 
-    // Reverse Intake lift motor (to try to fix stuff ball)
-    new JoystickButton(rightJoystick, JoystickConst.intakeReverse)
-      .whileHeld(new InstantCommand(intakeSubsystem::reverseIntakeLift));
-
-    new JoystickButton(joeStick, Constants.deployNumber)
+    new JoystickButton(leftJoystick, Constants.deployNumber)
       .whenPressed(new InstantCommand(pneumaticSubsystem::deployArms));
 
     new JoystickButton(leftJoystick, Constants.deployNumber)
