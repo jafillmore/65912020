@@ -63,12 +63,9 @@ public class RobotContainer {
           .arcadeDrive(leftJoystick.getY(), 
                        rightJoystick.getZ()), arcadeDriveSubsystem));
 
-
-
-
+                       
     new JoystickButton(leftJoystick, Constants.intakeNumber)
       .whenPressed(new DeployIntake(pneumaticSubsystem));
-
 
     new JoystickButton(leftJoystick, Constants.deployNumber)
       .whenPressed(new InstantCommand(pneumaticSubsystem::deployArms));
