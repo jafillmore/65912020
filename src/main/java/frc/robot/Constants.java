@@ -77,9 +77,9 @@ public final class DriveConst {
 
 // Intake Constants
 public final class IntakeConst {
-
-    public static final int liftMotor = 8;
+    public static final int liftMotor = 7;
     public static final int intakeMotor = 9;
+    public static final int primeMotor = 10;
     public static final double intakeSpeed = 0.5;
     public static final double liftPrimeSpeed = 0.15;
     public static final double liftShootSpeed = 0.50;
@@ -137,8 +137,8 @@ public static final class PnemuaticConst{
 }
    //Shooter Motor
    public static final class ShooterConst{
-    public static final int Shooter = 0;
-    public static final int Targeting = 1;
+    public static final int Shooter = 8;
+    public static final int Targeting = 7;
 }
 
 

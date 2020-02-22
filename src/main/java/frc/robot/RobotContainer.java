@@ -70,12 +70,12 @@ public class RobotContainer {
 
     new JoystickButton(leftJoystick, Constants.deployNumber)
       .whenPressed(new InstantCommand(pneumaticSubsystem::stowArms));
-
-    new JoystickButton(joeStick, JoystickConst.fire)
+      
+      new JoystickButton(joeStick, JoystickConst.fire)
       .whenPressed(new RunCommand(() -> shooterSubsystem.shoot(shooterSubsystem.shooterSpeed)))
       //-> intakeSubsystem.liftSpeed(IntakeConst.liftShootSpeed)));
       .whenReleased (new RunCommand(() -> shooterSubsystem.shoot(0.0)));
-      
+
     new JoystickButton(joeStick, JoystickConst.increaseSpeed)
       .whenPressed(new RunCommand(() -> shooterSubsystem.adjShooterSpeedUp()));
 
