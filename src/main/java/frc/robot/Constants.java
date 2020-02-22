@@ -35,7 +35,7 @@ public final class JoystickConst {
     //JoystickPort #s
     public static final int leftJoystickPort = 0;
     public static final int rightJoystickPort = 1;
-    public static final int shooterJoystickPort = 2;
+    public static final int joeStickPort = 2;
 
     //JoystickButton #s for Intake
     public static final int toggleIntake = 1;
@@ -58,8 +58,8 @@ public final class JoystickConst {
     public static final int fire = 10;
     public static final int rotateLeft = 11;
     public static final int rotateRight = 12;
-
-
+    public static final int increaseSpeed = 26;
+    public static final int decreaseSpeed = 27;
 }
 
 

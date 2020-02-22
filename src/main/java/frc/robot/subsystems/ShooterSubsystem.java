@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterConst;;
 
@@ -22,7 +23,7 @@ public class ShooterSubsystem extends SubsystemBase {
    //Create Shooter Motor
   public CANSparkMax shooterMotor = new CANSparkMax(ShooterConst.Shooter, MotorType.kBrushless);
   public CANSparkMax targetMotor = new CANSparkMax(ShooterConst.Targeting, MotorType.kBrushless);
-
+  public Double shooterSpeed = 0.5;
 
 
   public ShooterSubsystem() {
@@ -33,9 +34,20 @@ public class ShooterSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
   }
-  public Object shoot(double slider){
-shooterMotor.set(slider);
-return slider;
-    
+  public void shoot(){
+    shooterMotor.set(shooterSpeed);
+
+
   }
+  
+  public void adjShooterSpeedUp(){
+    shooterSpeed = shooterSpeed + 0.1;
+    SmartDashboard.putNumber("Shooter Motor Power", shooterSpeed );
+  }
+
+  public void adjShooterSpeedDown(){
+    shooterSpeed = shooterSpeed - 0.1;
+    SmartDashboard.putNumber("Shooter Motor Power", shooterSpeed );
+  }
+  
 }
