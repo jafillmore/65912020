@@ -27,11 +27,23 @@ public class IntakeSubsystem extends SubsystemBase {
   private CANSparkMax intakeMotor = new CANSparkMax(IntakeConst.intakeMotor, MotorType.kBrushless);
 
   //Intake Settings
-  public void intakeSpeed(double intSP) {
-    intakeMotor.set(intSP);
+  public void turnOnIntake() {
+    intakeMotor.set(IntakeConst.intakeSpeed);
+    liftMotor.set(ControlMode.PercentOutput, IntakeConst.liftSpeed);
   }
-  public void liftSpeed(double intliftSP)  {
-    liftMotor.set(ControlMode.PercentOutput, intliftSP);
+
+  public void turnOffIntake() {
+    intakeMotor.set(0);
+    liftMotor.set(ControlMode.PercentOutput, 0);
+  }
+
+
+  public void reverseIntakeLift()  {
+    liftMotor.set(ControlMode.PercentOutput, -IntakeConst.liftSpeed);
+  }
+
+  public void turnOffReverseIntakeLift()  {
+    liftMotor.set(ControlMode.PercentOutput, 0);
   }
 
   public IntakeSubsystem() {

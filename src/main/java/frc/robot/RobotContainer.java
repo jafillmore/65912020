@@ -64,19 +64,39 @@ public class RobotContainer {
                        rightJoystick.getZ()), arcadeDriveSubsystem));
 
 
+    // Deploy Intake while left trigger is held, retract when it is release
     new JoystickButton(leftJoystick, Constants.intakeNumber)
-      .whenPressed(new DeployIntake(pneumaticSubsystem));
+      .whileHeld(new InstantCommand(pneumaticSubsystem::deployIntake))
+      .whenReleased(new InstantCommand(pneumaticSubsystem::stowIntake));
 
-    new JoystickButton(leftJoystick, Constants.deployNumber)
+    // Turn on Intake motors
+    /*new JoystickButton(rightJoystick, JoystickConst.intakeTrigger)
+      .whileHeld(() -> intakeSubsystem.turnOnIntake())
+      .whenReleased(() -> intakeSubsystem.turnOffIntake());
+    */
+    new JoystickButton(leftJoystick, JoystickConst.intakeTrigger)
+      .whileHeld(new InstantCommand(intakeSubsystem::turnOnIntake))
+      .whenReleased(new InstantCommand(intakeSubsystem::turnOffIntake));
+    
+
+    // Reverse Intake lift motor (to try to fix stuff ball)
+    new JoystickButton(rightJoystick, JoystickConst.intakeReverse)
+      .whileHeld(new InstantCommand(intakeSubsystem::reverseIntakeLift));
+
+    new JoystickButton(joeStick, Constants.deployNumber)
       .whenPressed(new InstantCommand(pneumaticSubsystem::deployArms));
 
     new JoystickButton(leftJoystick, Constants.deployNumber)
       .whenPressed(new InstantCommand(pneumaticSubsystem::stowArms));
       
       new JoystickButton(joeStick, JoystickConst.fire)
-      .whenPressed(new RunCommand(() -> shooterSubsystem.shoot(shooterSubsystem.shooterSpeed)))
+      .whenHeld(new RunCommand(() -> shooterSubsystem.shootOn(/*shooterSubsystem.shooterSpeed*/)))
       //-> intakeSubsystem.liftSpeed(IntakeConst.liftShootSpeed)));
-      .whenReleased (new RunCommand(() -> shooterSubsystem.shoot(0.0)));
+      .whenReleased (new RunCommand(() -> shooterSubsystem.shootMotorOff()));
+
+    /*new JoystickButton(joeStick, JoystickConst.fire)
+      .whileHeld(new RunCommand(ShooterSubsystem::shootOn));
+      .whenReleased(new InstantCommand(ShooterSubsystem::shooterMotorOff));*/
 
     new JoystickButton(joeStick, JoystickConst.increaseSpeed)
       .whenPressed(new RunCommand(() -> shooterSubsystem.adjShooterSpeedUp()));
@@ -84,11 +104,9 @@ public class RobotContainer {
     new JoystickButton(joeStick, JoystickConst.decreaseSpeed)
       .whenPressed(new RunCommand(() -> shooterSubsystem.adjShooterSpeedDown()));
    
-    new RunCommand(() -> shooterSubsystem.rotate(joeStick.getZ()));
+    shooterSubsystem.setDefaultCommand(
+      new RunCommand(() -> shooterSubsystem .rotate(joeStick.getRawAxis(2)), shooterSubsystem));
 
-      //Intake stuffs
-    new JoystickButton(rightJoystick, JoystickConst.intakeTrigger).whileHeld(() -> intakeSubsystem.intakeSpeed(IntakeConst.intakeSpeed))
-    .whenReleased(() -> intakeSubsystem.intakeSpeed(0.0));
 
     Shuffleboard.getTab("Shooter value").add("rpm", shooterSubsystem.shooterMotor.getAppliedOutput());
   }
