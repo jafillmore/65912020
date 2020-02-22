@@ -35,7 +35,7 @@ public final class JoystickConst {
     //JoystickPort #s
     public static final int leftJoystickPort = 0;
     public static final int rightJoystickPort = 1;
-    public static final int shooterJoystickPort = 2;
+    public static final int joeStickPort = 2;
 
     //JoystickButton #s for Intake
     public static final int toggleIntake = 1;
@@ -58,8 +58,8 @@ public final class JoystickConst {
     public static final int fire = 10;
     public static final int rotateLeft = 11;
     public static final int rotateRight = 12;
-
-
+    public static final int increaseSpeed = 26;
+    public static final int decreaseSpeed = 27;
 }
 
 
@@ -77,9 +77,9 @@ public final class DriveConst {
 
 // Intake Constants
 public final class IntakeConst {
-
-    public static final int liftMotor = 8;
+    public static final int liftMotor = 7;
     public static final int intakeMotor = 9;
+    public static final int primeMotor = 10;
     public static final double intakeSpeed = 0.5;
     public static final double liftPrimeSpeed = 0.15;
     public static final double liftShootSpeed = 0.50;
@@ -137,8 +137,8 @@ public static final class PnemuaticConst{
 }
    //Shooter Motor
    public static final class ShooterConst{
-    public static final int Shooter = 0;
-    public static final int Targeting = 1;
+    public static final int Shooter = 8;
+    public static final int Targeting = 7;
 }
 
 
