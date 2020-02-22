@@ -37,10 +37,9 @@ public class ShooterSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
   }
-  public double shoot(double shootPower){
+  public void shoot(double shootPower){
     shooterMotor.set(shootPower);
     
-    return shootPower;
   }
   
   public void adjShooterSpeedUp(){
