@@ -71,16 +71,18 @@ public class RobotContainer {
     new JoystickButton(leftJoystick, Constants.deployNumber)
       .whenPressed(new InstantCommand(pneumaticSubsystem::stowArms));
 
-
     new JoystickButton(joeStick, JoystickConst.fire)
-      .whenPressed(new RunCommand(() -> shooterSubsystem.shoot()));
-
+      .whenPressed(new RunCommand(() -> shooterSubsystem.shoot(shooterSubsystem.shooterSpeed)))
+      //-> intakeSubsystem.liftSpeed(IntakeConst.liftShootSpeed)));
+      .whenReleased (new RunCommand(() -> shooterSubsystem.shoot(0.0)));
+      
     new JoystickButton(joeStick, JoystickConst.increaseSpeed)
       .whenPressed(new RunCommand(() -> shooterSubsystem.adjShooterSpeedUp()));
 
-      new JoystickButton(joeStick, JoystickConst.decreaseSpeed)
+    new JoystickButton(joeStick, JoystickConst.decreaseSpeed)
       .whenPressed(new RunCommand(() -> shooterSubsystem.adjShooterSpeedDown()));
    
+    new RunCommand(() -> shooterSubsystem.rotate(joeStick.getZ()));
 
       //Intake stuffs
     new JoystickButton(rightJoystick, JoystickConst.intakeTrigger).whileHeld(() -> intakeSubsystem.intakeSpeed(IntakeConst.intakeSpeed))
