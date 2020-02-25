@@ -9,7 +9,9 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.revrobotics.CANAnalog;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANAnalog.AnalogMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -23,10 +25,15 @@ public class ShooterSubsystem extends SubsystemBase {
    */
 
    //Create Shooter Motor
-  public static CANSparkMax shooterMotor = new CANSparkMax(ShooterConst.Shooter, MotorType.kBrushless);
-  public static CANSparkMax targetMotor = new CANSparkMax(ShooterConst.Targeting, MotorType.kBrushless);
-  public static VictorSPX primeMotor = new VictorSPX(ShooterConst.primeMotor);
-  public static double shooterSpeed = 0.2;
+  public CANSparkMax shooterMotor = new CANSparkMax(ShooterConst.Shooter, MotorType.kBrushless);
+  public CANSparkMax targetMotor = new CANSparkMax(ShooterConst.Targeting, MotorType.kBrushless);
+  public VictorSPX primeMotor = new VictorSPX(ShooterConst.primeMotor);
+  public double shooterSpeed = 0.2;
+  public CANAnalog analog = new CANAnalog(shooterMotor, AnalogMode.kAbsolute);
+
+  //Change the value when motor speed we are trying to reach is discovered
+  private double shooterMotorRequiredSpeed = -1;
+
   
 
 
@@ -45,8 +52,13 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public void shootOn(){
-    primeMotor.set(ControlMode.PercentOutput, -ShooterConst.primeMotorSpeed);
     shooterMotor.set(-shooterSpeed);
+    SmartDashboard.putNumber("Velocity of SparkMax", analog.getVelocity());
+
+    //Change shooterMotorRequiredSpeed when the required speed is determined
+    if(analog.getVelocity() == shooterMotorRequiredSpeed){
+      primeMotor.set(ControlMode.PercentOutput, -ShooterConst.primeMotorSpeed);
+    }
   }
   
   public void shootMotorOff(){
