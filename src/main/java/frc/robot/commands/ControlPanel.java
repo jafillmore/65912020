@@ -36,14 +36,14 @@ public class ControlPanel extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(controlPanelSubsystem.match.color == Constants.ControlPannelConst.yellowTarget){
-    detectedColor = Constants.ControlPannelConst.yellowTarget;
-  } else if (controlPanelSubsystem.match.color == Constants.ControlPannelConst.blueTarget){
-    detectedColor = Constants.ControlPannelConst.blueTarget;
-  } else if (controlPanelSubsystem.match.color == Constants.ControlPannelConst.greenTarget){
-    detectedColor = Constants.ControlPannelConst.greenTarget;
-  } else if (controlPanelSubsystem.match.color == Constants.ControlPannelConst.redTarget){
-    detectedColor = Constants.ControlPannelConst.redTarget;
+    if(controlPanelSubsystem.match.color == Constants.ControlPanelConst.yellowTarget){
+    detectedColor = Constants.ControlPanelConst.yellowTarget;
+  } else if (controlPanelSubsystem.match.color == Constants.ControlPanelConst.blueTarget){
+    detectedColor = Constants.ControlPanelConst.blueTarget;
+  } else if (controlPanelSubsystem.match.color == Constants.ControlPanelConst.greenTarget){
+    detectedColor = Constants.ControlPanelConst.greenTarget;
+  } else if (controlPanelSubsystem.match.color == Constants.ControlPanelConst.redTarget){
+    detectedColor = Constants.ControlPanelConst.redTarget;
   }
 
     for(int i = 0; rotationCount < 3; i++){

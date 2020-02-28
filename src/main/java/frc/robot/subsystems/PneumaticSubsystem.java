@@ -21,8 +21,6 @@ public class PneumaticSubsystem extends SubsystemBase {
   Compressor c = new Compressor(0);
 
 
-public DoubleSolenoid extendArmSolenoid = new DoubleSolenoid(7, 0);
-
   private DoubleSolenoid deployArmsDouble = new DoubleSolenoid(PnemuaticConst.deployA, PnemuaticConst.deployB);
   private DoubleSolenoid extendArmsDouble = new DoubleSolenoid(PnemuaticConst.extandA, PnemuaticConst.extandB);
   private DoubleSolenoid deployIntakeDouble = new DoubleSolenoid(PnemuaticConst.intakeA, PnemuaticConst.intakeB);
@@ -47,16 +45,19 @@ public DoubleSolenoid extendArmSolenoid = new DoubleSolenoid(7, 0);
     deployIntakeDouble.set(Value.kOff);
   }
 
+  public void stowIntake(){
+    deployIntakeDouble.set(Value.kReverse);
+    deployIntakeDouble.set(Value.kOff);
+  }
+
+  
 
   public void stowArms(){
     deployArmsDouble.set(Value.kReverse);
     deployArmsDouble.set(Value.kOff);
   }
 
-  public void stowIntake(){
-    deployIntakeDouble.set(Value.kReverse);
-    deployIntakeDouble.set(Value.kOff);
-  }
+
   
 
 /*
