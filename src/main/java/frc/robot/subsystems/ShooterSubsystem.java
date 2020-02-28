@@ -58,9 +58,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public void shootOn(){
     shooterMotor.set(-shooterSpeed);
-    
-    SmartDashboard.putNumber("Velocity of SparkMax", analog.getVelocity());
-    SmartDashboard.putNumber("Position", analog.getPosition());
+  
     SmartDashboard.putNumber("Velocity for Encoder", encoder.getVelocity());
 
     //Change shooterMotorRequiredSpeed when the required speed is determined
