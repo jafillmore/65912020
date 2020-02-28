@@ -11,13 +11,13 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.CANAnalog;
 import com.revrobotics.CANEncoder;
+import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANAnalog.AnalogMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.PIDConst;
 import frc.robot.Constants.ShooterConst;
 
 
@@ -33,6 +33,7 @@ public class ShooterSubsystem extends SubsystemBase {
   public double shooterSpeed = 0.2;
   public CANAnalog analog = new CANAnalog(shooterMotor, AnalogMode.kAbsolute);
   public CANEncoder encoder = new CANEncoder(shooterMotor);
+  public CANPIDController PID = new CANPIDController(shooterMotor);
 
   
 
@@ -43,7 +44,12 @@ public class ShooterSubsystem extends SubsystemBase {
 
 
   public ShooterSubsystem() {
-
+    PID.setP(PIDConst.P);
+    PID.setI(PIDConst.I);
+    PID.setD(PIDConst.D);
+    PID.setIZone(PIDConst.Iz);
+    PID.setFF(PIDConst.FF);
+    PID.setOutputRange(PIDConst.MinOutput, PIDConst.MaxOutput);
   }
 
   @Override
@@ -58,13 +64,11 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public void shootOn(){
     shooterMotor.set(-shooterSpeed);
-    
-    SmartDashboard.putNumber("Velocity of SparkMax", analog.getVelocity());
-    SmartDashboard.putNumber("Position", analog.getPosition());
+
     SmartDashboard.putNumber("Velocity for Encoder", encoder.getVelocity());
 
     //Change shooterMotorRequiredSpeed when the required speed is determined
-    if(analog.getVelocity() == shooterMotorRequiredSpeed){
+    if(encoder.getVelocity() >= shooterMotorRequiredSpeed){
       primeMotor.set(ControlMode.PercentOutput, -ShooterConst.primeMotorSpeed);
     }
   }
@@ -82,11 +86,10 @@ public class ShooterSubsystem extends SubsystemBase {
   public void adjShooterSpeedDown(){
     shooterSpeed = shooterSpeed - 0.1;
     SmartDashboard.putNumber("Shooter Motor Power", shooterSpeed );
-  }
+  } 
 
   public void rotate(double chubby) {
     targetMotor.set(-.2*chubby);
-
   }
   
 }
