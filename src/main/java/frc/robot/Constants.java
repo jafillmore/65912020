@@ -81,7 +81,7 @@ public final class ClimbConst {
     public static final int rightArmMotor = 14;
 }
 
-// Intake Constants
+// Intake 
 public final class IntakeConst {
     //Motor CAN IDs
     public static final int liftMotor = 10;
