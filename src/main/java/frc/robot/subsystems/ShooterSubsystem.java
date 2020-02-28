@@ -10,10 +10,12 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.CANAnalog;
+import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANAnalog.AnalogMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterConst;
@@ -30,6 +32,9 @@ public class ShooterSubsystem extends SubsystemBase {
   public VictorSPX primeMotor = new VictorSPX(ShooterConst.primeMotor);
   public double shooterSpeed = 0.2;
   public CANAnalog analog = new CANAnalog(shooterMotor, AnalogMode.kAbsolute);
+  public CANEncoder encoder = new CANEncoder(shooterMotor);
+
+  
 
   //Change the value when motor speed we are trying to reach is discovered
   private double shooterMotorRequiredSpeed = -1;
@@ -53,7 +58,10 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public void shootOn(){
     shooterMotor.set(-shooterSpeed);
+    
     SmartDashboard.putNumber("Velocity of SparkMax", analog.getVelocity());
+    SmartDashboard.putNumber("Position", analog.getPosition());
+    SmartDashboard.putNumber("Velocity for Encoder", encoder.getVelocity());
 
     //Change shooterMotorRequiredSpeed when the required speed is determined
     if(analog.getVelocity() == shooterMotorRequiredSpeed){
