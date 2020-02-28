@@ -26,7 +26,7 @@ public final class Constants {
 
 
 //climb arm motor
-public static final int intakeNumber = 0;
+public static final int intakeNumber = 1;
 public static final int deployNumber = 1;
 
 //Joystick Stuff
@@ -38,8 +38,9 @@ public final class JoystickConst {
     public static final int joeStickPort = 2;
 
     //JoystickButton #s for Intake
-    public static final int toggleIntake = 1;
-    public static final int intakeTrigger = 1;
+    public static final int toggleIntake = 1;  // Left Joystick
+    public static final int intakeTrigger = 1; // Right Joystick
+    public static final int intakeReverse = 2; // Right Joystick
 
     //JoystickButton #s for ControlPannel
     public static final int toggleColorArm = 2;
@@ -75,18 +76,26 @@ public final class DriveConst {
 }
 
 
+public final class ClimbConst {
+    public static final int leftArmMotor = 13;
+    public static final int rightArmMotor = 14;
+}
+
 // Intake Constants
 public final class IntakeConst {
-    public static final int liftMotor = 7;
+    //Motor CAN IDs
+    public static final int liftMotor = 10;
     public static final int intakeMotor = 9;
-    public static final int primeMotor = 10;
-    public static final double intakeSpeed = 0.5;
-    public static final double liftPrimeSpeed = 0.15;
-    public static final double liftShootSpeed = 0.50;
+    
+    
+    //Motor Speeds for Intake
+    public static final double intakeSpeed = 0.1;
+    public static final double liftSpeed = -0.80;
+
 
 }
 
- public static final class ControlPannelConst{
+ public static final class ControlPanelConst{
     // Wheel Spinning Motor CAN ID
     public static final int spinningMotor = 12;
 
@@ -120,13 +129,13 @@ public final class IntakeConst {
 public static final class PnemuaticConst{
 
     //Deploying Climb Arms
-    public static final int deployA = 1;
-    public static final int deployB = 2;
+    public static final int deployA = 2;
+    public static final int deployB = 3;
 
 
     //Extend Climb Arms
-    public static final int extandA = 3;
-    public static final int extandB = 4;
+    public static final int extandA = 4;
+    public static final int extandB = 5;
 
 
     //Deploy Intake
@@ -137,8 +146,14 @@ public static final class PnemuaticConst{
 }
    //Shooter Motor
    public static final class ShooterConst{
+
+    public static final double primeMotorSpeed = 1.0;
+    public static final double primeShootSpeed = 0.50;
+    
+    //Motor CAN IDs
     public static final int Shooter = 8;
     public static final int Targeting = 7;
+    public static final int primeMotor = 11;
 }
 
 
