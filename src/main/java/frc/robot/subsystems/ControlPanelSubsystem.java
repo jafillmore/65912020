@@ -14,7 +14,7 @@ import com.revrobotics.ColorSensorV3;
 
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.ControlPannelConst;
+import frc.robot.Constants.ControlPanelConst;
 
 
 public class ControlPanelSubsystem extends SubsystemBase {
@@ -22,10 +22,10 @@ public class ControlPanelSubsystem extends SubsystemBase {
    * Creates a new ColorsensorSubsystem.
    */
   //ControlPanel Motor
-  public VictorSPX control = new VictorSPX(ControlPannelConst.spinningMotor);
+  public VictorSPX control = new VictorSPX(ControlPanelConst.spinningMotor);
 
   // Color Sensor's
-  public ColorSensorV3 colorSensor = new ColorSensorV3(ControlPannelConst.colorSensorPort);
+  public ColorSensorV3 colorSensor = new ColorSensorV3(ControlPanelConst.colorSensorPort);
   public ColorMatch colorMatcher = new ColorMatch();
   public Color detectedColor = colorSensor.getColor();
 
@@ -36,10 +36,10 @@ public class ControlPanelSubsystem extends SubsystemBase {
 
   //Color Points
   public ControlPanelSubsystem() {
-    colorMatcher.addColorMatch(ControlPannelConst.blueTarget);
-    colorMatcher.addColorMatch(ControlPannelConst.greenTarget);
-    colorMatcher.addColorMatch(ControlPannelConst.redTarget);
-    colorMatcher.addColorMatch(ControlPannelConst.yellowTarget);
+    colorMatcher.addColorMatch(ControlPanelConst.blueTarget);
+    colorMatcher.addColorMatch(ControlPanelConst.greenTarget);
+    colorMatcher.addColorMatch(ControlPanelConst.redTarget);
+    colorMatcher.addColorMatch(ControlPanelConst.yellowTarget);
   }
 
   @Override

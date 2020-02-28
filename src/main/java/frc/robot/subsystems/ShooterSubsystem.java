@@ -7,14 +7,18 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.revrobotics.CANAnalog;
+import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANAnalog.AnalogMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.IntakeConst;
-import frc.robot.Constants.ShooterConst;;
+import frc.robot.Constants.ShooterConst;
 
 
 public class ShooterSubsystem extends SubsystemBase {
@@ -25,8 +29,17 @@ public class ShooterSubsystem extends SubsystemBase {
    //Create Shooter Motor
   public CANSparkMax shooterMotor = new CANSparkMax(ShooterConst.Shooter, MotorType.kBrushless);
   public CANSparkMax targetMotor = new CANSparkMax(ShooterConst.Targeting, MotorType.kBrushless);
-  public VictorSPX prime = new VictorSPX(IntakeConst.primeMotor);
-  public Double shooterSpeed = 0.5;
+  public VictorSPX primeMotor = new VictorSPX(ShooterConst.primeMotor);
+  public double shooterSpeed = 0.2;
+  public CANAnalog analog = new CANAnalog(shooterMotor, AnalogMode.kAbsolute);
+  public CANEncoder encoder = new CANEncoder(shooterMotor);
+
+  
+
+  //Change the value when motor speed we are trying to reach is discovered
+  private double shooterMotorRequiredSpeed = -1;
+
+  
 
 
   public ShooterSubsystem() {
@@ -38,10 +51,29 @@ public class ShooterSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
   }
   public void shoot(double shootPower){
-    shooterMotor.set(shootPower);
+    primeMotor.set(ControlMode.PercentOutput, -ShooterConst.primeMotorSpeed);
+    shooterMotor.set(-shooterSpeed);
     
   }
+
+  public void shootOn(){
+    shooterMotor.set(-shooterSpeed);
+    
+    SmartDashboard.putNumber("Velocity of SparkMax", analog.getVelocity());
+    SmartDashboard.putNumber("Position", analog.getPosition());
+    SmartDashboard.putNumber("Velocity for Encoder", encoder.getVelocity());
+
+    //Change shooterMotorRequiredSpeed when the required speed is determined
+    if(analog.getVelocity() == shooterMotorRequiredSpeed){
+      primeMotor.set(ControlMode.PercentOutput, -ShooterConst.primeMotorSpeed);
+    }
+  }
   
+  public void shootMotorOff(){
+    shooterMotor.set(0);
+    primeMotor.set(ControlMode.PercentOutput, 0);
+  }
+
   public void adjShooterSpeedUp(){
     shooterSpeed = shooterSpeed + 0.1;
     SmartDashboard.putNumber("Shooter Motor Power", shooterSpeed );
@@ -52,10 +84,9 @@ public class ShooterSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Shooter Motor Power", shooterSpeed );
   }
 
-  public double rotate(double chubby) {
-    shooterMotor.set(0.1 * chubby);
+  public void rotate(double chubby) {
+    targetMotor.set(-.2*chubby);
 
-    return chubby;
   }
   
 }
