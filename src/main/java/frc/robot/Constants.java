@@ -76,6 +76,11 @@ public final class DriveConst {
 }
 
 
+public final class ClimbConst {
+    public static final int leftArmMotor = 13;
+    public static final int rightArmMotor = 14;
+}
+
 // Intake Constants
 public final class IntakeConst {
     //Motor CAN IDs
