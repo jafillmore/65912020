@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.ArcadeDriveSubsystem;
+import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.PneumaticSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -33,6 +34,7 @@ public class RobotContainer {
   private final ArcadeDriveSubsystem arcadeDriveSubsystem = new ArcadeDriveSubsystem();
   private final PneumaticSubsystem pneumaticSubsystem = new PneumaticSubsystem();
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+  private final ClimberSubsystem climberSubsystem = new ClimberSubsystem();
   
 
   Joystick leftJoystick = new Joystick(JoystickConst.leftJoystickPort);
@@ -61,8 +63,7 @@ public class RobotContainer {
           .arcadeDrive(leftJoystick.getY(), 
                        rightJoystick.getZ()), arcadeDriveSubsystem));
 
-
-    // Deploy Intake while left trigger is held, retract when it is release
+                       
     new JoystickButton(leftJoystick, Constants.intakeNumber)
       .whileHeld(new InstantCommand(pneumaticSubsystem::deployIntake))
       .whenReleased(new InstantCommand(pneumaticSubsystem::stowIntake));
@@ -77,11 +78,7 @@ public class RobotContainer {
       .whenReleased(new InstantCommand(intakeSubsystem::turnOffIntake));
     
 
-    // Reverse Intake lift motor (to try to fix stuff ball)
-    new JoystickButton(rightJoystick, JoystickConst.intakeReverse)
-      .whileHeld(new InstantCommand(intakeSubsystem::reverseIntakeLift));
-
-    new JoystickButton(joeStick, Constants.deployNumber)
+    new JoystickButton(leftJoystick, Constants.deployNumber)
       .whenPressed(new InstantCommand(pneumaticSubsystem::deployArms));
 
     new JoystickButton(leftJoystick, Constants.deployNumber)
@@ -107,6 +104,9 @@ public class RobotContainer {
 
 
     Shuffleboard.getTab("Shooter value").add("rpm", shooterSubsystem.shooterMotor.getAppliedOutput());
+
+    shooterSubsystem.setDefaultCommand(
+      new RunCommand(() -> climberSubsystem.turnOnBalanceMotors(joeStick.getRawAxis(0)), climberSubsystem));
   }
 
   /**

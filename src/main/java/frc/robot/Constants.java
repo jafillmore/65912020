@@ -68,13 +68,16 @@ public final class JoystickConst {
 public final class DriveConst {
     public static final int frontLeftMotor = 4;
     public static final int midLeftMotor = 5;
-    public static final int backLeftMotor = 6;
     public static final int frontRightMotor = 1;
     public static final int midRightMotor = 2;
-    public static final int backRightMotor = 3; 
 
 }
 
+
+public final class ClimbConst {
+    public static final int leftArmMotor = 13;
+    public static final int rightArmMotor = 14;
+}
 
 // Intake Constants
 public final class IntakeConst {
@@ -151,17 +154,22 @@ public static final class PnemuaticConst{
     public static final int primeMotor = 11;
 }
 
-public static final class PIDConst{
+    public static final class PIDConst{
 
-    public static final double P = 6e-5; 
-    public static final double I = 0;
-    public static final double D = 0; 
-    public static final double Iz = 0; 
-    public static final double FF = 0.000015; 
-    public static final double MaxOutput = 1; 
-    public static final double MinOutput = -1;
-    public static final double maxRPM = 5700;
+        public static final double P = 6e-5; 
+        public static final double I = 0;
+        public static final double D = 0; 
+        public static final double Iz = 0; 
+        public static final double FF = 0.000015; 
+        public static final double MaxOutput = 5700; 
+        public static final double MinOutput = 0;
+        public static final double StartingSpeed = 2500;
+    }    
 
+    public static final class AutoConst{
+        public static final double AutoDriveSpeed = .25;
+        public static final double AutoDriveDistanceInches = 40;
     }
+
 
 }
