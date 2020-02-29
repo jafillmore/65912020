@@ -12,12 +12,20 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.CANAnalog;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANAnalog.AnalogMode;
+import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.Encoder;
+import org.opencv.core.Rect;
+import org.opencv.imgproc.Imgproc;
+
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.vision.VisionThread;
+//import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.StripPipeline;
+import frc.robot.Constants.PIDConst;
 import frc.robot.Constants.ShooterConst;
 
 
@@ -33,6 +41,16 @@ public class ShooterSubsystem extends SubsystemBase {
   public double shooterSpeed = 0.2;
   public CANAnalog analog = new CANAnalog(shooterMotor, AnalogMode.kAbsolute);
   public CANEncoder encoder = new CANEncoder(shooterMotor);
+  public CANPIDController PID = new CANPIDController(shooterMotor);
+
+  private static final int IMG_WIDTH = 320;
+  private static final int IMG_HEIGHT = 240;
+
+  private VisionThread visionThread;
+  private double centerX = 0.0;
+  //private RobotDrive drive;
+
+  private final Object imgLock = new Object();
 
   
 
@@ -86,7 +104,24 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public void rotate(double chubby) {
     targetMotor.set(-.2*chubby);
+  }
 
+
+  public void method(){
+    UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+    camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
+
+    visionThread = new VisionThread(camera, new StripPipeline(), pipeline -> {
+        if (!pipeline.filterContoursOutput().isEmpty()) {
+            Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
+            synchronized (imgLock) {
+                centerX = r.x + (r.width / 2);
+            }
+        }
+    });
+    visionThread.start();
+
+    //drive = new RobotDrive(1, 2);
   }
   
 }
