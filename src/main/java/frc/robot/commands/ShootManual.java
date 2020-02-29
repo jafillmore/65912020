@@ -16,6 +16,7 @@ public class ShootManual extends CommandBase {
    */
   private final ShooterSubsystem shooterSubsystem;
   public ShootManual(ShooterSubsystem shooter) {
+    
     // Use addRequirements() here to declare subsystem dependencies.private final PneumaticSubsystem pneumaticSubsystem;
   
     // Use addRequirements() here to declare subsystem dependencies.
