@@ -35,6 +35,7 @@ public class AutoCommand extends SequentialCommandGroup {
         >= AutoConst.AutoDriveDistanceInches)),
 
         new InstantCommand(ShooterSubsystem::shootOn, arcadeDriveSubsystem)
+        
 
     );
   }

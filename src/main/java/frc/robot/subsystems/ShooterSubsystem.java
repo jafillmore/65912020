@@ -13,12 +13,16 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import org.opencv.core.Rect;
+import org.opencv.imgproc.Imgproc;
+
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.vision.VisionThread;
-import edu.wpi.first.wpilibj.RobotDrive;
+//import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.StripPipeline;
 import frc.robot.Constants.PIDConst;
 import frc.robot.Constants.ShooterConst;
 
@@ -41,7 +45,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
   private VisionThread visionThread;
   private double centerX = 0.0;
-  private RobotDrive drive;
+  //private RobotDrive drive;
 
   private final Object imgLock = new Object();
 
@@ -109,7 +113,7 @@ public class ShooterSubsystem extends SubsystemBase {
     UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
     camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
 
-    visionThread = new VisionThread(camera, new MyVisionPipeline(), pipeline -> {
+    visionThread = new VisionThread(camera, new StripPipeline(), pipeline -> {
         if (!pipeline.filterContoursOutput().isEmpty()) {
             Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
             synchronized (imgLock) {
@@ -119,7 +123,7 @@ public class ShooterSubsystem extends SubsystemBase {
     });
     visionThread.start();
 
-    drive = new RobotDrive(1, 2);
+    //drive = new RobotDrive(1, 2);
   }
   
 }
