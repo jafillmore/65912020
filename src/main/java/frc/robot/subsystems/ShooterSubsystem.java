@@ -123,6 +123,7 @@ public class ShooterSubsystem extends SubsystemBase {
     });
     visionThread.start();
 
+    // xxxxxxx
 
     drive = new RobotDrive(1, 2);     //This needs to be changed to drive our shooter motor
   }
