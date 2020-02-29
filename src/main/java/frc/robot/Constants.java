@@ -163,10 +163,9 @@ public static final class PIDConst{
     public static final double D = 0; 
     public static final double Iz = 0; 
     public static final double FF = 0.000015; 
-    public static final double MaxOutput = 1; 
-    public static final double MinOutput = -1;
-    public static final double maxRPM = 5700;
-
+    public static final double MaxOutput = 5700; 
+    public static final double MinOutput = 0;
+    public static final double StartingSpeed = 2500;
     }
 
 }

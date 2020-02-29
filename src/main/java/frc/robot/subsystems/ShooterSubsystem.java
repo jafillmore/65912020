@@ -9,12 +9,12 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-import com.revrobotics.CANAnalog;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANAnalog.AnalogMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.ControlType;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.PIDConst;
@@ -30,8 +30,7 @@ public class ShooterSubsystem extends SubsystemBase {
   public CANSparkMax shooterMotor = new CANSparkMax(ShooterConst.Shooter, MotorType.kBrushless);
   public CANSparkMax targetMotor = new CANSparkMax(ShooterConst.Targeting, MotorType.kBrushless);
   public VictorSPX primeMotor = new VictorSPX(ShooterConst.primeMotor);
-  public double shooterSpeed = 0.2;
-  public CANAnalog analog = new CANAnalog(shooterMotor, AnalogMode.kAbsolute);
+  public double shooterSpeed = PIDConst.StartingSpeed;
   public CANEncoder encoder = new CANEncoder(shooterMotor);
   public CANPIDController PID = new CANPIDController(shooterMotor);
 
@@ -50,26 +49,28 @@ public class ShooterSubsystem extends SubsystemBase {
     PID.setIZone(PIDConst.Iz);
     PID.setFF(PIDConst.FF);
     PID.setOutputRange(PIDConst.MinOutput, PIDConst.MaxOutput);
+    if (!shooterMotor.getInverted()){
+      shooterMotor.setInverted(true);
+    }
+    if (!primeMotor.getInverted()){
+      primeMotor.setInverted(true);
+    }
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
   }
-  public void shoot(double shootPower){
-    primeMotor.set(ControlMode.PercentOutput, -ShooterConst.primeMotorSpeed);
-    shooterMotor.set(-shooterSpeed);
-    
-  }
+  
 
   public void shootOn(){
-    shooterMotor.set(-shooterSpeed);
+    PID.setReference(shooterSpeed, ControlType.kVelocity);
 
     SmartDashboard.putNumber("Velocity for Encoder", encoder.getVelocity());
 
     //Change shooterMotorRequiredSpeed when the required speed is determined
-    if(encoder.getVelocity() >= shooterMotorRequiredSpeed){
-      primeMotor.set(ControlMode.PercentOutput, -ShooterConst.primeMotorSpeed);
+    if(encoder.getVelocity() >= shooterSpeed){
+      primeMotor.set(ControlMode.PercentOutput, ShooterConst.primeMotorSpeed);
     }
   }
   
@@ -79,13 +80,13 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public void adjShooterSpeedUp(){
-    shooterSpeed = shooterSpeed + 0.1;
-    SmartDashboard.putNumber("Shooter Motor Power", shooterSpeed );
+    shooterSpeed += 500;
+    SmartDashboard.putNumber("Shooter Motor RPM", shooterSpeed );
   }
 
   public void adjShooterSpeedDown(){
-    shooterSpeed = shooterSpeed - 0.1;
-    SmartDashboard.putNumber("Shooter Motor Power", shooterSpeed );
+    shooterSpeed -= 500;
+    SmartDashboard.putNumber("Shooter Motor RPM", shooterSpeed );
   } 
 
   public void rotate(double chubby) {

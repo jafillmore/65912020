@@ -8,21 +8,16 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.ShooterSubsystem;
 
-public class ShootManual extends CommandBase {
+
+public class Autonomous extends CommandBase {
   /**
-   * Creates a new ShootManual.
+   * Creates a new Autonomous.
    */
-  private final ShooterSubsystem shooterSubsystem;
-  public ShootManual(ShooterSubsystem shooter) {
-    // Use addRequirements() here to declare subsystem dependencies.private final PneumaticSubsystem pneumaticSubsystem;
-  
+  public Autonomous() {
+    
     // Use addRequirements() here to declare subsystem dependencies.
-    shooterSubsystem = shooter;
-    addRequirements(shooterSubsystem);
   }
-  
 
   // Called when the command is initially scheduled.
   @Override
@@ -32,8 +27,6 @@ public class ShootManual extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
-   shooterSubsystem.shootOn();
   }
 
   // Called once the command ends or is interrupted.
