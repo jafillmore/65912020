@@ -74,33 +74,6 @@ public class ShooterSubsystem extends SubsystemBase {
     
   }
 
-  public void shootOn(){
-    shooterMotor.set(-shooterSpeed);
-    
-    SmartDashboard.putNumber("Velocity of SparkMax", analog.getVelocity());
-    SmartDashboard.putNumber("Position", analog.getPosition());
-    SmartDashboard.putNumber("Velocity for Encoder", encoder.getVelocity());
-
-    //Change shooterMotorRequiredSpeed when the required speed is determined
-    if(analog.getVelocity() == shooterMotorRequiredSpeed){
-      primeMotor.set(ControlMode.PercentOutput, -ShooterConst.primeMotorSpeed);
-    }
-  }
-  
-  public void shootMotorOff(){
-    shooterMotor.set(0);
-    primeMotor.set(ControlMode.PercentOutput, 0);
-  }
-
-  public void adjShooterSpeedUp(){
-    shooterSpeed = shooterSpeed + 0.1;
-    SmartDashboard.putNumber("Shooter Motor Power", shooterSpeed );
-  }
-
-  public void adjShooterSpeedDown(){
-    shooterSpeed = shooterSpeed - 0.1;
-    SmartDashboard.putNumber("Shooter Motor Power", shooterSpeed );
-  }
 
   public void rotate(double chubby) {
     targetMotor.set(-.2*chubby);
