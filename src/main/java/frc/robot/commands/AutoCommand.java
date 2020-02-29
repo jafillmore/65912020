@@ -23,7 +23,7 @@ public class AutoCommand extends SequentialCommandGroup {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
     super();
-    new StartEndCommand(
+    /*new StartEndCommand(
       // Drive Forward
       () -> arcadeDriveSubsystem.arcadeDrive(AutoConst.AutoDriveSpeed, 0),
       // Stop Driving
@@ -37,6 +37,6 @@ public class AutoCommand extends SequentialCommandGroup {
         new InstantCommand(ShooterSubsystem::shootOn, arcadeDriveSubsystem)
         
 
-    );
+    );*/
   }
 }
