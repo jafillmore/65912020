@@ -15,6 +15,11 @@ import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANAnalog.AnalogMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.vision.VisionThread;
+import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.PIDConst;
@@ -34,6 +39,15 @@ public class ShooterSubsystem extends SubsystemBase {
   public CANAnalog analog = new CANAnalog(shooterMotor, AnalogMode.kAbsolute);
   public CANEncoder encoder = new CANEncoder(shooterMotor);
   public CANPIDController PID = new CANPIDController(shooterMotor);
+
+  private static final int IMG_WIDTH = 320;
+  private static final int IMG_HEIGHT = 240;
+
+  private VisionThread visionThread;
+  private double centerX = 0.0;
+  private RobotDrive drive;
+
+  private final Object imgLock = new Object();
 
   
 
@@ -90,6 +104,24 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public void rotate(double chubby) {
     targetMotor.set(-.2*chubby);
+  }
+
+
+  public void method(){
+    UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+    camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
+
+    visionThread = new VisionThread(camera, new MyVisionPipeline(), pipeline -> {
+        if (!pipeline.filterContoursOutput().isEmpty()) {
+            Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
+            synchronized (imgLock) {
+                centerX = r.x + (r.width / 2);
+            }
+        }
+    });
+    visionThread.start();
+
+    drive = new RobotDrive(1, 2);
   }
   
 }
