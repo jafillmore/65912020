@@ -68,10 +68,8 @@ public final class JoystickConst {
 public final class DriveConst {
     public static final int frontLeftMotor = 4;
     public static final int midLeftMotor = 5;
-    public static final int backLeftMotor = 6;
     public static final int frontRightMotor = 1;
     public static final int midRightMotor = 2;
-    public static final int backRightMotor = 3; 
 
 }
 
