@@ -21,7 +21,7 @@ import org.opencv.imgproc.Imgproc;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.vision.VisionThread;
-//import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.StripPipeline;
@@ -48,7 +48,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
   private VisionThread visionThread;
   private double centerX = 0.0;
-  //private RobotDrive drive;
+  private RobotDrive drive;
 
   private final Object imgLock = new Object();
 
@@ -121,7 +121,8 @@ public class ShooterSubsystem extends SubsystemBase {
     });
     visionThread.start();
 
-    //drive = new RobotDrive(1, 2);
+
+    drive = new RobotDrive(1, 2);     //This needs to be changed to drive our shooter motor
   }
   
 }
