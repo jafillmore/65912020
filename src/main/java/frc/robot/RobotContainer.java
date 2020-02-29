@@ -15,19 +15,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-<<<<<<< HEAD
 import frc.robot.Constants.JoystickConst;
-=======
->>>>>>> 652b258c7c04e9743c35644b09712ba9b2a13ac3
 import frc.robot.subsystems.ArcadeDriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.PneumaticSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
-<<<<<<< HEAD
 import frc.robot.subsystems.ClimberSubsystem;
-=======
-import frc.robot.Constants.JoystickConst;
->>>>>>> 652b258c7c04e9743c35644b09712ba9b2a13ac3
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}

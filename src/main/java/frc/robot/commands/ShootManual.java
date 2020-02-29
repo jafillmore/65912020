@@ -33,7 +33,7 @@ public class ShootManual extends CommandBase {
   @Override
   public void execute() {
 
-   shooterSubsystem.shoot(shooterSubsystem.shooterSpeed);
+   shooterSubsystem.shootOn();
   }
 
   // Called once the command ends or is interrupted.
