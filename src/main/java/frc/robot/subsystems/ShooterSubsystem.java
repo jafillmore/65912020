@@ -7,8 +7,6 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
@@ -29,7 +27,7 @@ public class ShooterSubsystem extends SubsystemBase {
    //Create Shooter Motor
   public CANSparkMax shooterMotor = new CANSparkMax(ShooterConst.Shooter, MotorType.kBrushless);
   public CANSparkMax targetMotor = new CANSparkMax(ShooterConst.Targeting, MotorType.kBrushless);
-  public VictorSPX primeMotor = new VictorSPX(ShooterConst.primeMotor);
+  public CANSparkMax primeMotor = new CANSparkMax(ShooterConst.primeMotor, MotorType.kBrushless);
   public double shooterSpeed = PIDConst.StartingSpeed;
   public CANEncoder encoder = new CANEncoder(shooterMotor);
   public CANPIDController PID = new CANPIDController(shooterMotor);
@@ -70,13 +68,13 @@ public class ShooterSubsystem extends SubsystemBase {
 
     //Change shooterMotorRequiredSpeed when the required speed is determined
     if(encoder.getVelocity() >= shooterSpeed){
-      primeMotor.set(ControlMode.PercentOutput, ShooterConst.primeMotorSpeed);
+      primeMotor.set(ShooterConst.primeMotorSpeed);
     }
   }
   
   public void shootMotorOff(){
     shooterMotor.set(0);
-    primeMotor.set(ControlMode.PercentOutput, 0);
+    primeMotor.set(0);
   }
 
   public void adjShooterSpeedUp(){
