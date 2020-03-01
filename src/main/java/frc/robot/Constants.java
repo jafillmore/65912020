@@ -25,9 +25,7 @@ import edu.wpi.first.wpilibj.util.Color;
 public final class Constants {
 
 
-//climb arm motor
-public static final int intakeNumber = 1;
-public static final int deployNumber = 1;
+
 
 //Joystick Stuff
 public final class JoystickConst {
@@ -82,13 +80,13 @@ public final class ClimbConst {
 // Intake Constants
 public final class IntakeConst {
     //Motor CAN IDs
-    public static final int liftMotor = 9;
-    public static final int intakeMotor = 6;
+    public static final int liftMotor = 6;
+    public static final int intakeMotor = 9;
     
     
     //Motor Speeds for Intake
-    public static final double intakeSpeed = 0.2;
-    public static final double liftSpeed = 1.0;
+    public static final double intakeSpeed = 0.8;
+    public static final double liftSpeed = 0.8;
 
 
 }
@@ -132,13 +130,13 @@ public static final class PnemuaticConst{
 
 
     //Extend Climb Arms
-    public static final int extandA = 4;
-    public static final int extandB = 5;
+    public static final int extandA = 1;
+    public static final int extandB = 0;
 
 
     //Deploy Intake
-    public static final int intakeA = 1;
-    public static final int intakeB = 0 ;
+    public static final int intakeA = 4;
+    public static final int intakeB = 5;
    
    public static final int deployIntakeTrigger = 1;     
 }

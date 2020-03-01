@@ -65,26 +65,23 @@ public class RobotContainer {
                        rightJoystick.getZ()), arcadeDriveSubsystem));
 
                        
-    new JoystickButton(leftJoystick, Constants.intakeNumber)
-      .whileHeld(new InstantCommand(pneumaticSubsystem::deployIntake))
-      .whenReleased(new InstantCommand(pneumaticSubsystem::stowIntake));
+    new JoystickButton(leftJoystick, JoystickConst.toggleIntake)
+      .whenHeld(new InstantCommand(() -> pneumaticSubsystem.deployIntake()))
+      .whenReleased(new InstantCommand(() -> pneumaticSubsystem.stowIntake()));
 
     // Turn on Intake motors
-    /*new JoystickButton(rightJoystick, JoystickConst.intakeTrigger)
-      .whileHeld(() -> intakeSubsystem.turnOnIntake())
-      .whenReleased(() -> intakeSubsystem.turnOffIntake());
-    */
+
     new JoystickButton(rightJoystick, JoystickConst.intakeTrigger)
       .whileHeld(new InstantCommand(intakeSubsystem::turnOnIntake))
       .whenReleased(new InstantCommand(intakeSubsystem::turnOffIntake));
+
+    // Reverse Intake Lift Motor
+
+    new JoystickButton(rightJoystick, JoystickConst.intakeReverse)
+    .whileHeld(new InstantCommand(intakeSubsystem::turnOffReverseIntakeLift))
+    .whenReleased(new InstantCommand(intakeSubsystem::turnOffIntake));
     
-
-    /*new JoystickButton(leftJoystick, Constants.deployNumber)
-      .whenPressed(new InstantCommand(pneumaticSubsystem::deployArms));
-
-    new JoystickButton(leftJoystick, Constants.deployNumber)
-      .whenPressed(new InstantCommand(pneumaticSubsystem::stowArms));*/
-      
+ 
       new JoystickButton(joeStick, JoystickConst.fire)
       .whileHeld(new RunCommand(() -> shooterSubsystem.shootOn(/*shooterSubsystem.shooterSpeed*/)))
       //-> intakeSubsystem.liftSpeed(IntakeConst.liftShootSpeed)));

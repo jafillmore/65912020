@@ -87,7 +87,7 @@ public class ShooterSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("ShooterSpeed from ShootOn Command", shooterSpeed);
 
     //Change shooterMotorRequiredSpeed when the required speed is determined
-    if(encoder.getVelocity() >= (shooterSpeed/3 - 450)){
+    if(encoder.getVelocity() >= (shooterSpeed/3 - 500)){
       primeMotor.set(ShooterConst.primeMotorSpeed);
     }
   }
