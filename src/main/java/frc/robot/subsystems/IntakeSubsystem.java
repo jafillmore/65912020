@@ -23,27 +23,27 @@ public class IntakeSubsystem extends SubsystemBase {
    */
 
    //Intake Motors 
-  private VictorSPX liftMotor = new VictorSPX(IntakeConst.liftMotor);
+  private CANSparkMax liftMotor = new CANSparkMax(IntakeConst.liftMotor, MotorType.kBrushless);
   private CANSparkMax intakeMotor = new CANSparkMax(IntakeConst.intakeMotor, MotorType.kBrushless);
 
   //Intake Settings
   public void turnOnIntake() {
     intakeMotor.set(IntakeConst.intakeSpeed);
-    liftMotor.set(ControlMode.PercentOutput, IntakeConst.liftSpeed);
+    liftMotor.set(IntakeConst.liftSpeed);
   }
 
   public void turnOffIntake() {
     intakeMotor.set(0);
-    liftMotor.set(ControlMode.PercentOutput, 0);
+    liftMotor.set(0);
   }
 
 
   public void reverseIntakeLift()  {
-    liftMotor.set(ControlMode.PercentOutput, -IntakeConst.liftSpeed);
+    liftMotor.set(-IntakeConst.liftSpeed);
   }
 
   public void turnOffReverseIntakeLift()  {
-    liftMotor.set(ControlMode.PercentOutput, 0);
+    liftMotor.set(0);
   }
 
   public IntakeSubsystem() {

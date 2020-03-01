@@ -82,13 +82,13 @@ public final class ClimbConst {
 // Intake Constants
 public final class IntakeConst {
     //Motor CAN IDs
-    public static final int liftMotor = 10;
-    public static final int intakeMotor = 9;
+    public static final int liftMotor = 9;
+    public static final int intakeMotor = 6;
     
     
     //Motor Speeds for Intake
-    public static final double intakeSpeed = 0.1;
-    public static final double liftSpeed = -0.80;
+    public static final double intakeSpeed = 0.2;
+    public static final double liftSpeed = 1.0;
 
 
 }
@@ -145,13 +145,13 @@ public static final class PnemuaticConst{
    //Shooter Motor
    public static final class ShooterConst{
 
-    public static final double primeMotorSpeed = 1.0;
+    public static final double primeMotorSpeed = .75;
     public static final double primeShootSpeed = 0.50;
     
     //Motor CAN IDs
     public static final int Shooter = 8;
     public static final int Targeting = 7;
-    public static final int primeMotor = 11;
+    public static final int primeMotor = 3;
 }
 
     public static final class PIDConst{
@@ -163,7 +163,7 @@ public static final class PnemuaticConst{
         public static final double FF = 0.000015; 
         public static final double MaxOutput = 5700; 
         public static final double MinOutput = 0;
-        public static final double StartingSpeed = 2500;
+        public static final double StartingSpeed = 5700*3;
     }    
 
     public static final class AutoConst{

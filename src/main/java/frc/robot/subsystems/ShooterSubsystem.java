@@ -52,7 +52,7 @@ public class ShooterSubsystem extends SubsystemBase {
   
 
   //Change the value when motor speed we are trying to reach is discovered
-  private double shooterMotorRequiredSpeed = -1;
+  private double shooterMotorRequiredSpeed = 4000;
 
   
 
@@ -64,12 +64,8 @@ public class ShooterSubsystem extends SubsystemBase {
     PID.setIZone(PIDConst.Iz);
     PID.setFF(PIDConst.FF);
     PID.setOutputRange(PIDConst.MinOutput, PIDConst.MaxOutput);
-    if (!shooterMotor.getInverted()){
-      shooterMotor.setInverted(true);
-    }
-    if (!primeMotor.getInverted()){
-      primeMotor.setInverted(true);
-    }
+    
+    
   }
 
   @Override
@@ -79,12 +75,19 @@ public class ShooterSubsystem extends SubsystemBase {
   
 
   public void shootOn(){
+    boolean isShooterInverted = shooterMotor.getInverted();
+    shooterMotor.setInverted(false);
+    
+    primeMotor.setInverted(false);
+    
+
     PID.setReference(shooterSpeed, ControlType.kVelocity);
 
-    SmartDashboard.putNumber("Velocity for Encoder", encoder.getVelocity());
+    SmartDashboard.putNumber("Velocity from Encoder", encoder.getVelocity());
+    SmartDashboard.putNumber("ShooterSpeed from ShootOn Command", shooterSpeed);
 
     //Change shooterMotorRequiredSpeed when the required speed is determined
-    if(encoder.getVelocity() >= shooterSpeed){
+    if(encoder.getVelocity() >= (shooterSpeed/3 - 450)){
       primeMotor.set(ShooterConst.primeMotorSpeed);
     }
   }
@@ -96,12 +99,12 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public void adjShooterSpeedUp(){
     shooterSpeed += 500;
-    SmartDashboard.putNumber("Shooter Motor RPM", shooterSpeed );
+    SmartDashboard.putNumber("Target Motor RPM", shooterSpeed);
   }
 
   public void adjShooterSpeedDown(){
     shooterSpeed -= 500;
-    SmartDashboard.putNumber("Shooter Motor RPM", shooterSpeed );
+    SmartDashboard.putNumber("Target Motor RPM", shooterSpeed);
   } 
 
   public void rotate(double chubby) {

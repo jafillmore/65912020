@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -73,39 +74,41 @@ public class RobotContainer {
       .whileHeld(() -> intakeSubsystem.turnOnIntake())
       .whenReleased(() -> intakeSubsystem.turnOffIntake());
     */
-    new JoystickButton(leftJoystick, JoystickConst.intakeTrigger)
+    new JoystickButton(rightJoystick, JoystickConst.intakeTrigger)
       .whileHeld(new InstantCommand(intakeSubsystem::turnOnIntake))
       .whenReleased(new InstantCommand(intakeSubsystem::turnOffIntake));
     
 
-    new JoystickButton(leftJoystick, Constants.deployNumber)
+    /*new JoystickButton(leftJoystick, Constants.deployNumber)
       .whenPressed(new InstantCommand(pneumaticSubsystem::deployArms));
 
     new JoystickButton(leftJoystick, Constants.deployNumber)
-      .whenPressed(new InstantCommand(pneumaticSubsystem::stowArms));
+      .whenPressed(new InstantCommand(pneumaticSubsystem::stowArms));*/
       
       new JoystickButton(joeStick, JoystickConst.fire)
-      .whenHeld(new RunCommand(() -> shooterSubsystem.shootOn(/*shooterSubsystem.shooterSpeed*/)))
+      .whileHeld(new RunCommand(() -> shooterSubsystem.shootOn(/*shooterSubsystem.shooterSpeed*/)))
       //-> intakeSubsystem.liftSpeed(IntakeConst.liftShootSpeed)));
-      .whenReleased (new RunCommand(() -> shooterSubsystem.shootMotorOff()));
+      .whenReleased (new InstantCommand(() -> shooterSubsystem.shootMotorOff()));
 
     /*new JoystickButton(joeStick, JoystickConst.fire)
       .whileHeld(new RunCommand(ShooterSubsystem::shootOn));
       .whenReleased(new InstantCommand(ShooterSubsystem::shooterMotorOff));*/
 
     new JoystickButton(joeStick, JoystickConst.increaseSpeed)
-      .whenPressed(new RunCommand(() -> shooterSubsystem.adjShooterSpeedUp()));
+      .whenPressed(new InstantCommand(() -> shooterSubsystem.adjShooterSpeedUp()));
 
     new JoystickButton(joeStick, JoystickConst.decreaseSpeed)
-      .whenPressed(new RunCommand(() -> shooterSubsystem.adjShooterSpeedDown()));
+      .whenPressed(new InstantCommand(() -> shooterSubsystem.adjShooterSpeedDown()));
    
     shooterSubsystem.setDefaultCommand(
       new RunCommand(() -> shooterSubsystem .rotate(joeStick.getRawAxis(2)), shooterSubsystem));
 
 
-    Shuffleboard.getTab("Shooter value").add("rpm", shooterSubsystem.shooterMotor.getAppliedOutput());
+    Shuffleboard.getTab("Shooter value").add("rpm", shooterSubsystem.encoder.getVelocity());
+    SmartDashboard.putNumber("Target Motor RPM", shooterSubsystem.shooterSpeed);
 
-    shooterSubsystem.setDefaultCommand(
+
+    climberSubsystem.setDefaultCommand(
       new RunCommand(() -> climberSubsystem.turnOnBalanceMotors(joeStick.getRawAxis(0)), climberSubsystem));
   }
 
