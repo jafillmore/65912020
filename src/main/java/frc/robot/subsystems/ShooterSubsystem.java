@@ -10,21 +10,16 @@ package frc.robot.subsystems;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
+import com.revrobotics.ControlType;
 import org.opencv.core.Rect;
 import org.opencv.imgproc.Imgproc;
-
 import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.vision.VisionThread;
-import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Robot;
-import frc.robot.StripPipeline;
 import frc.robot.Constants.PIDConst;
 import frc.robot.Constants.ShooterConst;
 import frc.robot.StripPipeline;
@@ -49,7 +44,6 @@ public class ShooterSubsystem extends SubsystemBase {
 
   private VisionThread visionThread;
   private double centerX = 0.0;
-  private RobotDrive drive;
 
   private final Object imgLock = new Object();
 
@@ -57,9 +51,7 @@ public class ShooterSubsystem extends SubsystemBase {
   public UsbCamera targetCam;
   
 
-<<<<<<< HEAD
-  public ShooterSubsystem() {  
-=======
+
   //Change the value when motor speed we are trying to reach is discovered
   private double shooterMotorRequiredSpeed = 5450;
 
@@ -73,15 +65,10 @@ public class ShooterSubsystem extends SubsystemBase {
     PID.setIZone(PIDConst.Iz);
     PID.setFF(PIDConst.FF);
     PID.setOutputRange(PIDConst.MinOutput, PIDConst.MaxOutput);
-<<<<<<< HEAD
+
     if (!shooterMotor.getInverted()){
       shooterMotor.setInverted(true);
     }
-    if (!primeMotor.getInverted()){
-      primeMotor.setInverted(true);
-    }
->>>>>>> ed78bfe6762a2a7381eb2830be77601e15020b53
-=======
 
     frontCam = CameraServer.getInstance().startAutomaticCapture(0);
     targetCam = CameraServer.getInstance().startAutomaticCapture(1);
@@ -89,7 +76,7 @@ public class ShooterSubsystem extends SubsystemBase {
     targetCam.setResolution(1280, 720);
     
     
->>>>>>> 589112db8a1d56c4e09742f165ddbea51c7477f5
+
   }
 
   @Override
@@ -136,34 +123,19 @@ public class ShooterSubsystem extends SubsystemBase {
       primeMotor.set(0);
     }
   }
-<<<<<<< HEAD
-  
-<<<<<<< HEAD
   public void adjShooterSpeedUp(){
     shooterSpeed = shooterSpeed + 0.10;
     SmartDashboard.putNumber("Shooter Motor Power", shooterSpeed );
   }
 
-  public void adjShooterSpeedDown(){
-    shooterSpeed = shooterSpeed - 0.10;
-    SmartDashboard.putNumber("Shooter Motor Power", shooterSpeed );
-=======
-=======
->>>>>>> 589112db8a1d56c4e09742f165ddbea51c7477f5
   public void shootMotorOff(){
     shooterMotor.set(0);
     primeMotor.set(0);
   }
-
-  public void adjShooterSpeedUp(){
-    shooterSpeed += 500;
-<<<<<<< HEAD
-    SmartDashboard.putNumber("Shooter Motor RPM", shooterSpeed );
->>>>>>> ed78bfe6762a2a7381eb2830be77601e15020b53
-=======
+{
     if (shooterSpeed >= 6000*3){shooterSpeed=6000*3;}
     SmartDashboard.putNumber("Target Motor RPM", shooterSpeed);
->>>>>>> 589112db8a1d56c4e09742f165ddbea51c7477f5
+
   }
 
   public void adjShooterSpeedDown(){
@@ -212,7 +184,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     // xxxxxxx
 
-    drive = new RobotDrive(1, 2);     //This needs to be changed to drive our shooter motor
+   // drive = new RobotDrive(1, 2);     //This needs to be changed to drive our shooter motor
   }
   
 }

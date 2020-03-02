@@ -22,15 +22,9 @@ public class ArcadeDriveSubsystem extends SubsystemBase {
    */
   // Motor Types
   public CANSparkMax frontLeft = new CANSparkMax(DriveConst.frontLeftMotor, MotorType.kBrushless);
-<<<<<<< HEAD
-  public CANSparkMax backLeft = new CANSparkMax(DriveConst.backLeftMotor, MotorType.kBrushless);
-  public CANSparkMax frontRight = new CANSparkMax(DriveConst.frontRightMotor, MotorType.kBrushless);
-  public CANSparkMax backRight = new CANSparkMax(DriveConst.backRightMotor, MotorType.kBrushless);
-=======
   public CANSparkMax midLeft = new CANSparkMax(DriveConst.midLeftMotor, MotorType.kBrushless);
   public CANSparkMax frontRight = new CANSparkMax(DriveConst.frontRightMotor, MotorType.kBrushless);
   public CANSparkMax midRight = new CANSparkMax(DriveConst.midRightMotor, MotorType.kBrushless);
->>>>>>> 589112db8a1d56c4e09742f165ddbea51c7477f5
   
  
 
