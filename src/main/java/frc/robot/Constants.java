@@ -25,9 +25,7 @@ import edu.wpi.first.wpilibj.util.Color;
 public final class Constants {
 
 
-//climb arm motor
-public static final int intakeNumber = 1;
-public static final int deployNumber = 1;
+
 
 //Joystick Stuff
 public final class JoystickConst {
@@ -57,8 +55,9 @@ public final class JoystickConst {
     //Joystick Button #s for Shooting
     public static final int toggleAutoShoot = 9;
     public static final int fire = 10;
-    public static final int rotateLeft = 11;
-    public static final int rotateRight = 12;
+    public static final int fastFire = 11;
+    //public static final int rotateLeft = 11;
+    //public static final int rotateRight = 12;
     public static final int increaseSpeed = 26;
     public static final int decreaseSpeed = 27;
     public static final int firePrimeMotor = 1;
@@ -68,11 +67,17 @@ public final class JoystickConst {
 // Drive Constants CAN IDs
 public final class DriveConst {
     public static final int frontLeftMotor = 4;
+<<<<<<< HEAD
     //public static final int midLeftMotor = 5;
     public static final int backLeftMotor = 6;
     public static final int frontRightMotor = 1;
     //public static final int midRightMotor = 2;
     public static final int backRightMotor = 3; 
+=======
+    public static final int midLeftMotor = 5;
+    public static final int frontRightMotor = 1;
+    public static final int midRightMotor = 2;
+>>>>>>> 589112db8a1d56c4e09742f165ddbea51c7477f5
 
 }
 
@@ -85,13 +90,13 @@ public final class ClimbConst {
 // Intake Constants
 public final class IntakeConst {
     //Motor CAN IDs
-    public static final int liftMotor = 10;
+    public static final int liftMotor = 6;
     public static final int intakeMotor = 9;
     
     
     //Motor Speeds for Intake
-    public static final double intakeSpeed = 0.1;
-    public static final double liftSpeed = -0.80;
+    public static final double intakeSpeed = 0.8;
+    public static final double liftSpeed = 0.8;
 
 
 }
@@ -135,26 +140,26 @@ public static final class PnemuaticConst{
 
 
     //Extend Climb Arms
-    public static final int extandA = 4;
-    public static final int extandB = 5;
+    public static final int extandA = 1;
+    public static final int extandB = 0;
 
 
     //Deploy Intake
-    public static final int intakeA = 1;
-    public static final int intakeB = 0 ;
+    public static final int intakeA = 4;
+    public static final int intakeB = 5;
    
    public static final int deployIntakeTrigger = 1;     
 }
    //Shooter Motor
    public static final class ShooterConst{
 
-    public static final double primeMotorSpeed = 1.0;
+    public static final double primeMotorSpeed = .75;
     public static final double primeShootSpeed = 0.50;
     
     //Motor CAN IDs
     public static final int Shooter = 8;
     public static final int Targeting = 7;
-    public static final int primeMotor = 11;
+    public static final int primeMotor = 3;
 }
 
     public static final class PIDConst{
@@ -164,9 +169,10 @@ public static final class PnemuaticConst{
         public static final double D = 0; 
         public static final double Iz = 0; 
         public static final double FF = 0.000015; 
-        public static final double MaxOutput = 5700; 
+        public static final double MaxOutput = 6000; 
         public static final double MinOutput = 0;
-        public static final double StartingSpeed = 2500;
+        public static final double SlowStartingSpeed = 4000*3;
+        public static final double FastStartingSpeed = 6000*3;
     }    
 
     public static final class AutoConst{

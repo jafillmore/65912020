@@ -7,12 +7,9 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import frc.robot.subsystems.ArcadeDriveSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
-import frc.robot.Constants.AutoConst;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -26,7 +23,7 @@ public class AutoCommand extends SequentialCommandGroup {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
     super();
-    new StartEndCommand(
+    /*new StartEndCommand(
       // Drive Forward
       () -> arcadeDriveSubsystem.arcadeDrive(AutoConst.AutoDriveSpeed, 0),
       // Stop Driving
@@ -34,11 +31,12 @@ public class AutoCommand extends SequentialCommandGroup {
       // Reset Encoder
       .beforeStarting(arcadeDriveSubsystem :: resetEncoders, arcadeDriveSubsystem)
       // End The Command
-      //.withInterupt(() -> arcadeDriveSubsystem.getAverageEncoderDistance()
-      //  >= AutoConst.AutoDriveDistanceInches),
+      .withInterupt(() -> arcadeDriveSubsystem.getAverageEncoderDistance()
+        >= AutoConst.AutoDriveDistanceInches)),
 
         new InstantCommand(ShooterSubsystem::shootOn, arcadeDriveSubsystem)
+        
 
-    );
+    );*/
   }
 }
