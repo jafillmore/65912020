@@ -29,8 +29,7 @@ public class ShooterSubsystem extends SubsystemBase {
   public Double shooterSpeed = 0.5;
 
 
-  public ShooterSubsystem() {
-
+  public ShooterSubsystem() {  
   }
 
   @Override
@@ -43,12 +42,12 @@ public class ShooterSubsystem extends SubsystemBase {
   }
   
   public void adjShooterSpeedUp(){
-    shooterSpeed = shooterSpeed + 0.1;
+    shooterSpeed = shooterSpeed + 0.10;
     SmartDashboard.putNumber("Shooter Motor Power", shooterSpeed );
   }
 
   public void adjShooterSpeedDown(){
-    shooterSpeed = shooterSpeed - 0.1;
+    shooterSpeed = shooterSpeed - 0.10;
     SmartDashboard.putNumber("Shooter Motor Power", shooterSpeed );
   }
 

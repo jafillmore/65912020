@@ -60,16 +60,17 @@ public final class JoystickConst {
     public static final int rotateRight = 12;
     public static final int increaseSpeed = 26;
     public static final int decreaseSpeed = 27;
+    public static final int firePrimeMotor = 1;
 }
 
 
 // Drive Constants CAN IDs
 public final class DriveConst {
     public static final int frontLeftMotor = 4;
-    public static final int midLeftMotor = 5;
+    //public static final int midLeftMotor = 5;
     public static final int backLeftMotor = 6;
     public static final int frontRightMotor = 1;
-    public static final int midRightMotor = 2;
+    //public static final int midRightMotor = 2;
     public static final int backRightMotor = 3; 
 
 }
@@ -88,7 +89,7 @@ public final class IntakeConst {
 
  public static final class ControlPannelConst{
     // Wheel Spinning Motor CAN ID
-    public static final int spinningMotor = 12;
+    public static final int spinningMotor = 12; 
 
     // Color Sensor's
     public static final double yellowRVal = .300;
