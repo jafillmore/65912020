@@ -66,30 +66,45 @@ public class RobotContainer {
 
                        
     new JoystickButton(leftJoystick, JoystickConst.toggleIntake)
-      .whenHeld(new InstantCommand(() -> pneumaticSubsystem.deployIntake()))
-      .whenReleased(new InstantCommand(() -> pneumaticSubsystem.stowIntake()));
+      .whenHeld(new InstantCommand(pneumaticSubsystem:: deployIntake))
+      .whenReleased(new InstantCommand(pneumaticSubsystem::stowIntake));
 
     // Turn on Intake motors
 
     new JoystickButton(rightJoystick, JoystickConst.intakeTrigger)
-      .whileHeld(new InstantCommand(intakeSubsystem::turnOnIntake))
-      .whenReleased(new InstantCommand(intakeSubsystem::turnOffIntake));
+      .whileHeld(new InstantCommand(intakeSubsystem:: turnOnIntake))
+      .whenReleased(new InstantCommand(intakeSubsystem:: turnOffIntake));
 
     // Reverse Intake Lift Motor
 
     new JoystickButton(rightJoystick, JoystickConst.intakeReverse)
-    .whileHeld(new InstantCommand(intakeSubsystem::turnOffReverseIntakeLift))
+    .whenHeld(new InstantCommand(intakeSubsystem::reverseIntakeLift))
     .whenReleased(new InstantCommand(intakeSubsystem::turnOffIntake));
+
+    new JoystickButton(joeStick, JoystickConst.extendClimbArm)
+    .whenPressed(new InstantCommand(pneumaticSubsystem::extendClimbArms));
+
+    new JoystickButton(joeStick, JoystickConst.retractClimbArm)
+    .whenPressed(new InstantCommand(pneumaticSubsystem::retractClimbArms));
+
+
+    new JoystickButton(joeStick, JoystickConst.deployClimbArm)
+    .whenPressed(new InstantCommand(pneumaticSubsystem::deployClimbArms));
+
+    new JoystickButton(joeStick, JoystickConst.stowClimbArm)
+    .whenPressed(new InstantCommand(pneumaticSubsystem::stowClimbArms));
+    
     
  
       new JoystickButton(joeStick, JoystickConst.fire)
-      .whileHeld(new RunCommand(() -> shooterSubsystem.shootOn(/*shooterSubsystem.shooterSpeed*/)))
+      .whileHeld(new RunCommand(() -> shooterSubsystem.shootOn()))
       //-> intakeSubsystem.liftSpeed(IntakeConst.liftShootSpeed)));
       .whenReleased (new InstantCommand(() -> shooterSubsystem.shootMotorOff()));
 
-    /*new JoystickButton(joeStick, JoystickConst.fire)
-      .whileHeld(new RunCommand(ShooterSubsystem::shootOn));
-      .whenReleased(new InstantCommand(ShooterSubsystem::shooterMotorOff));*/
+    new JoystickButton(joeStick, JoystickConst.fastFire)
+      .whileHeld(new RunCommand(() -> shooterSubsystem.fastShoot()))
+      .whenReleased( new InstantCommand(() -> shooterSubsystem.shootMotorOff()));
+
 
     new JoystickButton(joeStick, JoystickConst.increaseSpeed)
       .whenPressed(new InstantCommand(() -> shooterSubsystem.adjShooterSpeedUp()));

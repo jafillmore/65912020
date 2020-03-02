@@ -40,6 +40,7 @@ public class ArcadeDriveSubsystem extends SubsystemBase {
 
   public void arcadeDrive(double fwd, double rot) {
   robotdrive.arcadeDrive(-fwd, rot);
+  
   }
 
 
@@ -47,6 +48,6 @@ public class ArcadeDriveSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    
+    robotdrive.setDeadband(0.06);
   }
 }

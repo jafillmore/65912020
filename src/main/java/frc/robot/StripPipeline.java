@@ -105,6 +105,9 @@ public class StripPipeline implements VisionPipeline {
 	public ArrayList<MatOfPoint> filterContoursOutput() {
 		return filterContoursOutput;
 	}
+	public Object filterContoursOutputArray(){
+		return filterContoursOutput.toArray();
+	}
 
 	/**
 	 * This method is a generated getter for the output of a CV_applyColorMap.

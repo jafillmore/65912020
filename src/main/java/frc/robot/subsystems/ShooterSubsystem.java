@@ -16,15 +16,18 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import org.opencv.core.Rect;
 import org.opencv.imgproc.Imgproc;
 
+import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.vision.VisionThread;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Robot;
 import frc.robot.StripPipeline;
 import frc.robot.Constants.PIDConst;
 import frc.robot.Constants.ShooterConst;
+import frc.robot.StripPipeline;
 
 
 public class ShooterSubsystem extends SubsystemBase {
@@ -36,7 +39,8 @@ public class ShooterSubsystem extends SubsystemBase {
   public CANSparkMax shooterMotor = new CANSparkMax(ShooterConst.Shooter, MotorType.kBrushless);
   public CANSparkMax targetMotor = new CANSparkMax(ShooterConst.Targeting, MotorType.kBrushless);
   public CANSparkMax primeMotor = new CANSparkMax(ShooterConst.primeMotor, MotorType.kBrushless);
-  public double shooterSpeed = PIDConst.StartingSpeed;
+  public double shooterSpeed = PIDConst.SlowStartingSpeed;
+  public double fastShooterSpeed = PIDConst.FastStartingSpeed;
   public CANEncoder encoder = new CANEncoder(shooterMotor);
   public CANPIDController PID = new CANPIDController(shooterMotor);
 
@@ -49,10 +53,12 @@ public class ShooterSubsystem extends SubsystemBase {
 
   private final Object imgLock = new Object();
 
+  public UsbCamera frontCam;
+  public UsbCamera targetCam;
   
 
   //Change the value when motor speed we are trying to reach is discovered
-  private double shooterMotorRequiredSpeed = 4000;
+  private double shooterMotorRequiredSpeed = 5450;
 
   
 
@@ -64,6 +70,11 @@ public class ShooterSubsystem extends SubsystemBase {
     PID.setIZone(PIDConst.Iz);
     PID.setFF(PIDConst.FF);
     PID.setOutputRange(PIDConst.MinOutput, PIDConst.MaxOutput);
+
+    frontCam = CameraServer.getInstance().startAutomaticCapture(0);
+    targetCam = CameraServer.getInstance().startAutomaticCapture(1);
+    frontCam.setResolution(1280,720);
+    targetCam.setResolution(1280, 720);
     
     
   }
@@ -87,11 +98,31 @@ public class ShooterSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("ShooterSpeed from ShootOn Command", shooterSpeed);
 
     //Change shooterMotorRequiredSpeed when the required speed is determined
-    if(encoder.getVelocity() >= (shooterSpeed/3 - 500)){
+    if(encoder.getVelocity() >= (shooterSpeed/3 -500)){
       primeMotor.set(ShooterConst.primeMotorSpeed);
+    } else if(encoder.getVelocity() <= shooterSpeed/3-500) {
+      primeMotor.set(0);
     }
   }
-  
+  public void fastShoot(){
+    boolean isShooterInverted = shooterMotor.getInverted();
+    shooterMotor.setInverted(false);
+    
+    primeMotor.setInverted(false);
+    
+
+    PID.setReference(fastShooterSpeed, ControlType.kVelocity);
+
+    SmartDashboard.putNumber("Velocity from Encoder", encoder.getVelocity());
+    SmartDashboard.putNumber("ShooterSpeed from ShootOn Command", fastShooterSpeed);
+
+    //Change shooterMotorRequiredSpeed when the required speed is determined
+    if(encoder.getVelocity() >= (fastShooterSpeed/3 -500)){
+      primeMotor.set(ShooterConst.primeMotorSpeed);
+    } else if(encoder.getVelocity() <= fastShooterSpeed/3-500) {
+      primeMotor.set(0);
+    }
+  }
   public void shootMotorOff(){
     shooterMotor.set(0);
     primeMotor.set(0);
@@ -99,6 +130,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public void adjShooterSpeedUp(){
     shooterSpeed += 500;
+    if (shooterSpeed >= 6000*3){shooterSpeed=6000*3;}
     SmartDashboard.putNumber("Target Motor RPM", shooterSpeed);
   }
 
@@ -113,18 +145,38 @@ public class ShooterSubsystem extends SubsystemBase {
 
 
   public void method(){
-    UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
-    camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
 
-    visionThread = new VisionThread(camera, new StripPipeline(), pipeline -> {
-        if (!pipeline.filterContoursOutput().isEmpty()) {
-            Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
-            synchronized (imgLock) {
-                centerX = r.x + (r.width / 2);
-            }
-        }
-    });
-    visionThread.start();
+    CvSource outputStream = CameraServer.getInstance().putVideo("Processed in Main", 1280, 720);
+    visionThread = new VisionThread(targetCam, new StripPipeline(), stripPipeline -> {
+			SmartDashboard.putNumber("Number of Contours Found", stripPipeline.findContoursOutput().size());
+                                     
+			if (stripPipeline.filterContoursOutput().isEmpty())
+			  {SmartDashboard.putString("Filterd Contour Status:", "No Contours Found");
+			};
+	  
+			
+			if (!stripPipeline.filterContoursOutput().isEmpty()) {
+			  
+			  SmartDashboard.putNumber("Number of Contours Found", stripPipeline.filterContoursOutput().size());
+	  
+				Rect r = Imgproc.boundingRect(stripPipeline.filterContoursOutput().get(0));
+				synchronized (imgLock) {
+					//centerX = r.x + (r.width / 2);
+
+					Object arrayList = stripPipeline.filterContoursOutputArray();
+
+					double[] array = (double[]) arrayList;
+
+					//SmartDashboard.putNumberArray("Filter Contours Output", stripPipeline.filterContoursOutput.toArray());
+					//SmartDashboard.putNumber("Center X from Subsys VisionThread", centerX);
+					SmartDashboard.putNumberArray("Array", array);
+				}
+
+				outputStream.putFrame(stripPipeline.cvAbsdiffOutput);
+			}
+	  
+		});
+		visionThread.start();
 
     // xxxxxxx
 

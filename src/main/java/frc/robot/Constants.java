@@ -55,8 +55,9 @@ public final class JoystickConst {
     //Joystick Button #s for Shooting
     public static final int toggleAutoShoot = 9;
     public static final int fire = 10;
-    public static final int rotateLeft = 11;
-    public static final int rotateRight = 12;
+    public static final int fastFire = 11;
+    //public static final int rotateLeft = 11;
+    //public static final int rotateRight = 12;
     public static final int increaseSpeed = 26;
     public static final int decreaseSpeed = 27;
 }
@@ -159,9 +160,10 @@ public static final class PnemuaticConst{
         public static final double D = 0; 
         public static final double Iz = 0; 
         public static final double FF = 0.000015; 
-        public static final double MaxOutput = 5700; 
+        public static final double MaxOutput = 6000; 
         public static final double MinOutput = 0;
-        public static final double StartingSpeed = 5700*3;
+        public static final double SlowStartingSpeed = 4000*3;
+        public static final double FastStartingSpeed = 6000*3;
     }    
 
     public static final class AutoConst{
