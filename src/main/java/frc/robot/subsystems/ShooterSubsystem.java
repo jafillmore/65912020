@@ -20,6 +20,7 @@ import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.vision.VisionThread;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -39,10 +40,14 @@ public class ShooterSubsystem extends SubsystemBase {
   public CANSparkMax shooterMotor = new CANSparkMax(ShooterConst.Shooter, MotorType.kBrushless);
   public CANSparkMax targetMotor = new CANSparkMax(ShooterConst.Targeting, MotorType.kBrushless);
   public CANSparkMax primeMotor = new CANSparkMax(ShooterConst.primeMotor, MotorType.kBrushless);
-  public double shooterSpeed = PIDConst.SlowStartingSpeed;
-  public double fastShooterSpeed = PIDConst.FastStartingSpeed;
   public CANEncoder encoder = new CANEncoder(shooterMotor);
   public CANPIDController PID = new CANPIDController(shooterMotor);
+
+  public double shooterSpeed = PIDConst.SlowStartingSpeed;
+  public double fastShooterSpeed = PIDConst.FastStartingSpeed;
+
+  private DigitalInput limitSwitch = new DigitalInput(1);
+  private boolean isBallPrimed = false;
 
   private static final int IMG_WIDTH = 320;
   private static final int IMG_HEIGHT = 240;
@@ -84,43 +89,62 @@ public class ShooterSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
   }
   
+  public void primeBall(){
+    primeMotor.setInverted(false);
+
+    primeMotor.set(.5);
+    if(limitSwitch.get()){
+      primeMotor.set(0);
+      isBallPrimed = true;
+    } else {
+      isBallPrimed = false;
+    }
+    
+
+  }
 
   public void shootOn(){
-    boolean isShooterInverted = shooterMotor.getInverted();
     shooterMotor.setInverted(false);
     
     primeMotor.setInverted(false);
-    
 
     PID.setReference(shooterSpeed, ControlType.kVelocity);
 
     SmartDashboard.putNumber("Velocity from Encoder", encoder.getVelocity());
     SmartDashboard.putNumber("ShooterSpeed from ShootOn Command", shooterSpeed);
+    
+    if(!isBallPrimed){
+      primeBall();
+    } else {
+     
 
-    //Change shooterMotorRequiredSpeed when the required speed is determined
-    if(encoder.getVelocity() >= (shooterSpeed/3 -500)){
-      primeMotor.set(ShooterConst.primeMotorSpeed);
-    } else if(encoder.getVelocity() <= shooterSpeed/3-500) {
-      primeMotor.set(0);
+      //Change shooterMotorRequiredSpeed when the required speed is determined
+      if(encoder.getVelocity() >= (shooterSpeed/3 -500)){
+        primeMotor.set(ShooterConst.primeMotorSpeed);
+      } else if(encoder.getVelocity() <= shooterSpeed/3-500) {
+        primeMotor.set(0);
+      }
     }
   }
   public void fastShoot(){
-    boolean isShooterInverted = shooterMotor.getInverted();
     shooterMotor.setInverted(false);
     
     primeMotor.setInverted(false);
-    
 
     PID.setReference(fastShooterSpeed, ControlType.kVelocity);
 
     SmartDashboard.putNumber("Velocity from Encoder", encoder.getVelocity());
     SmartDashboard.putNumber("ShooterSpeed from ShootOn Command", fastShooterSpeed);
-
-    //Change shooterMotorRequiredSpeed when the required speed is determined
-    if(encoder.getVelocity() >= (fastShooterSpeed/3 -500)){
-      primeMotor.set(ShooterConst.primeMotorSpeed);
-    } else if(encoder.getVelocity() <= fastShooterSpeed/3-500) {
-      primeMotor.set(0);
+    
+    if(!isBallPrimed){
+      primeBall();
+    } else {
+      //Change shooterMotorRequiredSpeed when the required speed is determined
+      if(encoder.getVelocity() >= (fastShooterSpeed/3 -500)){
+        primeMotor.set(ShooterConst.primeMotorSpeed);
+      } else if(encoder.getVelocity() <= fastShooterSpeed/3-500) {
+        primeMotor.set(0);
+      }
     }
   }
   public void shootMotorOff(){
