@@ -11,16 +11,17 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.Constants.JoystickConst;
 import frc.robot.subsystems.ArcadeDriveSubsystem;
+import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.PneumaticSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
-import frc.robot.subsystems.ClimberSubsystem;
+import frc.robot.Constants.JoystickConst;
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -63,54 +64,63 @@ public class RobotContainer {
           .arcadeDrive(leftJoystick.getY(), 
                        rightJoystick.getZ()), arcadeDriveSubsystem));
 
-
-    // Deploy Intake while left trigger is held, retract when it is release
-    new JoystickButton(leftJoystick, Constants.intakeNumber)
-      .whileHeld(new InstantCommand(pneumaticSubsystem::deployIntake))
+                       
+    new JoystickButton(leftJoystick, JoystickConst.toggleIntake)
+      .whenHeld(new InstantCommand(pneumaticSubsystem:: deployIntake))
       .whenReleased(new InstantCommand(pneumaticSubsystem::stowIntake));
 
     // Turn on Intake motors
-    /*new JoystickButton(rightJoystick, JoystickConst.intakeTrigger)
-      .whileHeld(() -> intakeSubsystem.turnOnIntake())
-      .whenReleased(() -> intakeSubsystem.turnOffIntake());
-    */
-    new JoystickButton(leftJoystick, JoystickConst.intakeTrigger)
-      .whileHeld(new InstantCommand(intakeSubsystem::turnOnIntake))
-      .whenReleased(new InstantCommand(intakeSubsystem::turnOffIntake));
-    
 
-    // Reverse Intake lift motor (to try to fix stuff ball)
+    new JoystickButton(rightJoystick, JoystickConst.intakeTrigger)
+      .whileHeld(new InstantCommand(intakeSubsystem:: turnOnIntake))
+      .whenReleased(new InstantCommand(intakeSubsystem:: turnOffIntake));
+
+    // Reverse Intake Lift Motor
+
     new JoystickButton(rightJoystick, JoystickConst.intakeReverse)
-      .whileHeld(new InstantCommand(intakeSubsystem::reverseIntakeLift));
+    .whenHeld(new InstantCommand(intakeSubsystem::reverseIntakeLift))
+    .whenReleased(new InstantCommand(intakeSubsystem::turnOffIntake));
 
-    new JoystickButton(joeStick, Constants.deployNumber)
-      .whenPressed(new InstantCommand(pneumaticSubsystem::deployArms));
+    new JoystickButton(joeStick, JoystickConst.extendClimbArm)
+    .whenPressed(new InstantCommand(pneumaticSubsystem::extendClimbArms));
 
-    new JoystickButton(leftJoystick, Constants.deployNumber)
-      .whenPressed(new InstantCommand(pneumaticSubsystem::stowArms));
-      
+    new JoystickButton(joeStick, JoystickConst.retractClimbArm)
+    .whenPressed(new InstantCommand(pneumaticSubsystem::retractClimbArms));
+
+
+    new JoystickButton(joeStick, JoystickConst.deployClimbArm)
+    .whenPressed(new InstantCommand(pneumaticSubsystem::deployClimbArms));
+
+    new JoystickButton(joeStick, JoystickConst.stowClimbArm)
+    .whenPressed(new InstantCommand(pneumaticSubsystem::stowClimbArms));
+    
+    
+ 
       new JoystickButton(joeStick, JoystickConst.fire)
-      .whenHeld(new RunCommand(() -> shooterSubsystem.shootOn(/*shooterSubsystem.shooterSpeed*/)))
+      .whileHeld(new RunCommand(() -> shooterSubsystem.shootOn()))
       //-> intakeSubsystem.liftSpeed(IntakeConst.liftShootSpeed)));
-      .whenReleased (new RunCommand(() -> shooterSubsystem.shootMotorOff()));
+      .whenReleased (new InstantCommand(() -> shooterSubsystem.shootMotorOff()));
 
-    /*new JoystickButton(joeStick, JoystickConst.fire)
-      .whileHeld(new RunCommand(ShooterSubsystem::shootOn));
-      .whenReleased(new InstantCommand(ShooterSubsystem::shooterMotorOff));*/
+    new JoystickButton(joeStick, JoystickConst.fastFire)
+      .whileHeld(new RunCommand(() -> shooterSubsystem.fastShoot()))
+      .whenReleased( new InstantCommand(() -> shooterSubsystem.shootMotorOff()));
+
 
     new JoystickButton(joeStick, JoystickConst.increaseSpeed)
-      .whenPressed(new RunCommand(() -> shooterSubsystem.adjShooterSpeedUp()));
+      .whenPressed(new InstantCommand(() -> shooterSubsystem.adjShooterSpeedUp()));
 
     new JoystickButton(joeStick, JoystickConst.decreaseSpeed)
-      .whenPressed(new RunCommand(() -> shooterSubsystem.adjShooterSpeedDown()));
+      .whenPressed(new InstantCommand(() -> shooterSubsystem.adjShooterSpeedDown()));
    
     shooterSubsystem.setDefaultCommand(
       new RunCommand(() -> shooterSubsystem .rotate(joeStick.getRawAxis(2)), shooterSubsystem));
 
 
-    Shuffleboard.getTab("Shooter value").add("rpm", shooterSubsystem.shooterMotor.getAppliedOutput());
+    Shuffleboard.getTab("Shooter value").add("rpm", shooterSubsystem.encoder.getVelocity());
+    SmartDashboard.putNumber("Target Motor RPM", shooterSubsystem.shooterSpeed);
 
-    shooterSubsystem.setDefaultCommand(
+
+    climberSubsystem.setDefaultCommand(
       new RunCommand(() -> climberSubsystem.turnOnBalanceMotors(joeStick.getRawAxis(0)), climberSubsystem));
   }
 
