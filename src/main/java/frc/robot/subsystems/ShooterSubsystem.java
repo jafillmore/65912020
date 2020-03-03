@@ -45,13 +45,8 @@ public class ShooterSubsystem extends SubsystemBase {
   private DigitalInput limitSwitch = new DigitalInput(1);
   private boolean isBallPrimed = false;
 
-
-
   //Change the value when motor speed we are trying to reach is discovered
   private double shooterMotorRequiredSpeed = 5450;
-
-  
-
 
   public ShooterSubsystem() {
     PID.setP(PIDConst.P);
