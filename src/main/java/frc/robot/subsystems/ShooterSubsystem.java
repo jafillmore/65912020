@@ -103,6 +103,9 @@ public class ShooterSubsystem extends SubsystemBase {
 
   }
 
+  //Both of the methods below were replaced by one method that takes in a shooterSpeed as a parameter
+
+  /*
   public void shootOn(){
     shooterMotor.setInverted(false);
     
@@ -118,7 +121,6 @@ public class ShooterSubsystem extends SubsystemBase {
     } else {
      
 
-      //Change shooterMotorRequiredSpeed when the required speed is determined
       if(encoder.getVelocity() >= (shooterSpeed/3 -500)){
         primeMotor.set(ShooterConst.primeMotorSpeed);
       } else if(encoder.getVelocity() <= shooterSpeed/3-500) {
@@ -139,7 +141,6 @@ public class ShooterSubsystem extends SubsystemBase {
     if(!isBallPrimed){
       primeBall();
     } else {
-      //Change shooterMotorRequiredSpeed when the required speed is determined
       if(encoder.getVelocity() >= (fastShooterSpeed/3 -500)){
         primeMotor.set(ShooterConst.primeMotorSpeed);
       } else if(encoder.getVelocity() <= fastShooterSpeed/3-500) {
@@ -147,6 +148,32 @@ public class ShooterSubsystem extends SubsystemBase {
       }
     }
   }
+  */
+
+  //If this method does not work, uncomment the methods above and change the method that the button press calls in RobotContainer
+  public void shooterOn (double speedOfShooter){
+    shooterMotor.setInverted(false);
+    
+    primeMotor.setInverted(false);
+
+    PID.setReference(speedOfShooter, ControlType.kVelocity);
+
+    SmartDashboard.putNumber("Velocity from Encoder", encoder.getVelocity());
+    SmartDashboard.putNumber("ShooterSpeed from ShootOn Command", speedOfShooter);
+    
+    if(!isBallPrimed){
+      primeBall();
+    } else {
+
+      if(encoder.getVelocity() >= (speedOfShooter/3 -500)){
+        primeMotor.set(ShooterConst.primeMotorSpeed);
+      } else if(encoder.getVelocity() <= speedOfShooter/3-500) {
+        primeMotor.set(0);
+      }
+    }
+  }
+
+
   public void shootMotorOff(){
     shooterMotor.set(0);
     primeMotor.set(0);

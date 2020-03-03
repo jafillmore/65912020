@@ -22,6 +22,8 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.PneumaticSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.Constants.JoystickConst;
+import frc.robot.Constants.PIDConst;
+import frc.robot.Constants.ShooterConst;
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -97,12 +99,12 @@ public class RobotContainer {
     
  
       new JoystickButton(joeStick, JoystickConst.fire)
-      .whileHeld(new RunCommand(() -> shooterSubsystem.shootOn()))
+      .whileHeld(new RunCommand(() -> shooterSubsystem.shooterOn(PIDConst.SlowStartingSpeed)))
       //-> intakeSubsystem.liftSpeed(IntakeConst.liftShootSpeed)));
       .whenReleased (new InstantCommand(() -> shooterSubsystem.shootMotorOff()));
 
     new JoystickButton(joeStick, JoystickConst.fastFire)
-      .whileHeld(new RunCommand(() -> shooterSubsystem.fastShoot()))
+      .whileHeld(new RunCommand(() -> shooterSubsystem.shooterOn(PIDConst.FastStartingSpeed)))
       .whenReleased( new InstantCommand(() -> shooterSubsystem.shootMotorOff()));
 
 
