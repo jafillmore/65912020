@@ -67,17 +67,9 @@ public final class JoystickConst {
 // Drive Constants CAN IDs
 public final class DriveConst {
     public static final int frontLeftMotor = 4;
-<<<<<<< HEAD
-    //public static final int midLeftMotor = 5;
-    public static final int backLeftMotor = 6;
-    public static final int frontRightMotor = 1;
-    //public static final int midRightMotor = 2;
-    public static final int backRightMotor = 3; 
-=======
     public static final int midLeftMotor = 5;
     public static final int frontRightMotor = 1;
     public static final int midRightMotor = 2;
->>>>>>> 589112db8a1d56c4e09742f165ddbea51c7477f5
 
 }
 
@@ -180,5 +172,21 @@ public static final class PnemuaticConst{
         public static final double AutoDriveDistanceInches = 40;
     }
 
+    public static final class VisConstants {
+        public static final int TargetCameraFrameWidth = 640;
+        public static final int TargetCameraFrameHeight = 360;
+        public static final int TargetCameraFPS = 30;
+        public static final int TargetCameraBrightness = 15;
+        public static final int TargetCameraExposure = 75;
 
+        public static final int DriveCameraFrameWidth = 320;
+        public static final int DriveCameraFrameHeight = 180;
+        public static final int DriveCameraFPS = 30;
+        public static final int DriveCameraBrightness = 15;
+        public static final int DriveCameraExposure = 75;
+
+        public static final double allowableTargetError = 10;
+        public static final double chaseSpeed = 0.25;
+
+    }
 }
