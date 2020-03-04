@@ -30,6 +30,8 @@ public class ArcadeDriveSubsystem extends SubsystemBase {
   public CANEncoder midLeftEncoder = new CANEncoder(midLeft);
   public CANEncoder frontRightEncoder = new CANEncoder(frontRight);
   public CANEncoder midRightEncoder = new CANEncoder(midRight);
+
+  public double averageEncoderDistance;
   
  
 
@@ -45,14 +47,31 @@ public class ArcadeDriveSubsystem extends SubsystemBase {
 
   public void arcadeDrive(double fwd, double rot) {
   robotdrive.arcadeDrive(-fwd, rot);
-  
   }
 
+  public void resetEncoders(){
+    frontLeftEncoder.setPosition(0);
+    midLeftEncoder.setPosition(0);
+    frontRightEncoder.setPosition(0);
+    midRightEncoder.setPosition(0);
+  }
 
+  public double getAverageEncoderDistance(){
+    double posOfFL = frontLeftEncoder.getPosition();
+    double posOfML = midLeftEncoder.getPosition();
+    double posOfFR = frontRightEncoder.getPosition();
+    double posOfMR = midRightEncoder.getPosition();
+
+    averageEncoderDistance = (posOfFL + posOfML + posOfFR + posOfMR) / 4;
+    return averageEncoderDistance;
+  }
+ 
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     robotdrive.setDeadband(0.06);
   }
+
+  
 }
