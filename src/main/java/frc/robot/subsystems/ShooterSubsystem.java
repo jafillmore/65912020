@@ -43,7 +43,6 @@ public class ShooterSubsystem extends SubsystemBase {
   public double fastShooterSpeed = PIDConst.FastStartingSpeed;
 
   public DigitalInput limitSwitch = new DigitalInput(1);
-  public boolean limitSwitchStatus = false;
   private boolean isBallPrimed = false;
 
   public ShooterSubsystem() {
@@ -62,14 +61,19 @@ public class ShooterSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    
+    printLimitSwitchStatus();
+
+
   }
   
+  public void printLimitSwitchStatus() {
+    SmartDashboard.putBoolean("Primer Limit Status", limitSwitch.get());
+  }
   
   public void primeBall(){
     primeMotor.setInverted(false);
 
-    primeMotor.set(.5);
+    primeMotor.set(ShooterConst.primeMotorPrimeSpeed);
     if(!limitSwitch.get()){
       primeMotor.set(0);
       isBallPrimed = true;
@@ -98,7 +102,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
       //Change shooterMotorRequiredSpeed when the required speed is determined
       if(encoder.getVelocity() >= (shooterSpeed/3 -500)){
-        primeMotor.set(ShooterConst.primeMotorSpeed);
+        primeMotor.set(ShooterConst.primeMotorShootSpeed);
       } else if(encoder.getVelocity() <= shooterSpeed/3-500) {
         primeMotor.set(0);
       }
@@ -119,7 +123,7 @@ public class ShooterSubsystem extends SubsystemBase {
     } else {
       //Change shooterMotorRequiredSpeed when the required speed is determined
       if(encoder.getVelocity() >= (fastShooterSpeed/3 -500)){
-        primeMotor.set(ShooterConst.primeMotorSpeed);
+        primeMotor.set(ShooterConst.primeMotorShootSpeed);
       } else if(encoder.getVelocity() <= fastShooterSpeed/3-500) {
         primeMotor.set(0);
       }

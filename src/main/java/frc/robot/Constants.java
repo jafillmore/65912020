@@ -54,7 +54,7 @@ public final class JoystickConst {
     
     //Joystick Button #s for Shooting
     public static final int toggleAutoShoot = 9;
-    public static final int fire = 10;
+    public static final int slowFire = 10;
     public static final int fastFire = 11;
     //public static final int rotateLeft = 11;
     //public static final int rotateRight = 12;
@@ -145,8 +145,8 @@ public static final class PnemuaticConst{
    //Shooter Motor
    public static final class ShooterConst{
 
-    public static final double primeMotorSpeed = .75;
-    public static final double primeShootSpeed = 0.50;
+    public static final double primeMotorPrimeSpeed = .5;
+    public static final double primeMotorShootSpeed = 0.75;
     
     //Motor CAN IDs
     public static final int Shooter = 8;
