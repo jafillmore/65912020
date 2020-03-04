@@ -13,8 +13,8 @@ import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 
-import edu.wpi.cscore.CvSource;
-import edu.wpi.first.cameraserver.CameraServer;
+//import edu.wpi.cscore.CvSource;
+//import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.vision.VisionPipeline;
 
 /**
@@ -32,7 +32,7 @@ public class StripPipeline implements VisionPipeline {
 	public ArrayList<MatOfPoint> filterContoursOutput = new ArrayList<MatOfPoint>();
 	private Mat cvApplycolormapOutput = new Mat();
 	public Mat cvAbsdiffOutput = new Mat();
-	CvSource outputStream = CameraServer.getInstance().putVideo("Processed", 1280, 720);
+	//CvSource outputStream = CameraServer.getInstance().putVideo("Processed", 640, 360);
 
 	static {
 	//	System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
@@ -78,7 +78,7 @@ public class StripPipeline implements VisionPipeline {
 		Mat cvAbsdiffSrc1 = source0;
 		Mat cvAbsdiffSrc2 = cvApplycolormapOutput;
 		cvAbsdiff(cvAbsdiffSrc1, cvAbsdiffSrc2, cvAbsdiffOutput);
-		outputStream.putFrame(cvAbsdiffOutput);
+		//outputStream.putFrame(cvAbsdiffOutput);
 
 	}
 

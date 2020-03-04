@@ -16,11 +16,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.subsystems.ArcadeDriveSubsystem;
-import frc.robot.subsystems.ClimberSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.PneumaticSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.*;
 import frc.robot.Constants.JoystickConst;
 import frc.robot.Constants.PIDConst;
 import frc.robot.Constants.ShooterConst;
@@ -38,7 +34,10 @@ public class RobotContainer {
   private final PneumaticSubsystem pneumaticSubsystem = new PneumaticSubsystem();
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
   private final ClimberSubsystem climberSubsystem = new ClimberSubsystem();
-  
+
+  // DO NOT REMOVE - Required to get the cameras started....
+  private final VisionSubsystem visionSubsystem = new VisionSubsystem();
+  // DO NOT REMOVE - Required to get the cameras started....  
 
   Joystick leftJoystick = new Joystick(JoystickConst.leftJoystickPort);
   Joystick rightJoystick = new Joystick(JoystickConst.rightJoystickPort);
@@ -96,10 +95,8 @@ public class RobotContainer {
     new JoystickButton(joeStick, JoystickConst.stowClimbArm)
     .whenPressed(new InstantCommand(pneumaticSubsystem::stowClimbArms));
     
-    
- 
-      new JoystickButton(joeStick, JoystickConst.fire)
-      .whileHeld(new RunCommand(() -> shooterSubsystem.shooterOn(PIDConst.SlowStartingSpeed)))
+      new JoystickButton(joeStick, JoystickConst.slowFire)
+      .whileHeld(new RunCommand(() -> shooterSubsystem.shootOn()))
       //-> intakeSubsystem.liftSpeed(IntakeConst.liftShootSpeed)));
       .whenReleased (new InstantCommand(() -> shooterSubsystem.shootMotorOff()));
 
@@ -113,6 +110,9 @@ public class RobotContainer {
 
     new JoystickButton(joeStick, JoystickConst.decreaseSpeed)
       .whenPressed(new InstantCommand(() -> shooterSubsystem.adjShooterSpeedDown()));
+
+    new JoystickButton(joeStick, JoystickConst.firePrimeMotor)
+      .whileHeld(new RunCommand(() -> shooterSubsystem.primeBall()));
    
     shooterSubsystem.setDefaultCommand(
       new RunCommand(() -> shooterSubsystem .rotate(joeStick.getRawAxis(2)), shooterSubsystem));
