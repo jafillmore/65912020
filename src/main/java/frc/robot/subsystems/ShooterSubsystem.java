@@ -80,7 +80,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
   //Both of the methods below were replaced by one method that takes in a shooterSpeed as a parameter
 
-  /*
+  
   public void shootOn(){
     shooterMotor.setInverted(false);
     
@@ -123,7 +123,7 @@ public class ShooterSubsystem extends SubsystemBase {
       }
     }
   }
-  */
+  
 
   //If this method does not work, uncomment the methods above and change the method that the button press calls in RobotContainer
   public void shooterOn (double speedOfShooter){
@@ -141,7 +141,7 @@ public class ShooterSubsystem extends SubsystemBase {
     } else {
 
       if(encoder.getVelocity() >= (speedOfShooter/3 -500)){
-        primeMotor.set(ShooterConst.primeMotorSpeed);
+        primeMotor.set(ShooterConst.primeMotorShootSpeed);
       } else if(encoder.getVelocity() <= speedOfShooter/3-500) {
         primeMotor.set(0);
       }
@@ -159,6 +159,10 @@ public class ShooterSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Target Motor RPM", shooterSpeed);
   }
 
+  public void adjShooterSpeedUp(){
+    shooterSpeed += 500;
+    SmartDashboard.putNumber("Target Motor RPM", shooterSpeed);
+  } 
   public void adjShooterSpeedDown(){
     shooterSpeed -= 500;
     SmartDashboard.putNumber("Target Motor RPM", shooterSpeed);

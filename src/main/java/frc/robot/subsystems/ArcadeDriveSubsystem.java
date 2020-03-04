@@ -25,6 +25,11 @@ public class ArcadeDriveSubsystem extends SubsystemBase {
   public CANSparkMax midLeft = new CANSparkMax(DriveConst.midLeftMotor, MotorType.kBrushless);
   public CANSparkMax frontRight = new CANSparkMax(DriveConst.frontRightMotor, MotorType.kBrushless);
   public CANSparkMax midRight = new CANSparkMax(DriveConst.midRightMotor, MotorType.kBrushless);
+
+  public CANEncoder frontLeftEncoder = new CANEncoder(frontLeft);
+  public CANEncoder midLeftEncoder = new CANEncoder(midLeft);
+  public CANEncoder frontRightEncoder = new CANEncoder(frontRight);
+  public CANEncoder midRightEncoder = new CANEncoder(midRight);
   
  
 
