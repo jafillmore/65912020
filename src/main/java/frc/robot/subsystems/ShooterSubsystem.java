@@ -70,9 +70,10 @@ public class ShooterSubsystem extends SubsystemBase {
     primeMotor.setInverted(false);
 
     primeMotor.set(.5);
-    if(limitSwitch.get()){
+    if(!limitSwitch.get()){
       primeMotor.set(0);
       isBallPrimed = true;
+      return;
     } else {
       isBallPrimed = false;
     }

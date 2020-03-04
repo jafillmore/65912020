@@ -173,15 +173,17 @@ public static final class PnemuaticConst{
     }
 
     public static final class VisConstants {
+        public static final int TargetCameraPort = 1;
         public static final int TargetCameraFrameWidth = 640;
         public static final int TargetCameraFrameHeight = 360;
-        public static final int TargetCameraFPS = 30;
+        public static final int TargetCameraFPS = 15;
         public static final int TargetCameraBrightness = 25;
         public static final int TargetCameraExposure = 75;
 
+        public static final int DriveCameraPort = 0;
         public static final int DriveCameraFrameWidth = 320;
         public static final int DriveCameraFrameHeight = 180;
-        public static final int DriveCameraFPS = 30;
+        public static final int DriveCameraFPS = 15;
         public static final int DriveCameraBrightness = 15;
         public static final int DriveCameraExposure = 75;
 

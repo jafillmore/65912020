@@ -21,8 +21,8 @@ import frc.robot.StripPipeline;
 import frc.robot.Constants.VisConstants;
 
 public class VisionSubsystem extends SubsystemBase {
-  UsbCamera driveCam = CameraServer.getInstance().startAutomaticCapture(0);
-  UsbCamera targetCam = CameraServer.getInstance().startAutomaticCapture(1);
+  UsbCamera driveCam = CameraServer.getInstance().startAutomaticCapture(VisConstants.DriveCameraPort);
+  UsbCamera targetCam = CameraServer.getInstance().startAutomaticCapture(VisConstants.TargetCameraPort);
 
    
   public int count = 0;

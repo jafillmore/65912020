@@ -91,7 +91,7 @@ public class RobotContainer {
     new JoystickButton(joeStick, JoystickConst.stowClimbArm)
     .whenPressed(new InstantCommand(pneumaticSubsystem::stowClimbArms));
     
-    
+      limitSwitch.get()
  
       new JoystickButton(joeStick, JoystickConst.fire)
       .whileHeld(new RunCommand(() -> shooterSubsystem.shootOn()))
@@ -108,6 +108,9 @@ public class RobotContainer {
 
     new JoystickButton(joeStick, JoystickConst.decreaseSpeed)
       .whenPressed(new InstantCommand(() -> shooterSubsystem.adjShooterSpeedDown()));
+
+    new JoystickButton(joeStick, JoystickConst.firePrimeMotor)
+      .whileHeld(new RunCommand(() -> shooterSubsystem.primeBall()));
    
     shooterSubsystem.setDefaultCommand(
       new RunCommand(() -> shooterSubsystem .rotate(joeStick.getRawAxis(2)), shooterSubsystem));
