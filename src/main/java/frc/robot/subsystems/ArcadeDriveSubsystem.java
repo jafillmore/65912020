@@ -50,10 +50,19 @@ public class ArcadeDriveSubsystem extends SubsystemBase {
   }
 
   public void resetEncoders(){
-
+    frontLeftEncoder.setPosition(0);
+    midLeftEncoder.setPosition(0);
+    frontRightEncoder.setPosition(0);
+    midRightEncoder.setPosition(0);
   }
 
   public double getAverageEncoderDistance(){
+    double posOfFL = frontLeftEncoder.getPosition();
+    double posOfML = midLeftEncoder.getPosition();
+    double posOfFR = frontRightEncoder.getPosition();
+    double posOfMR = midRightEncoder.getPosition();
+
+    averageEncoderDistance = (posOfFL + posOfML + posOfFR + posOfMR) / 4;
     return averageEncoderDistance;
   }
  
