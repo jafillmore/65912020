@@ -7,6 +7,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import frc.robot.Constants.AutoConst;
@@ -30,14 +31,11 @@ public class AutoCommand extends SequentialCommandGroup {
       () -> arcadeDriveSubsystem.arcadeDrive(AutoConst.AutoDriveSpeed, 0),
       // Stop Driving
       () -> arcadeDriveSubsystem.arcadeDrive(0, 0), arcadeDriveSubsystem)
-      // Reset Encoder
-      .beforeStarting(arcadeDriveSubsystem :: resetEncoders, arcadeDriveSubsystem)
-      // End The Command
-      .withInterrupt(() -> arcadeDriveSubsystem.getAverageEncoderDistance() >= AutoConst.AutoDriveDistanceInches)),
+    // Reset Encoder
+    .beforeStarting(arcadeDriveSubsystem :: resetEncoders, arcadeDriveSubsystem)
+    // End The Command
+    .withInterrupt(() -> arcadeDriveSubsystem.getAverageEncoderDistance() >= AutoConst.AutoDriveDistanceInches);
 
-        new InstantCommand(ShooterSubsystem::shootOn, arcadeDriveSubsystem)
-        
-
-    );
+    new InstantCommand(shooterSubsystem::shootOn, shooterSubsystem);
   }
 }

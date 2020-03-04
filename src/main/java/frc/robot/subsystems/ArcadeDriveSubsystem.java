@@ -31,7 +31,7 @@ public class ArcadeDriveSubsystem extends SubsystemBase {
   public CANEncoder frontRightEncoder = new CANEncoder(frontRight);
   public CANEncoder midRightEncoder = new CANEncoder(midRight);
 
-  private double averageEncoderDistance;
+  public double averageEncoderDistance;
   
  
 
@@ -53,12 +53,10 @@ public class ArcadeDriveSubsystem extends SubsystemBase {
 
   }
 
-  public void averageEncoderDistance(){
-    
-  }
   public double getAverageEncoderDistance(){
     return averageEncoderDistance;
   }
+ 
 
   @Override
   public void periodic() {
