@@ -32,8 +32,10 @@ public class RobotContainer {
   private final PneumaticSubsystem pneumaticSubsystem = new PneumaticSubsystem();
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
   private final ClimberSubsystem climberSubsystem = new ClimberSubsystem();
+
+  // DO NOT REMOVE - Required to get the cameras started....
   private final VisionSubsystem visionSubsystem = new VisionSubsystem();
-  
+  // DO NOT REMOVE - Required to get the cameras started....  
 
   Joystick leftJoystick = new Joystick(JoystickConst.leftJoystickPort);
   Joystick rightJoystick = new Joystick(JoystickConst.rightJoystickPort);
