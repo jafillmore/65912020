@@ -16,11 +16,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.subsystems.ArcadeDriveSubsystem;
-import frc.robot.subsystems.ClimberSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.PneumaticSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.*;
 import frc.robot.Constants.JoystickConst;
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -36,6 +32,7 @@ public class RobotContainer {
   private final PneumaticSubsystem pneumaticSubsystem = new PneumaticSubsystem();
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
   private final ClimberSubsystem climberSubsystem = new ClimberSubsystem();
+  private final VisionSubsystem visionSubsystem = new VisionSubsystem();
   
 
   Joystick leftJoystick = new Joystick(JoystickConst.leftJoystickPort);

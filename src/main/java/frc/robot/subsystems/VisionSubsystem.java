@@ -21,7 +21,8 @@ import frc.robot.StripPipeline;
 import frc.robot.Constants.VisConstants;
 
 public class VisionSubsystem extends SubsystemBase {
-  UsbCamera targetCam = CameraServer.getInstance().startAutomaticCapture(0);
+  UsbCamera driveCam = CameraServer.getInstance().startAutomaticCapture(0);
+  UsbCamera targetCam = CameraServer.getInstance().startAutomaticCapture(1);
 
    
   public int count = 0;
@@ -34,7 +35,7 @@ public class VisionSubsystem extends SubsystemBase {
 public VisionSubsystem() {
 
   
-  targetCam.setVideoMode(VideoMode.PixelFormat.kMJPEG,
+  driveCam.setVideoMode(VideoMode.PixelFormat.kMJPEG,
                         VisConstants.DriveCameraFrameWidth,
                         VisConstants.DriveCameraFrameHeight,
                         VisConstants.DriveCameraFPS);  
