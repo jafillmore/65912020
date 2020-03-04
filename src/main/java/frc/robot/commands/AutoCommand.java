@@ -31,14 +31,13 @@ public class AutoCommand extends SequentialCommandGroup {
       // Stop Driving
       () -> arcadeDriveSubsystem.arcadeDrive(0, 0), arcadeDriveSubsystem)
       // Reset Encoder
-      .beforeStarting(arcadeDriveSubsystem :: resetEncoders, arcadeDriveSubsystem);
+      .beforeStarting(arcadeDriveSubsystem :: resetEncoders, arcadeDriveSubsystem)
       // End The Command
-      //.withInterupt(() -> arcadeDriveSubsystem.getAverageEncoderDistance()
-        //>= AutoConst.AutoDriveDistanceInches)),
+      .withInterrupt(() -> arcadeDriveSubsystem.getAverageEncoderDistance() >= AutoConst.AutoDriveDistanceInches)),
 
-        //new InstantCommand(ShooterSubsystem::shootOn, arcadeDriveSubsystem)
+        new InstantCommand(ShooterSubsystem::shootOn, arcadeDriveSubsystem)
         
 
-    //);
+    );
   }
 }
