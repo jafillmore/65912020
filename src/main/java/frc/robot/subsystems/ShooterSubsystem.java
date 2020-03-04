@@ -42,11 +42,9 @@ public class ShooterSubsystem extends SubsystemBase {
   public double shooterSpeed = PIDConst.SlowStartingSpeed;
   public double fastShooterSpeed = PIDConst.FastStartingSpeed;
 
-  private DigitalInput limitSwitch = new DigitalInput(1);
+  public DigitalInput limitSwitch = new DigitalInput(1);
+  public boolean limitSwitchStatus = false;
   private boolean isBallPrimed = false;
-
-  //Change the value when motor speed we are trying to reach is discovered
-  private double shooterMotorRequiredSpeed = 5450;
 
   public ShooterSubsystem() {
     PID.setP(PIDConst.P);
@@ -64,7 +62,9 @@ public class ShooterSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    
   }
+  
   
   public void primeBall(){
     primeMotor.setInverted(false);

@@ -91,7 +91,7 @@ public class RobotContainer {
     new JoystickButton(joeStick, JoystickConst.stowClimbArm)
     .whenPressed(new InstantCommand(pneumaticSubsystem::stowClimbArms));
     
-      limitSwitch.get()
+      SmartDashboard.putBoolean("Ball Primed", ShooterSubsystem.limitSwitchStatus);
  
       new JoystickButton(joeStick, JoystickConst.fire)
       .whileHeld(new RunCommand(() -> shooterSubsystem.shootOn()))
