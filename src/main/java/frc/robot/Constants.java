@@ -140,7 +140,11 @@ public static final class PnemuaticConst{
     public static final int intakeA = 4;
     public static final int intakeB = 5;
    
-   public static final int deployIntakeTrigger = 1;     
+    public static final int deployIntakeTrigger = 1;
+   
+   //Pressure Sensor Stuff
+   public static final int pressureSensorAIOPort = 3;
+   public static final double normalizedVoltage = 5.0;
 }
    //Shooter Motor
    public static final class ShooterConst{

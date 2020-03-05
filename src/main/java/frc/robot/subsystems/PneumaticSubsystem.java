@@ -7,9 +7,11 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.PnemuaticConst;
 
@@ -24,6 +26,34 @@ public class PneumaticSubsystem extends SubsystemBase {
   private static DoubleSolenoid deployArmsDouble = new DoubleSolenoid(PnemuaticConst.deployA, PnemuaticConst.deployB);
   private static DoubleSolenoid extendArmsDouble = new DoubleSolenoid(PnemuaticConst.extandA, PnemuaticConst.extandB);
   private static DoubleSolenoid deployIntakeDouble = new DoubleSolenoid(PnemuaticConst.intakeA, PnemuaticConst.intakeB);
+
+  private static AnalogInput pressureSensor = new AnalogInput(3);
+  
+  private double returnedVoltage = 0.0;
+  private double calculatedPressure =0.0;
+  
+  
+  public PneumaticSubsystem() {
+    pressureSensor.setAverageBits(4);
+  }
+
+  @Override
+  public void periodic() {
+    // This method will be called once per scheduler run
+    
+    printPressure();
+
+  }
+
+
+  public void printPressure(){
+
+    returnedVoltage = pressureSensor.getAverageValue();
+    calculatedPressure = (250*(returnedVoltage/PnemuaticConst.normalizedVoltage))-25;
+    SmartDashboard.putNumber("Pressure", calculatedPressure);
+    
+  }
+
 
 //***************************************************** */
 //deploy the climb
@@ -68,17 +98,7 @@ public class PneumaticSubsystem extends SubsystemBase {
     System.out.println("Stowing Intake");
   }
 
-  
 
 
 
-
-  public PneumaticSubsystem() {
-
-  }
-
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-  }
 }
