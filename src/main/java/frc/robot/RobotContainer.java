@@ -20,6 +20,7 @@ import frc.robot.subsystems.*;
 import frc.robot.Constants.JoystickConst;
 import frc.robot.Constants.PIDConst;
 import frc.robot.Constants.ShooterConst;
+import frc.robot.commands.AutoCommand;
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -27,23 +28,23 @@ import frc.robot.Constants.ShooterConst;
  * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  private static final Command m_autoCommand = null;
+  
   // The robot's subsystems and commands are defined here...
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   private final ArcadeDriveSubsystem arcadeDriveSubsystem = new ArcadeDriveSubsystem();
   private final PneumaticSubsystem pneumaticSubsystem = new PneumaticSubsystem();
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
   private final ClimberSubsystem climberSubsystem = new ClimberSubsystem();
-
+  private final Command autoCommand = new AutoCommand(arcadeDriveSubsystem, shooterSubsystem);
   // DO NOT REMOVE - Required to get the cameras started....
   private final VisionSubsystem visionSubsystem = new VisionSubsystem();
-  // DO NOT REMOVE - Required to get the cameras started....  
+  // DO NOT REMOVE - Required to get the cameras started....
 
   Joystick leftJoystick = new Joystick(JoystickConst.leftJoystickPort);
   Joystick rightJoystick = new Joystick(JoystickConst.rightJoystickPort);
   Joystick joeStick = new Joystick(JoystickConst.joeStickPort);
 
-  /**
+   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
@@ -59,7 +60,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
     //ArcadeDriveSubsystem Joysticks 
     
-    
+        
     arcadeDriveSubsystem.setDefaultCommand(
       new RunCommand(() -> arcadeDriveSubsystem
           .arcadeDrive(leftJoystick.getY(), 
@@ -133,6 +134,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    return autoCommand;
   }
 }

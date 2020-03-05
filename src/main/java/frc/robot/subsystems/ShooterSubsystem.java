@@ -35,7 +35,7 @@ public class ShooterSubsystem extends SubsystemBase {
   public double shooterSpeed = PIDConst.SlowStartingSpeed;
   public double fastShooterSpeed = PIDConst.FastStartingSpeed;
 
-  public DigitalInput limitSwitch = new DigitalInput(1);
+  public DigitalInput limitSwitch = new DigitalInput(0);
   private boolean isBallPrimed = false;
 
   public ShooterSubsystem() {
@@ -55,7 +55,6 @@ public class ShooterSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     printLimitSwitchStatus();
-
 
   }
   
