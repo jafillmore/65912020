@@ -146,12 +146,15 @@ public static final class PnemuaticConst{
    public static final class ShooterConst{
 
     public static final double primeMotorPrimeSpeed = .5;
-    public static final double primeMotorShootSpeed = 0.75;
+    public static final double primeMotorShootSpeed = 1.0;
     
     //Motor CAN IDs
     public static final int Shooter = 8;
     public static final int Targeting = 7;
     public static final int primeMotor = 3;
+
+    //Limit Switch DIO Port
+    public static final int LimitSwitchPort = 0;
 }
 
     public static final class PIDConst{
@@ -162,9 +165,10 @@ public static final class PnemuaticConst{
         public static final double Iz = 0; 
         public static final double FF = 0.000015; 
         public static final double MaxOutput = 6000; 
-        public static final double MinOutput = 0;
-        public static final double SlowStartingSpeed = 4000*3;
+        public static final double MinOutput = 3500;
+        public static final double SlowStartingSpeed = 4500*3;
         public static final double FastStartingSpeed = 6000*3;
+        public static final double AllowableSpeedError = 500;
     }    
 
     public static final class AutoConst{
@@ -178,13 +182,13 @@ public static final class PnemuaticConst{
         public static final int TargetCameraFrameHeight = 360;
         public static final int TargetCameraFPS = 15;
         public static final int TargetCameraBrightness = 25;
-        public static final int TargetCameraExposure = 75;
+        public static final int TargetCameraExposure = 3;
 
         public static final int DriveCameraPort = 0;
         public static final int DriveCameraFrameWidth = 320;
         public static final int DriveCameraFrameHeight = 180;
-        public static final int DriveCameraFPS = 15;
-        public static final int DriveCameraBrightness = 15;
+        public static final int DriveCameraFPS = 7;
+        public static final int DriveCameraBrightness = 30;
         public static final int DriveCameraExposure = 75;
 
         public static final double allowableTargetError = 10;

@@ -28,7 +28,7 @@ public class VisionSubsystem extends SubsystemBase {
   public int count = 0;
   public int pipeCount = 0;
   private VisionThread visionThread;
-  private double centerX = 0.0;
+  public double centerX = 0.0;
   
   private final Object imgLock = new Object();
 
@@ -49,8 +49,8 @@ public VisionSubsystem() {
                         VisConstants.TargetCameraFPS);
 
   targetCam.setBrightness(VisConstants.TargetCameraBrightness);
-  targetCam.setExposureAuto();
-  //targetCam.setExposureManual(VisConstants.targetCameraExposure);
+  targetCam.setExposureManual(VisConstants.TargetCameraExposure);
+ 
 
   CvSource outputStream = CameraServer.getInstance().putVideo("Processed in Main", VisConstants.TargetCameraFrameWidth, VisConstants.TargetCameraFrameHeight);
   

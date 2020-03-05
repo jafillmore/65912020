@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import frc.robot.Constants.AutoConst;
+import frc.robot.Constants.PIDConst;
 import frc.robot.subsystems.ArcadeDriveSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
@@ -22,6 +23,7 @@ public class AutoCommand extends SequentialCommandGroup {
   /**
    * Creates a new AutoCommand.
    */
+ 
   public AutoCommand(ArcadeDriveSubsystem arcadeDriveSubsystem, ShooterSubsystem shooterSubsystem) {
 
     // Add your commands in the super() call, e.g.
@@ -37,6 +39,10 @@ public class AutoCommand extends SequentialCommandGroup {
     // End The Command
     .withInterrupt(() -> arcadeDriveSubsystem.getAverageEncoderDistance() >= AutoConst.AutoDriveDistanceInches);
 
-    new InstantCommand(shooterSubsystem::shootOn, shooterSubsystem);
+    /////////////////   Basic Command to shoot 'blind'  ////////////////////
+
+    new InstantCommand( 
+      () -> shooterSubsystem.shooterOn(PIDConst.FastStartingSpeed), shooterSubsystem);
+      
   }
 }

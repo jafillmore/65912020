@@ -26,16 +26,16 @@ public class ShooterSubsystem extends SubsystemBase {
    */
 
    //Create Shooter Motor
-  public CANSparkMax shooterMotor = new CANSparkMax(ShooterConst.Shooter, MotorType.kBrushless);
+  private CANSparkMax shooterMotor = new CANSparkMax(ShooterConst.Shooter, MotorType.kBrushless);
   public CANSparkMax targetMotor = new CANSparkMax(ShooterConst.Targeting, MotorType.kBrushless);
-  public CANSparkMax primeMotor = new CANSparkMax(ShooterConst.primeMotor, MotorType.kBrushless);
+  private CANSparkMax primeMotor = new CANSparkMax(ShooterConst.primeMotor, MotorType.kBrushless);
   public CANEncoder encoder = new CANEncoder(shooterMotor);
   public CANPIDController PID = new CANPIDController(shooterMotor);
 
   public double shooterSpeed = PIDConst.SlowStartingSpeed;
   public double fastShooterSpeed = PIDConst.FastStartingSpeed;
 
-  public DigitalInput limitSwitch = new DigitalInput(0);
+  public DigitalInput limitSwitch = new DigitalInput(ShooterConst.LimitSwitchPort);
   private boolean isBallPrimed = false;
 
   public ShooterSubsystem() {
@@ -59,27 +59,36 @@ public class ShooterSubsystem extends SubsystemBase {
   }
   
   public void printLimitSwitchStatus() {
-    SmartDashboard.putBoolean("Primer Limit Status", limitSwitch.get());
+    SmartDashboard.putBoolean("Primer Limit SW Status", limitSwitch.get());
   }
   
   public void primeBall(){
     primeMotor.setInverted(false);
 
-    primeMotor.set(ShooterConst.primeMotorPrimeSpeed);
     if(!limitSwitch.get()){
       primeMotor.set(0);
       isBallPrimed = true;
       return;
     } else {
-      isBallPrimed = false;
+        primeMotor.set(ShooterConst.primeMotorPrimeSpeed);
+        if(!limitSwitch.get()){
+          primeMotor.set(0);
+          isBallPrimed = true;
+          return;
+        } else {
+          isBallPrimed = false;
+        }
     }
-    
-
   }
 
+  
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+  
   //Both of the methods below were replaced by one method that takes in a shooterSpeed as a parameter
 
+  //////////////////////////////////////////////////////////////////////////////////////////////////////
   
+  /*
   public void shootOn(){
     shooterMotor.setInverted(false);
     
@@ -122,8 +131,10 @@ public class ShooterSubsystem extends SubsystemBase {
       }
     }
   }
+  */
   
-
+  
+  ////////////////////////////////////     New Shooter Command (if it doesn't work it is Jade's fault...)  //////////////
   //If this method does not work, uncomment the methods above and change the method that the button press calls in RobotContainer
   public void shooterOn (double speedOfShooter){
     shooterMotor.setInverted(false);
@@ -132,14 +143,14 @@ public class ShooterSubsystem extends SubsystemBase {
 
     PID.setReference(speedOfShooter, ControlType.kVelocity);
 
-    SmartDashboard.putNumber("Velocity from Encoder", encoder.getVelocity());
-    SmartDashboard.putNumber("ShooterSpeed from ShootOn Command", speedOfShooter);
+    SmartDashboard.putNumber("Actual Motor RPM", (encoder.getVelocity()/3));
+    SmartDashboard.putNumber("Target Motor RPM", (speedOfShooter/3));
     
     if(!isBallPrimed){
       primeBall();
     } else {
 
-      if(encoder.getVelocity() >= (speedOfShooter/3 -500)){
+      if(encoder.getVelocity() >= (speedOfShooter/3 -PIDConst.AllowableSpeedError)){
         primeMotor.set(ShooterConst.primeMotorShootSpeed);
       } else if(encoder.getVelocity() <= speedOfShooter/3-500) {
         primeMotor.set(0);
@@ -147,26 +158,27 @@ public class ShooterSubsystem extends SubsystemBase {
     }
   }
 
-
+  ////////////  Turn off Shooter Motor and Priming Motor ////////////////
   public void shootMotorOff(){
     shooterMotor.set(0);
     primeMotor.set(0);
   }
   
-  {
-    if (shooterSpeed >= 6000*3){shooterSpeed=6000*3;}
-    SmartDashboard.putNumber("Target Motor RPM", shooterSpeed);
-  }
 
+  ////////////   Manual Adjust Shooter Speed Up for Low Power Shots   //////////////////
   public void adjShooterSpeedUp(){
     shooterSpeed += 500;
-    SmartDashboard.putNumber("Target Motor RPM", shooterSpeed);
+    if (shooterSpeed >= PIDConst.FastStartingSpeed){shooterSpeed=PIDConst.FastStartingSpeed;}
+    SmartDashboard.putNumber("Target Motor RPM", (shooterSpeed/3));
   } 
+  ////////////   Manual Adjust Shooter Speed Down for Low Power Shots   //////////////////  
   public void adjShooterSpeedDown(){
     shooterSpeed -= 500;
-    SmartDashboard.putNumber("Target Motor RPM", shooterSpeed);
+    if (shooterSpeed <= PIDConst.SlowStartingSpeed){shooterSpeed=PIDConst.SlowStartingSpeed;}
+    SmartDashboard.putNumber("Target Motor RPM", (shooterSpeed/3));
   } 
 
+  ////////////////////   Rotate the Shooter   /////////////////////////////////  
   public void rotate(double chubby) {
     targetMotor.set(-.2*chubby);
   }
