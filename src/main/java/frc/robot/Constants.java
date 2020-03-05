@@ -154,7 +154,7 @@ public static final class PnemuaticConst{
     public static final int primeMotor = 3;
 
     //Limit Switch DIO Port
-    public static final int LimitSwitchPort = 0;
+    public static final int LimitSwitchPort = 1;
 }
 
     public static final class PIDConst{
