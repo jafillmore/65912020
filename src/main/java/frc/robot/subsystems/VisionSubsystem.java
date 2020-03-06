@@ -49,8 +49,8 @@ public VisionSubsystem() {
                         VisConst.TargetCameraFrameHeight,
                         VisConst.TargetCameraFPS);
 
-  targetCam.setBrightness(VisConst.TargetCameraBrightness);
-  targetCam.setExposureManual(VisConst.TargetCameraExposure);
+  //targetCam.setBrightness(VisConst.TargetCameraBrightness);
+  //targetCam.setExposureManual(VisConst.TargetCameraExposure);
  
 
   CvSource outputStream = CameraServer.getInstance().putVideo("Processed in Main", VisConst.TargetCameraFrameWidth, VisConst.TargetCameraFrameHeight);
@@ -92,6 +92,6 @@ public void periodic() {
 
 
   }
-
+       
 }
 }

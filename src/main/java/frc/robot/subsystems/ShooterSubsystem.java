@@ -194,11 +194,11 @@ public class ShooterSubsystem extends SubsystemBase {
   ///////////////////   Auto Target the Shooter   //////////////////////////////
   
   public void target(){
-    if (targetPipeline.filterContoursOutput().isEmpty()) {
+    /*if (targetPipeline.filterContoursOutput().isEmpty()) {
       onTarget = false;
       return;
     }
-      
+    */
     if (Math.abs(visionSubsystem.targetError) > VisConst.allowableTargetError) {
       rotate(visionSubsystem.targetError);
       onTarget = false;

@@ -21,6 +21,7 @@ import frc.robot.Constants.JoystickConst;
 import frc.robot.Constants.PIDConst;
 import frc.robot.Constants.ShooterConst;
 import frc.robot.commands.AutoCommand;
+
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -36,6 +37,7 @@ public class RobotContainer {
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
   private final ClimberSubsystem climberSubsystem = new ClimberSubsystem();
   private final Command autoCommand = new AutoCommand(arcadeDriveSubsystem, shooterSubsystem);
+  
   // DO NOT REMOVE - Required to get the cameras started....
   private final VisionSubsystem visionSubsystem = new VisionSubsystem();
   // DO NOT REMOVE - Required to get the cameras started....

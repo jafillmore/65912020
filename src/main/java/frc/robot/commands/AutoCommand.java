@@ -40,7 +40,7 @@ public class AutoCommand extends SequentialCommandGroup {
       // End The Command
       .withInterrupt(() -> arcadeDriveSubsystem.getAverageEncoderDistance() >= AutoConst.AutoDriveDistanceInches),
 
-       new RunCommand(() -> shooterSubsystem.targetAndShoot(), shooterSubsystem)
+      new RunCommand(() -> shooterSubsystem.targetAndShoot(), shooterSubsystem)
     );
   }
 }
