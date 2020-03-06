@@ -17,7 +17,7 @@ import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.vision.VisionThread;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.StripPipeline;
+import frc.robot.TargetPipeline;
 import frc.robot.Constants.VisConstants;
 
 public class VisionSubsystem extends SubsystemBase {
@@ -54,20 +54,15 @@ public VisionSubsystem() {
 
   CvSource outputStream = CameraServer.getInstance().putVideo("Processed in Main", VisConstants.TargetCameraFrameWidth, VisConstants.TargetCameraFrameHeight);
   
-  visionThread = new VisionThread(targetCam, new StripPipeline(), stripPipeline -> {
+  visionThread = new VisionThread(targetCam, new TargetPipeline(), targetPipeline -> {
                           
-    SmartDashboard.putNumber("Number of Contours Found", stripPipeline.findContoursOutput().size());
+    SmartDashboard.putNumber("Contours Found", targetPipeline.findContoursOutput().size());
                                    
-    if (stripPipeline.filterContoursOutput().isEmpty())
-      {SmartDashboard.putString("Filterd Contour Status:", "No Contours Found");
-    };
-
-    
-    if (!stripPipeline.filterContoursOutput().isEmpty()) {
+    if (!targetPipeline.filterContoursOutput().isEmpty()) {
       
-      SmartDashboard.putNumber("Number of Filtered Contours Found", stripPipeline.filterContoursOutput().size());
+      SmartDashboard.putNumber("Filtered Contours", targetPipeline.filterContoursOutput().size());
 
-        Rect r = Imgproc.boundingRect(stripPipeline.filterContoursOutput().get(0));
+        Rect r = Imgproc.boundingRect(targetPipeline.filterContoursOutput().get(0));
         synchronized (imgLock) {
             centerX = r.x + (r.width / 2);
 
@@ -75,7 +70,7 @@ public VisionSubsystem() {
 
           
         }
-        outputStream.putFrame(stripPipeline.cvAbsdiffOutput);
+        outputStream.putFrame(targetPipeline.cvAbsdiffOutput);
     }
     
   });
