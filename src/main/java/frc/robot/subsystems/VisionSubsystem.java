@@ -24,11 +24,11 @@ public class VisionSubsystem extends SubsystemBase {
   UsbCamera driveCam = CameraServer.getInstance().startAutomaticCapture(VisConst.DriveCameraPort);
   UsbCamera targetCam = CameraServer.getInstance().startAutomaticCapture(VisConst.TargetCameraPort);
 
-   
   public int count = 0;
   public int pipeCount = 0;
   private VisionThread visionThread;
   private double centerX = 0.0;
+  public double targetError = 0.0;
   
   private final Object imgLock = new Object();
 
