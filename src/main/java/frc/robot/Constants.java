@@ -183,7 +183,7 @@ public static final class PnemuaticConst{
         public static final int DriveCameraPort = 0;
         public static final int DriveCameraFrameWidth = 320;
         public static final int DriveCameraFrameHeight = 180;
-        public static final int DriveCameraFPS = 15;
+        public static final int DriveCameraFPS = 7;
         public static final int DriveCameraBrightness = 15;
         public static final int DriveCameraExposure = 75;
 

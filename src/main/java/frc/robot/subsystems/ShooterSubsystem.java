@@ -49,6 +49,7 @@ public class ShooterSubsystem extends SubsystemBase {
     if (!shooterMotor.getInverted()){
       shooterMotor.setInverted(true);
     }
+    targetMotor.setInverted(true);
   }
 
   @Override
@@ -66,17 +67,16 @@ public class ShooterSubsystem extends SubsystemBase {
   public void primeBall(){
     primeMotor.setInverted(false);
 
-    primeMotor.set(ShooterConst.primeMotorPrimeSpeed);
-    if(!limitSwitch.get()){
+    if(limitSwitch.get()){
       primeMotor.set(0);
       isBallPrimed = true;
-      return;
-    } else {
-      isBallPrimed = false;
-    }
+      return;}
     
-
-  }
+      if(!limitSwitch.get()){
+        primeMotor.set(ShooterConst.primeMotorPrimeSpeed);
+        isBallPrimed = true;
+        return;}
+    }
 
   public void shootOn(){
     shooterMotor.setInverted(false);
@@ -143,7 +143,7 @@ public class ShooterSubsystem extends SubsystemBase {
   } 
 
   public void rotate(double chubby) {
-    targetMotor.set(-.2*chubby);
+    targetMotor.set(.2*chubby);
   }
 
   
