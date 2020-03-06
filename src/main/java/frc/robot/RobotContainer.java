@@ -107,6 +107,11 @@ public class RobotContainer {
 
     ////////////////////////    Shooting Stuff   ////////////////////////////////
     
+    // Automatic Targeting
+    new JoystickButton(joeStick, JoystickConst.autoTarget)
+    .whenPressed(new RunCommand(() -> shooterSubsystem.target()));  
+
+
     // Low Power Fire
     new JoystickButton(joeStick, JoystickConst.slowFire)
     .whileHeld(new RunCommand(() -> shooterSubsystem.shooterOn(PIDConst.SlowStartingSpeed)))

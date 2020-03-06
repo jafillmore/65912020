@@ -46,7 +46,7 @@ public class TargetPipeline implements VisionPipeline {
 		// Step Blur0:
 		Mat blurInput = source0;
 		BlurType blurType = BlurType.get("Median Filter");
-		double blurRadius = 7.547169811320753;
+		double blurRadius = 3.0;
 		blur(blurInput, blurType, blurRadius, blurOutput);
 
 		// Step HSV_Threshold0:
@@ -69,9 +69,9 @@ public class TargetPipeline implements VisionPipeline {
 		double filterContoursMaxWidth = 1000.0;
 		double filterContoursMinHeight = 0.0;
 		double filterContoursMaxHeight = 1000.0;
-		double[] filterContoursSolidity = {24.908424952091316, 75.34722089767456};
+		double[] filterContoursSolidity = {10.0, 24.0};
 		double filterContoursMaxVertices = 1000000.0;
-		double filterContoursMinVertices = 0.0;
+		double filterContoursMinVertices = 8.0;
 		double filterContoursMinRatio = 0.0;
 		double filterContoursMaxRatio = 1000.0;
 		filterContours(filterContoursContours, filterContoursMinArea, filterContoursMinPerimeter, filterContoursMinWidth, filterContoursMaxWidth, filterContoursMinHeight, filterContoursMaxHeight, filterContoursSolidity, filterContoursMaxVertices, filterContoursMinVertices, filterContoursMinRatio, filterContoursMaxRatio, filterContoursOutput);

@@ -18,26 +18,31 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.PIDConst;
 import frc.robot.Constants.ShooterConst;
+import frc.robot.Constants.VisConst;
+import frc.robot.TargetPipeline;
 
 
 public class ShooterSubsystem extends SubsystemBase {
   /**
    * Creates a new Shooter.
    */
-
+  private final VisionSubsystem visionSubsystem = new VisionSubsystem();
+  private final TargetPipeline targetPipeline = new TargetPipeline();
    //Create Shooter Motor
   private CANSparkMax shooterMotor = new CANSparkMax(ShooterConst.Shooter, MotorType.kBrushless);
   public CANSparkMax targetMotor = new CANSparkMax(ShooterConst.Targeting, MotorType.kBrushless);
   private CANSparkMax primeMotor = new CANSparkMax(ShooterConst.primeMotor, MotorType.kBrushless);
   public CANEncoder encoder = new CANEncoder(shooterMotor);
   public CANPIDController PID = new CANPIDController(shooterMotor);
+  public CANEncoder targetingencoder = new CANEncoder(targetMotor);
 
   public double shooterSpeed = PIDConst.SlowStartingSpeed;
   public double fastShooterSpeed = PIDConst.FastStartingSpeed;
 
   public DigitalInput limitSwitch = new DigitalInput(ShooterConst.LimitSwitchPort);
   private boolean isBallPrimed = false;
-
+  private boolean onTarget = false;
+  
   public ShooterSubsystem() {
     PID.setP(PIDConst.P);
     PID.setI(PIDConst.I);
@@ -48,7 +53,10 @@ public class ShooterSubsystem extends SubsystemBase {
 
     if (!shooterMotor.getInverted()){
       shooterMotor.setInverted(true);
+      
     }
+
+    targetMotor.setInverted(true);
   }
 
   @Override
@@ -180,8 +188,39 @@ public class ShooterSubsystem extends SubsystemBase {
 
   ////////////////////   Rotate the Shooter   /////////////////////////////////  
   public void rotate(double chubby) {
-    targetMotor.set(-.2*chubby);
+    targetMotor.set(0.2*chubby);
   }
 
+  ///////////////////   Auto Target the Shooter   //////////////////////////////
+  
+  public void target(){
+    if (targetPipeline.filterContoursOutput().isEmpty()) {
+      onTarget = false;
+      return;
+    }
+      
+    if (Math.abs(visionSubsystem.targetError) > VisConst.allowableTargetError) {
+      rotate(visionSubsystem.targetError);
+      onTarget = false;
+      return;
+    }
+
+    if (Math.abs(visionSubsystem.targetError) < VisConst.allowableTargetError) {
+      rotate(0.0);
+      onTarget = true;
+      return;      
+    }
+
+    SmartDashboard.putBoolean("On Target", onTarget);
+    
+  }
+  
+  public void targetAndShoot() {
+    target();
+    if (onTarget) {
+      shooterOn(PIDConst.FastStartingSpeed);
+    }
+
+  }
   
 }
