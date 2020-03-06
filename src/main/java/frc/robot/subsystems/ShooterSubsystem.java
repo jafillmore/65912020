@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.PIDConst;
 import frc.robot.Constants.ShooterConst;
 import frc.robot.Constants.VisConst;
-import frc.robot.TargetPipeline;
+import frc.robot.StripPipeline;
 
 
 public class ShooterSubsystem extends SubsystemBase {
@@ -27,7 +27,7 @@ public class ShooterSubsystem extends SubsystemBase {
    * Creates a new Shooter.
    */
   private final VisionSubsystem visionSubsystem = new VisionSubsystem();
-  private final TargetPipeline targetPipeline = new TargetPipeline();
+  //private final StripPipeline stripPipeline = new StripPipeline();
    //Create Shooter Motor
   private CANSparkMax shooterMotor = new CANSparkMax(ShooterConst.Shooter, MotorType.kBrushless);
   public CANSparkMax targetMotor = new CANSparkMax(ShooterConst.Targeting, MotorType.kBrushless);
