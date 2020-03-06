@@ -22,9 +22,9 @@ public class AutoCommand extends SequentialCommandGroup {
 
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super();
-    /*new StartEndCommand(
-      // Drive Forward
+    super(
+      new StartEndCommand(
+       //Drive Forward
       () -> arcadeDriveSubsystem.arcadeDrive(AutoConst.AutoDriveSpeed, 0),
       // Stop Driving
       () -> arcadeDriveSubsystem.arcadeDrive(0, 0), arcadeDriveSubsystem)
@@ -32,11 +32,10 @@ public class AutoCommand extends SequentialCommandGroup {
       .beforeStarting(arcadeDriveSubsystem :: resetEncoders, arcadeDriveSubsystem)
       // End The Command
       .withInterupt(() -> arcadeDriveSubsystem.getAverageEncoderDistance()
-        >= AutoConst.AutoDriveDistanceInches)),
+        >= AutoConst.AutoDriveDistanceInches));
 
-        new InstantCommand(ShooterSubsystem::shootOn, arcadeDriveSubsystem)
-        
+        }    
 
-    );*/
-  }
+  
+  
 }

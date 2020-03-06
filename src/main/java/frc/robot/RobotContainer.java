@@ -110,8 +110,10 @@ public class RobotContainer {
       .whenPressed(new InstantCommand(() -> shooterSubsystem.adjShooterSpeedDown()));
 
     new JoystickButton(joeStick, JoystickConst.firePrimeMotor)
-      .whileHeld(new RunCommand(() -> shooterSubsystem.primeBall()));
-   
+    .whileHeld(new RunCommand(() -> shooterSubsystem.primeBall()))
+    .whenReleased( new InstantCommand(() -> shooterSubsystem.primerOff()));
+
+
     shooterSubsystem.setDefaultCommand(
       new RunCommand(() -> shooterSubsystem .rotate(joeStick.getRawAxis(2)), shooterSubsystem));
 

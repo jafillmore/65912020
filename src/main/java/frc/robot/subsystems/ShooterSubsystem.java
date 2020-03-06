@@ -67,16 +67,16 @@ public class ShooterSubsystem extends SubsystemBase {
   public void primeBall(){
     primeMotor.setInverted(false);
 
-    if(limitSwitch.get()){
-      primeMotor.set(0);
-      isBallPrimed = true;
-      return;}
-    
-      if(!limitSwitch.get()){
+
         primeMotor.set(ShooterConst.primeMotorPrimeSpeed);
-        isBallPrimed = true;
-        return;}
+
     }
+
+    public void primerOff(){
+      primeMotor.setInverted(false);  
+      primeMotor.set(0);
+  
+      }
 
   public void shootOn(){
     shooterMotor.setInverted(false);
@@ -88,18 +88,12 @@ public class ShooterSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Velocity from Encoder", encoder.getVelocity());
     SmartDashboard.putNumber("ShooterSpeed from ShootOn Command", shooterSpeed);
     
-    if(!isBallPrimed){
-      primeBall();
-    } else {
-     
-
       //Change shooterMotorRequiredSpeed when the required speed is determined
       if(encoder.getVelocity() >= (shooterSpeed/3 -500)){
         primeMotor.set(ShooterConst.primeMotorShootSpeed);
       } else if(encoder.getVelocity() <= shooterSpeed/3-500) {
         primeMotor.set(0);
       }
-    }
   }
   public void fastShoot(){
     shooterMotor.setInverted(false);
@@ -111,26 +105,27 @@ public class ShooterSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Velocity from Encoder", encoder.getVelocity());
     SmartDashboard.putNumber("ShooterSpeed from ShootOn Command", fastShooterSpeed);
     
-    if(!isBallPrimed){
-      primeBall();
-    } else {
       //Change shooterMotorRequiredSpeed when the required speed is determined
-      if(encoder.getVelocity() >= (fastShooterSpeed/3 -500)){
-        primeMotor.set(ShooterConst.primeMotorShootSpeed);
-      } else if(encoder.getVelocity() <= fastShooterSpeed/3-500) {
-        primeMotor.set(0);
-      }
+    if(encoder.getVelocity() >= (fastShooterSpeed/3 -500)){
+      primeMotor.set(ShooterConst.primeMotorShootSpeed);
+    } else if(encoder.getVelocity() <= fastShooterSpeed/3-500) {
+      primeMotor.set(0);
     }
-  }
-  public void adjShooterSpeedUp(){
-    shooterSpeed = shooterSpeed + 0.10;
-    SmartDashboard.putNumber("Shooter Motor Power", shooterSpeed );
+    
   }
 
   public void shootMotorOff(){
     shooterMotor.set(0);
     primeMotor.set(0);
   }
+
+
+  public void adjShooterSpeedUp(){
+    shooterSpeed += 500;
+    SmartDashboard.putNumber("Shooter Motor Power", shooterSpeed );
+  }
+
+
   
   {
     if (shooterSpeed >= 6000*3){shooterSpeed=6000*3;}
