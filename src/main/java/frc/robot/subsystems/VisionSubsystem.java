@@ -56,31 +56,29 @@ public VisionSubsystem() {
   
   visionThread = new VisionThread(targetCam, new StripPipeline(), stripPipeline -> {
                           
-    SmartDashboard.putNumber("Number of Contours Found", stripPipeline.findContoursOutput().size());
-                                   
-    if (stripPipeline.filterContoursOutput().isEmpty())
-      {SmartDashboard.putString("Filterd Contour Status:", "No Contours Found");
-    };
-
-    
-    if (!stripPipeline.filterContoursOutput().isEmpty()) {
-      
-      SmartDashboard.putNumber("Number of Filtered Contours Found", stripPipeline.filterContoursOutput().size());
-
-        Rect r = Imgproc.boundingRect(stripPipeline.filterContoursOutput().get(0));
-        synchronized (imgLock) {
-            centerX = r.x + (r.width / 2);
-
-            SmartDashboard.putNumber("Center X from Subsys VisionThread", centerX);
-
-          
-        }
-        outputStream.putFrame(stripPipeline.cvAbsdiffOutput);
-    }
-    
-  });
+                 
+      SmartDashboard.putNumber("Contours Found", stripPipeline.findContoursOutput().size());
+                                     
+      if (!stripPipeline.filterContoursOutput().isEmpty()) {
+        
+        SmartDashboard.putNumber("Filtered Contours", stripPipeline.filterContoursOutput().size());
   
-  visionThread.start();  
+          Rect r = Imgproc.boundingRect(stripPipeline.filterContoursOutput().get(0));
+          synchronized (imgLock) {
+              centerX = r.x + (r.width / 2);
+  
+              SmartDashboard.putNumber("Center X from Subsys VisionThread", centerX);
+  
+              targetError = centerX - (VisConst.TargetCameraFrameWidth/2);
+  
+            
+          }
+          outputStream.putFrame(stripPipeline.cvAbsdiffOutput);
+      }
+      
+    });
+    
+    visionThread.start();   
 
 
 }
