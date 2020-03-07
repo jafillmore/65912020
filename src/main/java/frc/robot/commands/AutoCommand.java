@@ -43,7 +43,8 @@ public class AutoCommand extends SequentialCommandGroup {
 
       //new RunCommand(() -> shooterSubsystem.targetAndShoot(), shooterSubsystem)
     );  */
-      new RunCommand(() -> shooterSubsystem.shooterOn(PIDConst.SlowStartingSpeed))
-      .withTimeout(16));
+      new SequentialCommandGroup());
+      new RunCommand(() -> shooterSubsystem.targetAndShoot())
+      .withTimeout(10).andThen(new RunCommand(() -> arcadeDriveSubsystem.arcadeDrive(.25, 0)));
   }
 }
