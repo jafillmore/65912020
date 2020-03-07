@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import frc.robot.Constants.AutoConst;
 import frc.robot.Constants.PIDConst;
 import frc.robot.Constants.ShooterConst;
+import frc.robot.command.RunCommandTime;
 import frc.robot.subsystems.ArcadeDriveSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
@@ -43,8 +44,10 @@ public class AutoCommand extends SequentialCommandGroup {
 
       //new RunCommand(() -> shooterSubsystem.targetAndShoot(), shooterSubsystem)
     );  */
-     new RunCommand(() -> shooterSubsystem.shooterOn(PIDConst.SlowStartingSpeed))
-     .withTimeout(16));
+     new RunCommandTime(new RunCommand(() -> shooterSubsystem.shooterOn(PIDConst.SlowStartingSpeed)),12),
+     //new InstantCommand(() -> shooterSubsystem.shootMotorOff()), 
+     new RunCommand(() -> arcadeDriveSubsystem.arcadeDrive(-.6, 0), arcadeDriveSubsystem));
+    
      //   new RunCommand(() -> arcadeDriveSubsystem.arcadeDrive(.4, 0))
      //c   .withTimeout(6));
   }
