@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import frc.robot.Constants.AutoConst;
 import frc.robot.Constants.PIDConst;
+import frc.robot.Constants.ShooterConst;
 import frc.robot.subsystems.ArcadeDriveSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
@@ -30,7 +31,7 @@ public class AutoCommand extends SequentialCommandGroup {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
     super(
-      new StartEndCommand(
+      /*new StartEndCommand(
         // Drive Forward
         () -> arcadeDriveSubsystem.arcadeDrive(AutoConst.AutoDriveSpeed, 0),
         // Stop Driving
@@ -38,9 +39,11 @@ public class AutoCommand extends SequentialCommandGroup {
       // Reset Encoder
       .beforeStarting(arcadeDriveSubsystem :: resetEncoders, arcadeDriveSubsystem)
       // End The Command
-      .withInterrupt(() -> arcadeDriveSubsystem.getAverageEncoderDistance() >= AutoConst.AutoDriveDistanceInches),
+      .withInterrupt(() -> arcadeDriveSubsystem.getAverageEncoderDistance() >= AutoConst.AutoDriveDistanceInches)
 
-      new RunCommand(() -> shooterSubsystem.targetAndShoot(), shooterSubsystem)
-    );
+      //new RunCommand(() -> shooterSubsystem.targetAndShoot(), shooterSubsystem)
+    );  */
+      new RunCommand(() -> shooterSubsystem.shooterOn(PIDConst.SlowStartingSpeed))
+      .withTimeout(16));
   }
 }

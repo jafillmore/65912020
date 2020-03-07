@@ -19,7 +19,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.PIDConst;
 import frc.robot.Constants.ShooterConst;
 import frc.robot.Constants.VisConst;
-import frc.robot.StripPipeline;
 
 
 public class ShooterSubsystem extends SubsystemBase {
@@ -72,7 +71,7 @@ public class ShooterSubsystem extends SubsystemBase {
   
   public void primeBall(){
     primeMotor.setInverted(false);
-
+    
     if(!limitSwitch.get()){
       primeMotor.set(0);
       isBallPrimed = true;
@@ -89,6 +88,9 @@ public class ShooterSubsystem extends SubsystemBase {
     }
   }
 
+  public void primeMotorOn (){
+    primeMotor.set(ShooterConst.primeMotorPrimeSpeed);
+  }
   
   /////////////////////////////////////////////////////////////////////////////////////////////////////
   
@@ -151,25 +153,29 @@ public class ShooterSubsystem extends SubsystemBase {
 
     PID.setReference(speedOfShooter, ControlType.kVelocity);
 
-    SmartDashboard.putNumber("Actual Motor RPM", (encoder.getVelocity()/3));
+    SmartDashboard.putNumber("Actual Motor RPM", (encoder.getVelocity()));
     SmartDashboard.putNumber("Target Motor RPM", (speedOfShooter/3));
     
-    if(!isBallPrimed){
+    /*if(!isBallPrimed){
       primeBall();
     } else {
-
+*/
       if(encoder.getVelocity() >= (speedOfShooter/3 -PIDConst.AllowableSpeedError)){
         primeMotor.set(ShooterConst.primeMotorShootSpeed);
-      } else if(encoder.getVelocity() <= speedOfShooter/3-500) {
+      } else if(encoder.getVelocity() <= speedOfShooter/3-PIDConst.AllowableSpeedError) {
         primeMotor.set(0);
       }
-    }
+    //}
   }
 
   ////////////  Turn off Shooter Motor and Priming Motor ////////////////
   public void shootMotorOff(){
     shooterMotor.set(0);
     primeMotor.set(0);
+  }
+
+  public void reversePrimeMotor(){
+    primeMotor.set(-ShooterConst.primeMotorShootSpeed);
   }
   
 
@@ -192,13 +198,13 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   ///////////////////   Auto Target the Shooter   //////////////////////////////
-  
+  /*
   public void target(){
     /*if (targetPipeline.filterContoursOutput().isEmpty()) {
       onTarget = false;
       return;
     }
-    */
+  
     if (Math.abs(visionSubsystem.targetError) > VisConst.allowableTargetError) {
       rotate(visionSubsystem.targetError);
       onTarget = false;
@@ -222,5 +228,5 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
   }
-  
+  */
 }

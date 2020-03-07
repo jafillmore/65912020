@@ -108,11 +108,11 @@ public class RobotContainer {
     ////////////////////////  End of Climbing Stuff    //////////////////////////////
 
     ////////////////////////    Shooting Stuff   ////////////////////////////////
-    
+    /*
     // Automatic Targeting
     new JoystickButton(joeStick, JoystickConst.autoTarget)
     .whenPressed(new RunCommand(() -> shooterSubsystem.target()));  
-
+    */
 
     // Low Power Fire
     new JoystickButton(joeStick, JoystickConst.slowFire)
@@ -136,7 +136,12 @@ public class RobotContainer {
 
     // Manual Prime
     new JoystickButton(joeStick, JoystickConst.firePrimeMotor)
-      .whileHeld(new RunCommand(() -> shooterSubsystem.primeBall()));
+      .whileHeld(new RunCommand(() -> shooterSubsystem.primeMotorOn()))
+      .whenReleased(new InstantCommand(() -> shooterSubsystem.shootMotorOff()));
+    
+    new JoystickButton(joeStick, 15)
+      .whileHeld(new RunCommand(() -> shooterSubsystem.reversePrimeMotor()))
+      .whenReleased(new InstantCommand(() -> shooterSubsystem.shootMotorOff()));
 
     // Default Command for rotating the shooter   
     shooterSubsystem.setDefaultCommand(

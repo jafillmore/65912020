@@ -17,13 +17,17 @@ import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.vision.VisionThread;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.StripPipeline;
+
 import frc.robot.Constants.VisConst;
 
 public class VisionSubsystem extends SubsystemBase {
-  UsbCamera driveCam = CameraServer.getInstance().startAutomaticCapture(VisConst.DriveCameraPort);
-  UsbCamera targetCam = CameraServer.getInstance().startAutomaticCapture(VisConst.TargetCameraPort);
+  //UsbCamera driveCam = CameraServer.getInstance().startAutomaticCapture(VisConst.DriveCameraPort);
+ // UsbCamera targetCam = CameraServer.getInstance().startAutomaticCapture(VisConst.TargetCameraPort);
+ UsbCamera driveCamera = CameraServer.getInstance().startAutomaticCapture();
+ UsbCamera targetCamera = CameraServer.getInstance().startAutomaticCapture();
+ 
 
+  /*
   public int count = 0;
   public int pipeCount = 0;
   private VisionThread visionThread;
@@ -82,16 +86,17 @@ public VisionSubsystem() {
 
 
 }
+ */
 
 @Override
 public void periodic() {
   // This method will be called once per scheduler run
 
-  synchronized (imgLock) {
-    SmartDashboard.putNumber("Center X from Subsys VisionThread", centerX);
-
+  //synchronized (imgLock) {
+   // SmartDashboard.putNumber("Center X from Subsys VisionThread", centerX);
+    driveCamera.setFPS(15);
 
   }
 
-}
+//}
 }

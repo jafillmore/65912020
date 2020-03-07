@@ -172,7 +172,7 @@ public static final class PnemuaticConst{
         public static final double MinOutput = 3500;
         public static final double SlowStartingSpeed = 4500*3;
         public static final double FastStartingSpeed = 6000*3;
-        public static final double AllowableSpeedError = 500;
+        public static final double AllowableSpeedError = 600;
     }    
 
     public static final class AutoConst{
