@@ -16,9 +16,11 @@ import com.revrobotics.ControlType;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.TargetPipeline;
 import frc.robot.Constants.PIDConst;
 import frc.robot.Constants.ShooterConst;
 import frc.robot.Constants.VisConst;
+
 
 
 public class ShooterSubsystem extends SubsystemBase {
@@ -26,7 +28,7 @@ public class ShooterSubsystem extends SubsystemBase {
    * Creates a new Shooter.
    */
   private final VisionSubsystem visionSubsystem = new VisionSubsystem();
-  //private final StripPipeline stripPipeline = new StripPipeline();
+  private final TargetPipeline targetPipeline = new TargetPipeline();
    //Create Shooter Motor
   private CANSparkMax shooterMotor = new CANSparkMax(ShooterConst.Shooter, MotorType.kBrushless);
   public CANSparkMax targetMotor = new CANSparkMax(ShooterConst.Targeting, MotorType.kBrushless);
@@ -92,58 +94,7 @@ public class ShooterSubsystem extends SubsystemBase {
     primeMotor.set(ShooterConst.primeMotorPrimeSpeed);
   }
   
-  /////////////////////////////////////////////////////////////////////////////////////////////////////
-  
-  //Both of the methods below were replaced by one method that takes in a shooterSpeed as a parameter
 
-  //////////////////////////////////////////////////////////////////////////////////////////////////////
-  
-  /*
-  public void shootOn(){
-    shooterMotor.setInverted(false);
-    
-    primeMotor.setInverted(false);
-
-    PID.setReference(shooterSpeed, ControlType.kVelocity);
-
-    SmartDashboard.putNumber("Velocity from Encoder", encoder.getVelocity());
-    SmartDashboard.putNumber("ShooterSpeed from ShootOn Command", shooterSpeed);
-    
-    if(!isBallPrimed){
-      primeBall();
-    } else {
-     
-
-      if(encoder.getVelocity() >= (shooterSpeed/3 -500)){
-        primeMotor.set(ShooterConst.primeMotorShootSpeed);
-      } else if(encoder.getVelocity() <= shooterSpeed/3-500) {
-        primeMotor.set(0);
-      }
-    }
-  }
-  public void fastShoot(){
-    shooterMotor.setInverted(false);
-    
-    primeMotor.setInverted(false);
-
-    PID.setReference(fastShooterSpeed, ControlType.kVelocity);
-
-    SmartDashboard.putNumber("Velocity from Encoder", encoder.getVelocity());
-    SmartDashboard.putNumber("ShooterSpeed from ShootOn Command", fastShooterSpeed);
-    
-    if(!isBallPrimed){
-      primeBall();
-    } else {
-      if(encoder.getVelocity() >= (fastShooterSpeed/3 -500)){
-        primeMotor.set(ShooterConst.primeMotorShootSpeed);
-      } else if(encoder.getVelocity() <= fastShooterSpeed/3-500) {
-        primeMotor.set(0);
-      }
-    }
-  }
-  */
-  
-  
   ////////////////////////////////////     New Shooter Command (if it doesn't work it is Jade's fault...)  //////////////
   //If this method does not work, uncomment the methods above and change the method that the button press calls in RobotContainer
   public void shooterOn (double speedOfShooter){
@@ -198,9 +149,9 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   ///////////////////   Auto Target the Shooter   //////////////////////////////
-  /*
+  
   public void target(){
-    /*if (targetPipeline.filterContoursOutput().isEmpty()) {
+    if (targetPipeline.filterContoursOutput().isEmpty()) {
       onTarget = false;
       return;
     }
@@ -228,5 +179,5 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
   }
-  */
+  
 }
