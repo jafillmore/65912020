@@ -5,43 +5,48 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.command;
 
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.PneumaticSubsystem;
 
-public class DeployClimbArms extends CommandBase {
+public class RunCommandTime extends CommandBase {
+
+  private Command cmd;
+  private double runTime, startTime;
+
   /**
-   * Creates a new Deploy.
+   * Creates a new RunCommandTime.
    */
-  public DeployClimbArms(PneumaticSubsystem pneumaticSubsystem) {
-
-    addRequirements(pneumaticSubsystem);
-
-    // Use addRequirements() here to declare subsystem dependencies.
-
+  public RunCommandTime(Command cmd, double runTime) {
+    this.cmd = cmd;
+    this.runTime = runTime;
+    for(var sys : cmd.getRequirements()) addRequirements(sys);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    startTime = Timer.getFPGATimestamp();
+    cmd.initialize();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //PneumaticSubsystem.deployClimbArmsSolenoid.set(Value.kReverse);
+    cmd.execute();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    cmd.end(interrupted);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return (((Timer.getFPGATimestamp() - startTime) >= runTime) || cmd.isFinished());
   }
 }
- 

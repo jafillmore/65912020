@@ -17,18 +17,22 @@ import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.vision.VisionThread;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.StripPipeline;
-import frc.robot.Constants.VisConstants;
+
+import frc.robot.Constants.VisConst;
 
 public class VisionSubsystem extends SubsystemBase {
-  UsbCamera driveCam = CameraServer.getInstance().startAutomaticCapture(VisConstants.DriveCameraPort);
-  UsbCamera targetCam = CameraServer.getInstance().startAutomaticCapture(VisConstants.TargetCameraPort);
+  //UsbCamera driveCam = CameraServer.getInstance().startAutomaticCapture(VisConst.DriveCameraPort);
+ // UsbCamera targetCam = CameraServer.getInstance().startAutomaticCapture(VisConst.TargetCameraPort);
+ UsbCamera driveCamera = CameraServer.getInstance().startAutomaticCapture();
+ UsbCamera targetCamera = CameraServer.getInstance().startAutomaticCapture();
+ 
 
-   
+  /*
   public int count = 0;
   public int pipeCount = 0;
   private VisionThread visionThread;
   private double centerX = 0.0;
+  public double targetError = 0.0;
   
   private final Object imgLock = new Object();
 
@@ -36,64 +40,63 @@ public VisionSubsystem() {
 
   
   driveCam.setVideoMode(VideoMode.PixelFormat.kMJPEG,
-                        VisConstants.DriveCameraFrameWidth,
-                        VisConstants.DriveCameraFrameHeight,
-                        VisConstants.DriveCameraFPS);  
+                        VisConst.DriveCameraFrameWidth,
+                        VisConst.DriveCameraFrameHeight,
+                        VisConst.DriveCameraFPS);  
   
   
 
   
   targetCam.setVideoMode(VideoMode.PixelFormat.kMJPEG,
-                        VisConstants.TargetCameraFrameWidth,
-                        VisConstants.TargetCameraFrameHeight,
-                        VisConstants.TargetCameraFPS);
+                        VisConst.TargetCameraFrameWidth,
+                        VisConst.TargetCameraFrameHeight,
+                        VisConst.TargetCameraFPS);
 
-  targetCam.setBrightness(VisConstants.TargetCameraBrightness);
+  targetCam.setBrightness(VisConst.TargetCameraBrightness);
   targetCam.setExposureAuto();
   //targetCam.setExposureManual(VisConstants.targetCameraExposure);
 
-  CvSource outputStream = CameraServer.getInstance().putVideo("Processed in Main", VisConstants.TargetCameraFrameWidth, VisConstants.TargetCameraFrameHeight);
+  CvSource outputStream = CameraServer.getInstance().putVideo("Processed in Main", VisConst.TargetCameraFrameWidth, VisConst.TargetCameraFrameHeight);
   
   visionThread = new VisionThread(targetCam, new StripPipeline(), stripPipeline -> {
                           
-    SmartDashboard.putNumber("Number of Contours Found", stripPipeline.findContoursOutput().size());
-                                   
-    if (stripPipeline.filterContoursOutput().isEmpty())
-      {SmartDashboard.putString("Filterd Contour Status:", "No Contours Found");
-    };
-
-    
-    if (!stripPipeline.filterContoursOutput().isEmpty()) {
-      
-      SmartDashboard.putNumber("Number of Filtered Contours Found", stripPipeline.filterContoursOutput().size());
-
-        Rect r = Imgproc.boundingRect(stripPipeline.filterContoursOutput().get(0));
-        synchronized (imgLock) {
-            centerX = r.x + (r.width / 2);
-
-            SmartDashboard.putNumber("Center X from Subsys VisionThread", centerX);
-
-          
-        }
-        outputStream.putFrame(stripPipeline.cvAbsdiffOutput);
-    }
-    
-  });
+                 
+      SmartDashboard.putNumber("Contours Found", stripPipeline.findContoursOutput().size());
+                                     
+      if (!stripPipeline.filterContoursOutput().isEmpty()) {
+        
+        SmartDashboard.putNumber("Filtered Contours", stripPipeline.filterContoursOutput().size());
   
-  visionThread.start();  
+          Rect r = Imgproc.boundingRect(stripPipeline.filterContoursOutput().get(0));
+          synchronized (imgLock) {
+              centerX = r.x + (r.width / 2);
+  
+              SmartDashboard.putNumber("Center X from Subsys VisionThread", centerX);
+  
+              targetError = centerX - (VisConst.TargetCameraFrameWidth/2);
+  
+            
+          }
+          outputStream.putFrame(stripPipeline.cvAbsdiffOutput);
+      }
+      
+    });
+    
+    visionThread.start();   
 
 
 }
+ */
 
 @Override
 public void periodic() {
   // This method will be called once per scheduler run
 
-  synchronized (imgLock) {
-    SmartDashboard.putNumber("Center X from Subsys VisionThread", centerX);
-
+  //synchronized (imgLock) {
+   // SmartDashboard.putNumber("Center X from Subsys VisionThread", centerX);
+    driveCamera.setFPS(15);
 
   }
 
-}
+//}
 }
