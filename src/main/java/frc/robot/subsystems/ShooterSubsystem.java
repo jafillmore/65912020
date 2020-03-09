@@ -96,15 +96,9 @@ public class ShooterSubsystem extends SubsystemBase {
   
   //Both of the methods below were replaced by one method that takes in a shooterSpeed as a parameter
 
-<<<<<<< HEAD
-  //Both of the methods below were replaced by one method that takes in a shooterSpeed as a parameter
-
-  
-=======
   //////////////////////////////////////////////////////////////////////////////////////////////////////
   
   /*
->>>>>>> 82f9baf705616edc5aecb755d6efcf9a7518f740
   public void shootOn(){
     shooterMotor.setInverted(false);
     
