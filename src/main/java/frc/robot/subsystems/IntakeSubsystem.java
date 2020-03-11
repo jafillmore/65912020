@@ -23,6 +23,7 @@ public class IntakeSubsystem extends SubsystemBase {
    //Intake Motors 
   private CANSparkMax liftMotor = new CANSparkMax(IntakeConst.liftMotor, MotorType.kBrushless);
   private CANSparkMax intakeMotor = new CANSparkMax(IntakeConst.intakeMotor, MotorType.kBrushless);
+
   
 
   //Intake Settings

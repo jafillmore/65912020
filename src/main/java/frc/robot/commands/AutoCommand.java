@@ -8,9 +8,10 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.StartEndCommand;
-import frc.robot.Constants.AutoConst;
+import frc.robot.Constants.PIDConst;
+import frc.robot.command.RunCommandTime;
 import frc.robot.subsystems.ArcadeDriveSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
@@ -22,21 +23,30 @@ public class AutoCommand extends SequentialCommandGroup {
   /**
    * Creates a new AutoCommand.
    */
+ 
   public AutoCommand(ArcadeDriveSubsystem arcadeDriveSubsystem, ShooterSubsystem shooterSubsystem) {
 
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super();
-    new StartEndCommand(
-      // Drive Forward
-      () -> arcadeDriveSubsystem.arcadeDrive(AutoConst.AutoDriveSpeed, 0),
-      // Stop Driving
-      () -> arcadeDriveSubsystem.arcadeDrive(0, 0), arcadeDriveSubsystem)
-    // Reset Encoder
-    .beforeStarting(arcadeDriveSubsystem :: resetEncoders, arcadeDriveSubsystem)
-    // End The Command
-    .withInterrupt(() -> arcadeDriveSubsystem.getAverageEncoderDistance() >= AutoConst.AutoDriveDistanceInches);
+    super(
+      /*new StartEndCommand(
+        // Drive Forward
+        () -> arcadeDriveSubsystem.arcadeDrive(AutoConst.AutoDriveSpeed, 0),
+        // Stop Driving
+        () -> arcadeDriveSubsystem.arcadeDrive(0, 0), arcadeDriveSubsystem)
+      // Reset Encoder
+      .beforeStarting(arcadeDriveSubsystem :: resetEncoders, arcadeDriveSubsystem)
+      // End The Command
+      .withInterrupt(() -> arcadeDriveSubsystem.getAverageEncoderDistance() >= AutoConst.AutoDriveDistanceInches)
 
-    new InstantCommand(shooterSubsystem::shootOn, shooterSubsystem);
+      //new RunCommand(() -> shooterSubsystem.targetAndShoot(), shooterSubsystem)
+    );  */
+     new RunCommandTime(new RunCommand(() -> shooterSubsystem.shooterOn(PIDConst.SlowStartingSpeed)), 12),
+     new InstantCommand(() -> shooterSubsystem.shootMotorOff()), 
+     new RunCommandTime(new RunCommand(() -> arcadeDriveSubsystem.arcadeDrive(-.6, 0), arcadeDriveSubsystem), 1));
+     new InstantCommand(() -> arcadeDriveSubsystem.arcadeDrive(0, 0));
+    
+     //   new RunCommand(() -> arcadeDriveSubsystem.arcadeDrive(.4, 0))
+     //c   .withTimeout(6));
   }
 }

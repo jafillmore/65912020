@@ -18,12 +18,15 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.JoystickConst;
 import frc.robot.Constants.PIDConst;
+import frc.robot.Constants.ShooterConst;
+import frc.robot.commands.AutoCommand;
 import frc.robot.subsystems.ArcadeDriveSubsystem;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.PneumaticSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
+
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -31,23 +34,24 @@ import frc.robot.subsystems.VisionSubsystem;
  * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  private static final Command m_autoCommand = null;
+  
   // The robot's subsystems and commands are defined here...
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   private final ArcadeDriveSubsystem arcadeDriveSubsystem = new ArcadeDriveSubsystem();
   private final PneumaticSubsystem pneumaticSubsystem = new PneumaticSubsystem();
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
   private final ClimberSubsystem climberSubsystem = new ClimberSubsystem();
-
+  private final Command autoCommand = new AutoCommand(arcadeDriveSubsystem, shooterSubsystem);
+  
   // DO NOT REMOVE - Required to get the cameras started....
   private final VisionSubsystem visionSubsystem = new VisionSubsystem();
-  // DO NOT REMOVE - Required to get the cameras started....  
+  // DO NOT REMOVE - Required to get the cameras started....
 
   Joystick leftJoystick = new Joystick(JoystickConst.leftJoystickPort);
   Joystick rightJoystick = new Joystick(JoystickConst.rightJoystickPort);
   Joystick joeStick = new Joystick(JoystickConst.joeStickPort);
 
-  /**
+   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
@@ -63,71 +67,98 @@ public class RobotContainer {
   private void configureButtonBindings() {
     //ArcadeDriveSubsystem Joysticks 
     
-    
+    //  Drive the Robot        
     arcadeDriveSubsystem.setDefaultCommand(
       new RunCommand(() -> arcadeDriveSubsystem
           .arcadeDrive(leftJoystick.getY(), 
                        rightJoystick.getZ()), arcadeDriveSubsystem));
 
-                       
+    /////////////////////   Intake Stuff   //////////////////////////
+    //  Extend / Retract Intake Arms                 
     new JoystickButton(leftJoystick, JoystickConst.toggleIntake)
       .whenHeld(new InstantCommand(pneumaticSubsystem:: deployIntake))
       .whenReleased(new InstantCommand(pneumaticSubsystem::stowIntake));
 
     // Turn on Intake motors
-
     new JoystickButton(rightJoystick, JoystickConst.intakeTrigger)
       .whileHeld(new InstantCommand(intakeSubsystem:: turnOnIntake))
       .whenReleased(new InstantCommand(intakeSubsystem:: turnOffIntake));
 
     // Reverse Intake Lift Motor
-
     new JoystickButton(rightJoystick, JoystickConst.intakeReverse)
-    .whenHeld(new InstantCommand(intakeSubsystem::reverseIntakeLift))
-    .whenReleased(new InstantCommand(intakeSubsystem::turnOffIntake));
-
-    new JoystickButton(joeStick, JoystickConst.extendClimbArm)
-    .whenPressed(new InstantCommand(pneumaticSubsystem::extendClimbArms));
-
-    new JoystickButton(joeStick, JoystickConst.retractClimbArm)
-    .whenPressed(new InstantCommand(pneumaticSubsystem::retractClimbArms));
-
-
-    new JoystickButton(joeStick, JoystickConst.deployClimbArm)
-    .whenPressed(new InstantCommand(pneumaticSubsystem::deployClimbArms));
-
-    new JoystickButton(joeStick, JoystickConst.stowClimbArm)
-    .whenPressed(new InstantCommand(pneumaticSubsystem::stowClimbArms));
+      .whenHeld(new InstantCommand(intakeSubsystem::reverseIntakeLift))
+      .whenReleased(new InstantCommand(intakeSubsystem::turnOffIntake));
+    /////////////////////  End of Intake Stuff   //////////////////////////////
     
-      new JoystickButton(joeStick, JoystickConst.slowFire)
-      .whileHeld(new RunCommand(() -> shooterSubsystem.shootOn()))
+    ////////////////////   Climbing Stuff  ////////////////////////////////////
+    // Extend Climb Arms to prepare for climbing
+    new JoystickButton(joeStick, JoystickConst.extendClimbArm)
+      .whenPressed(new InstantCommand(pneumaticSubsystem::extendClimbArms));
+
+    // Retract Climb Arms (aka Climb!)
+    new JoystickButton(joeStick, JoystickConst.retractClimbArm)
+      .whenPressed(new InstantCommand(pneumaticSubsystem::retractClimbArms));
+
+    // Balance using the joystick
+    climberSubsystem.setDefaultCommand(
+      new RunCommand(() -> climberSubsystem.turnOnBalanceMotors(joeStick.getRawAxis(0)), climberSubsystem));
+    
+    // Deploy (flip up) Climb arms
+    new JoystickButton(joeStick, JoystickConst.deployClimbArm)
+      .whenPressed(new InstantCommand(pneumaticSubsystem::deployClimbArms));
+
+    // Stow (fold down) Climb arms
+    new JoystickButton(joeStick, JoystickConst.stowClimbArm)
+      .whenPressed(new InstantCommand(pneumaticSubsystem::stowClimbArms));
+    ////////////////////////  End of Climbing Stuff    //////////////////////////////
+
+    ////////////////////////    Shooting Stuff   ////////////////////////////////
+    /*
+    // Automatic Targeting
+    new JoystickButton(joeStick, JoystickConst.autoTarget)
+    .whenPressed(new RunCommand(() -> shooterSubsystem.target()));  
+    */
+
+    // Low Power Fire
+    new JoystickButton(joeStick, JoystickConst.slowFire)
+    .whileHeld(new RunCommand(() -> shooterSubsystem.shooterOn(PIDConst.SlowStartingSpeed)))
+      //.whileHeld(new RunCommand(() -> shooterSubsystem.shootOn()))
       //-> intakeSubsystem.liftSpeed(IntakeConst.liftShootSpeed)));
       .whenReleased (new InstantCommand(() -> shooterSubsystem.shootMotorOff()));
 
+    // Full Power Fire
     new JoystickButton(joeStick, JoystickConst.fastFire)
       .whileHeld(new RunCommand(() -> shooterSubsystem.shooterOn(PIDConst.FastStartingSpeed)))
       .whenReleased( new InstantCommand(() -> shooterSubsystem.shootMotorOff()));
 
-
+    // Increase Low Power Shot speed
     new JoystickButton(joeStick, JoystickConst.increaseSpeed)
       .whenPressed(new InstantCommand(() -> shooterSubsystem.adjShooterSpeedUp()));
 
+    // Decrease Low Power Shot Speed
     new JoystickButton(joeStick, JoystickConst.decreaseSpeed)
       .whenPressed(new InstantCommand(() -> shooterSubsystem.adjShooterSpeedDown()));
 
+    // Manual Prime
     new JoystickButton(joeStick, JoystickConst.firePrimeMotor)
-      .whileHeld(new RunCommand(() -> shooterSubsystem.primeBall()));
-   
+      .whileHeld(new RunCommand(() -> shooterSubsystem.primeMotorOn()))
+      .whenReleased(new InstantCommand(() -> shooterSubsystem.shootMotorOff()));
+    
+    new JoystickButton(joeStick, 15)
+      .whileHeld(new RunCommand(() -> shooterSubsystem.reversePrimeMotor()))
+      .whenReleased(new InstantCommand(() -> shooterSubsystem.shootMotorOff()));
+
+    // Default Command for rotating the shooter   
     shooterSubsystem.setDefaultCommand(
       new RunCommand(() -> shooterSubsystem .rotate(joeStick.getRawAxis(2)), shooterSubsystem));
 
+    // Show the shooter motor speed on the Driver Station
+    Shuffleboard.getTab("Actual Shooter RPM").add("rpm", shooterSubsystem.encoder.getVelocity());
+    SmartDashboard.putNumber("Ideal Shooter RPM", shooterSubsystem.shooterSpeed);
+    
+    ///////////////////////////   End of Shooter Stuff   //////////////////////////////////
 
-    Shuffleboard.getTab("Shooter value").add("rpm", shooterSubsystem.encoder.getVelocity());
-    SmartDashboard.putNumber("Target Motor RPM", shooterSubsystem.shooterSpeed);
 
-
-    climberSubsystem.setDefaultCommand(
-      new RunCommand(() -> climberSubsystem.turnOnBalanceMotors(joeStick.getRawAxis(0)), climberSubsystem));
   }
 
   /**
@@ -137,6 +168,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    return autoCommand;
   }
 }
