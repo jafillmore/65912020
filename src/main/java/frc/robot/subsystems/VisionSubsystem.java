@@ -53,8 +53,8 @@ public VisionSubsystem() {
                         VisConst.TargetCameraFPS);
 
   targetCam.setBrightness(VisConst.TargetCameraBrightness);
-  targetCam.setExposureAuto();
-  //targetCam.setExposureManual(VisConstants.targetCameraExposure);
+  //targetCam.setExposureAuto();
+  targetCam.setExposureManual(VisConst.TargetCameraExposure);
 
   CvSource outputStream = CameraServer.getInstance().putVideo("Processed in Main", VisConst.TargetCameraFrameWidth, VisConst.TargetCameraFrameHeight);
   

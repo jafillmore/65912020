@@ -14,7 +14,10 @@ import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 
+import edu.wpi.cscore.CvSource;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.vision.VisionPipeline;
+import frc.robot.Constants.VisConst;
 
 /**
 * TargetPipeline class.
@@ -32,6 +35,8 @@ public class TargetPipeline implements VisionPipeline {
 	public ArrayList<MatOfPoint> filterContoursOutput = new ArrayList<MatOfPoint>();
 	private Mat cvApplycolormapOutput = new Mat();
 	public Mat cvAbsdiffOutput = new Mat();
+	CvSource pipeStream = CameraServer.getInstance().putVideo("Processed in Main", VisConst.TargetCameraFrameWidth, VisConst.TargetCameraFrameHeight);
+	
 
 	static {
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
@@ -84,6 +89,7 @@ public class TargetPipeline implements VisionPipeline {
 		Mat cvAbsdiffSrc2 = cvApplycolormapOutput;
 		cvAbsdiff(cvAbsdiffSrc1, cvAbsdiffSrc2, cvAbsdiffOutput);
 
+		pipeStream.putFrame(cvAbsdiffOutput);
 	}
 
 	/**
