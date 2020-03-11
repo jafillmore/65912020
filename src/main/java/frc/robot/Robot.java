@@ -7,7 +7,6 @@
 
 package frc.robot;
 
-import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -24,6 +23,7 @@ public class Robot extends TimedRobot {
   // File Contacts 
   private RobotContainer m_robotContainer;
   public static ArcadeDriveSubsystem arcadeDriveSubsystem = new ArcadeDriveSubsystem();
+  
  
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -35,7 +35,9 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
 
-    CameraServer.getInstance().startAutomaticCapture();
+    
+
+
 
   }
 
@@ -84,6 +86,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
+    
   }
 
   @Override

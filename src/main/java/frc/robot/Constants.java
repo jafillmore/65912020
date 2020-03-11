@@ -25,9 +25,7 @@ import edu.wpi.first.wpilibj.util.Color;
 public final class Constants {
 
 
-//climb arm motor
-public static final int intakeNumber = 1;
-public static final int deployNumber = 1;
+
 
 //Joystick Stuff
 public final class JoystickConst {
@@ -55,12 +53,14 @@ public final class JoystickConst {
     public static final int retractClimbArm = 8;
     
     //Joystick Button #s for Shooting
-    public static final int toggleAutoShoot = 9;
-    public static final int fire = 10;
-    public static final int rotateLeft = 11;
-    public static final int rotateRight = 12;
+    public static final int autoTarget = 9;
+    public static final int slowFire = 10;
+    public static final int fastFire = 11;
+    //public static final int rotateLeft = 11;
+    //public static final int rotateRight = 12;
     public static final int increaseSpeed = 26;
     public static final int decreaseSpeed = 27;
+    public static final int firePrimeMotor = 1;
 }
 
 
@@ -68,10 +68,8 @@ public final class JoystickConst {
 public final class DriveConst {
     public static final int frontLeftMotor = 4;
     public static final int midLeftMotor = 5;
-    public static final int backLeftMotor = 6;
     public static final int frontRightMotor = 1;
     public static final int midRightMotor = 2;
-    public static final int backRightMotor = 3; 
 
 }
 
@@ -84,20 +82,20 @@ public final class ClimbConst {
 // Intake 
 public final class IntakeConst {
     //Motor CAN IDs
-    public static final int liftMotor = 10;
+    public static final int liftMotor = 6;
     public static final int intakeMotor = 9;
     
     
     //Motor Speeds for Intake
-    public static final double intakeSpeed = 0.1;
-    public static final double liftSpeed = -0.80;
+    public static final double intakeSpeed = 0.8;
+    public static final double liftSpeed = 0.8;
 
 
 }
 
  public static final class ControlPanelConst{
     // Wheel Spinning Motor CAN ID
-    public static final int spinningMotor = 12;
+    public static final int spinningMotor = 12; 
 
     // Color Sensor's
     public static final double yellowRVal = .300;
@@ -134,25 +132,30 @@ public static final class PnemuaticConst{
 
 
     //Extend Climb Arms
-    public static final int extandA = 4;
-    public static final int extandB = 5;
+    public static final int extandA = 1;
+    public static final int extandB = 0;
 
 
     //Deploy Intake
-    public static final int intakeA = 1;
-    public static final int intakeB = 0 ;
+    public static final int intakeA = 4;
+    public static final int intakeB = 5;
    
-   public static final int deployIntakeTrigger = 1;     
+    public static final int deployIntakeTrigger = 1;
+   
+   //Pressure Sensor Stuff
+   public static final int pressureSensorAIOPort = 3;
+   public static final double normalizedVoltage = 5.0;
 }
    //Shooter Motor
    public static final class ShooterConst{
 
-    public static final double primeMotorSpeed = 1.0;
-    public static final double primeShootSpeed = 0.50;
+    public static final double primeMotorPrimeSpeed = .5;
+    public static final double primeMotorShootSpeed = 1.0;
     
     //Motor CAN IDs
     public static final int Shooter = 8;
     public static final int Targeting = 7;
+<<<<<<< HEAD
     public static final int primeMotor = 11;
 
 }
@@ -171,5 +174,50 @@ public static final class PnemuaticConst{
    public static final double maxRPM = 5700;
 
     
+=======
+    public static final int primeMotor = 3;
+
+    //Limit Switch DIO Port
+    public static final int LimitSwitchPort = 1;
+}
+
+    public static final class PIDConst{
+
+        public static final double P = 6e-5; 
+        public static final double I = 0;
+        public static final double D = 0; 
+        public static final double Iz = 0; 
+        public static final double FF = 0.000015; 
+        public static final double MaxOutput = 6000; 
+        public static final double MinOutput = 3500;
+        public static final double SlowStartingSpeed = 4500*3;
+        public static final double FastStartingSpeed = 6000*3;
+        public static final double AllowableSpeedError = 600;
+    }    
+
+    public static final class AutoConst{
+        public static final double AutoDriveSpeed = .25;
+        public static final double AutoDriveDistanceInches = 40;
+    }
+
+    public static final class VisConst {
+        public static final int TargetCameraPort = 1;
+        public static final int TargetCameraFrameWidth = 640;
+        public static final int TargetCameraFrameHeight = 480;
+        public static final int TargetCameraFPS = 30;
+        public static final int TargetCameraBrightness = 25;
+        public static final int TargetCameraExposure = 3;
+
+        public static final int DriveCameraPort = 0;
+        public static final int DriveCameraFrameWidth = 320;
+        public static final int DriveCameraFrameHeight = 240;
+        public static final int DriveCameraFPS = 15;
+        public static final int DriveCameraBrightness = 30;
+        public static final int DriveCameraExposure = 75;
+
+        public static final double allowableTargetError = 10;
+        public static final double chaseSpeed = 0.25;
+
+>>>>>>> e7fecd843f57c2c8e08667aef263a350ad7210e6
     }
 }

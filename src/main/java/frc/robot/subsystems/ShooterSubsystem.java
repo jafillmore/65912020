@@ -7,17 +7,16 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-import com.revrobotics.CANAnalog;
 import com.revrobotics.CANEncoder;
+import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANAnalog.AnalogMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.ControlType;
 
-import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.PIDConst;
 import frc.robot.Constants.ShooterConst;
 
 
@@ -25,66 +24,214 @@ public class ShooterSubsystem extends SubsystemBase {
   /**
    * Creates a new Shooter.
    */
-
+  private final VisionSubsystem visionSubsystem = new VisionSubsystem();
+  //private final StripPipeline stripPipeline = new StripPipeline();
    //Create Shooter Motor
-  public CANSparkMax shooterMotor = new CANSparkMax(ShooterConst.Shooter, MotorType.kBrushless);
+  private CANSparkMax shooterMotor = new CANSparkMax(ShooterConst.Shooter, MotorType.kBrushless);
   public CANSparkMax targetMotor = new CANSparkMax(ShooterConst.Targeting, MotorType.kBrushless);
-  public VictorSPX primeMotor = new VictorSPX(ShooterConst.primeMotor);
-  public double shooterSpeed = 0.2;
-  public CANAnalog analog = new CANAnalog(shooterMotor, AnalogMode.kAbsolute);
+  private CANSparkMax primeMotor = new CANSparkMax(ShooterConst.primeMotor, MotorType.kBrushless);
   public CANEncoder encoder = new CANEncoder(shooterMotor);
+  public CANPIDController PID = new CANPIDController(shooterMotor);
+  public CANEncoder targetingencoder = new CANEncoder(targetMotor);
 
+  public double shooterSpeed = PIDConst.SlowStartingSpeed;
+  public double fastShooterSpeed = PIDConst.FastStartingSpeed;
+
+  public DigitalInput limitSwitch = new DigitalInput(ShooterConst.LimitSwitchPort);
+  private boolean isBallPrimed = false;
+  private boolean onTarget = false;
   
-
-  //Change the value when motor speed we are trying to reach is discovered
-  private double shooterMotorRequiredSpeed = -1;
-
-  
-
-
   public ShooterSubsystem() {
+    PID.setP(PIDConst.P);
+    PID.setI(PIDConst.I);
+    PID.setD(PIDConst.D);
+    PID.setIZone(PIDConst.Iz);
+    PID.setFF(PIDConst.FF);
+    PID.setOutputRange(PIDConst.MinOutput, PIDConst.MaxOutput);
 
+    if (!shooterMotor.getInverted()){
+      shooterMotor.setInverted(true);
+      
+    }
+
+    targetMotor.setInverted(true);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    printLimitSwitchStatus();
+
   }
-  public void shoot(double shootPower){
-    primeMotor.set(ControlMode.PercentOutput, -ShooterConst.primeMotorSpeed);
-    shooterMotor.set(-shooterSpeed);
+  
+  public void printLimitSwitchStatus() {
+    SmartDashboard.putBoolean("Primer Limit SW Status", limitSwitch.get());
+  }
+  
+  public void primeBall(){
+    primeMotor.setInverted(false);
     
+    if(!limitSwitch.get()){
+      primeMotor.set(0);
+      isBallPrimed = true;
+      return;
+    } else {
+        primeMotor.set(ShooterConst.primeMotorPrimeSpeed);
+        if(!limitSwitch.get()){
+          primeMotor.set(0);
+          isBallPrimed = true;
+          return;
+        } else {
+          isBallPrimed = false;
+        }
+    }
   }
 
+  public void primeMotorOn (){
+    primeMotor.set(ShooterConst.primeMotorPrimeSpeed);
+  }
+  
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+  
+  //Both of the methods below were replaced by one method that takes in a shooterSpeed as a parameter
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////////
+  
+  /*
   public void shootOn(){
+<<<<<<< HEAD
     shooterMotor.set(-shooterSpeed);
   
     SmartDashboard.putNumber("Velocity for Encoder", encoder.getVelocity());
+=======
+    shooterMotor.setInverted(false);
+    
+    primeMotor.setInverted(false);
 
-    //Change shooterMotorRequiredSpeed when the required speed is determined
-    if(analog.getVelocity() == shooterMotorRequiredSpeed){
-      primeMotor.set(ControlMode.PercentOutput, -ShooterConst.primeMotorSpeed);
+    PID.setReference(shooterSpeed, ControlType.kVelocity);
+
+    SmartDashboard.putNumber("Velocity from Encoder", encoder.getVelocity());
+    SmartDashboard.putNumber("ShooterSpeed from ShootOn Command", shooterSpeed);
+    
+    if(!isBallPrimed){
+      primeBall();
+    } else {
+     
+
+      if(encoder.getVelocity() >= (shooterSpeed/3 -500)){
+        primeMotor.set(ShooterConst.primeMotorShootSpeed);
+      } else if(encoder.getVelocity() <= shooterSpeed/3-500) {
+        primeMotor.set(0);
+      }
     }
   }
+  public void fastShoot(){
+    shooterMotor.setInverted(false);
+    
+    primeMotor.setInverted(false);
+
+    PID.setReference(fastShooterSpeed, ControlType.kVelocity);
+>>>>>>> e7fecd843f57c2c8e08667aef263a350ad7210e6
+
+    SmartDashboard.putNumber("Velocity from Encoder", encoder.getVelocity());
+    SmartDashboard.putNumber("ShooterSpeed from ShootOn Command", fastShooterSpeed);
+    
+    if(!isBallPrimed){
+      primeBall();
+    } else {
+      if(encoder.getVelocity() >= (fastShooterSpeed/3 -500)){
+        primeMotor.set(ShooterConst.primeMotorShootSpeed);
+      } else if(encoder.getVelocity() <= fastShooterSpeed/3-500) {
+        primeMotor.set(0);
+      }
+    }
+  }
+  */
   
+  
+  ////////////////////////////////////     New Shooter Command (if it doesn't work it is Jade's fault...)  //////////////
+  //If this method does not work, uncomment the methods above and change the method that the button press calls in RobotContainer
+  public void shooterOn (double speedOfShooter){
+    shooterMotor.setInverted(false);
+    
+    primeMotor.setInverted(false);
+
+    PID.setReference(speedOfShooter, ControlType.kVelocity);
+
+    SmartDashboard.putNumber("Actual Motor RPM", (encoder.getVelocity()));
+    SmartDashboard.putNumber("Target Motor RPM", (speedOfShooter/3));
+    
+    /*if(!isBallPrimed){
+      primeBall();
+    } else {
+*/
+      if(encoder.getVelocity() >= (speedOfShooter/3 -PIDConst.AllowableSpeedError)){
+        primeMotor.set(ShooterConst.primeMotorShootSpeed);
+      } else if(encoder.getVelocity() <= speedOfShooter/3-PIDConst.AllowableSpeedError) {
+        primeMotor.set(0);
+      }
+    //}
+  }
+
+  ////////////  Turn off Shooter Motor and Priming Motor ////////////////
   public void shootMotorOff(){
     shooterMotor.set(0);
-    primeMotor.set(ControlMode.PercentOutput, 0);
+    primeMotor.set(0);
   }
 
-  public void adjShooterSpeedUp(){
-    shooterSpeed = shooterSpeed + 0.1;
-    SmartDashboard.putNumber("Shooter Motor Power", shooterSpeed );
-  }
-
-  public void adjShooterSpeedDown(){
-    shooterSpeed = shooterSpeed - 0.1;
-    SmartDashboard.putNumber("Shooter Motor Power", shooterSpeed );
-  }
-
-  public void rotate(double chubby) {
-    targetMotor.set(-.2*chubby);
-
+  public void reversePrimeMotor(){
+    primeMotor.set(-ShooterConst.primeMotorShootSpeed);
   }
   
+
+  ////////////   Manual Adjust Shooter Speed Up for Low Power Shots   //////////////////
+  public void adjShooterSpeedUp(){
+    shooterSpeed += 500;
+    if (shooterSpeed >= PIDConst.FastStartingSpeed){shooterSpeed=PIDConst.FastStartingSpeed;}
+    SmartDashboard.putNumber("Target Motor RPM", (shooterSpeed/3));
+  } 
+  ////////////   Manual Adjust Shooter Speed Down for Low Power Shots   //////////////////  
+  public void adjShooterSpeedDown(){
+    shooterSpeed -= 500;
+    if (shooterSpeed <= PIDConst.SlowStartingSpeed){shooterSpeed=PIDConst.SlowStartingSpeed;}
+    SmartDashboard.putNumber("Target Motor RPM", (shooterSpeed/3));
+  } 
+
+  ////////////////////   Rotate the Shooter   /////////////////////////////////  
+  public void rotate(double chubby) {
+    targetMotor.set(0.2*chubby);
+  }
+
+  ///////////////////   Auto Target the Shooter   //////////////////////////////
+  /*
+  public void target(){
+    /*if (targetPipeline.filterContoursOutput().isEmpty()) {
+      onTarget = false;
+      return;
+    }
+  
+    if (Math.abs(visionSubsystem.targetError) > VisConst.allowableTargetError) {
+      rotate(visionSubsystem.targetError);
+      onTarget = false;
+      return;
+    }
+
+    if (Math.abs(visionSubsystem.targetError) < VisConst.allowableTargetError) {
+      rotate(0.0);
+      onTarget = true;
+      return;      
+    }
+
+    SmartDashboard.putBoolean("On Target", onTarget);
+    
+  }
+  
+  public void targetAndShoot() {
+    target();
+    if (onTarget) {
+      shooterOn(PIDConst.FastStartingSpeed);
+    }
+
+  }
+  */
 }

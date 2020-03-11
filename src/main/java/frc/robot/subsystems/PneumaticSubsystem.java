@@ -21,50 +21,58 @@ public class PneumaticSubsystem extends SubsystemBase {
   Compressor c = new Compressor(0);
 
 
-  private DoubleSolenoid deployArmsDouble = new DoubleSolenoid(PnemuaticConst.deployA, PnemuaticConst.deployB);
-  private DoubleSolenoid extendArmsDouble = new DoubleSolenoid(PnemuaticConst.extandA, PnemuaticConst.extandB);
-  private DoubleSolenoid deployIntakeDouble = new DoubleSolenoid(PnemuaticConst.intakeA, PnemuaticConst.intakeB);
+  private static DoubleSolenoid deployArmsDouble = new DoubleSolenoid(PnemuaticConst.deployA, PnemuaticConst.deployB);
+  private static DoubleSolenoid extendArmsDouble = new DoubleSolenoid(PnemuaticConst.extandA, PnemuaticConst.extandB);
+  private static DoubleSolenoid deployIntakeDouble = new DoubleSolenoid(PnemuaticConst.intakeA, PnemuaticConst.intakeB);
 
-
+//***************************************************** */
 //deploy the climb
-  public void deployArms() {
-    deployArmsDouble.set(Value.kForward);
-    deployArmsDouble.set(Value.kOff);   
+  public void deployClimbArms() {
+    deployArmsDouble.set(Value.kOff);  
+    deployArmsDouble.set(Value.kForward);  
   } 
 
-//extand climb arms
-  public void extendArms(){
-    extendArmsDouble.set(Value.kForward);
-    extendArmsDouble.set(Value.kOff);
+//stow the Climb Arms
+  public void stowClimbArms(){
+    deployArmsDouble.set(Value.kOff);
+    deployArmsDouble.set(Value.kReverse);
   }
+
+
+ //********************************************* */ 
+//extand climb arms
+  public void extendClimbArms(){
+    extendArmsDouble.set(Value.kOff);
+    extendArmsDouble.set(Value.kForward);    
+  }
+
+//Retract climb arms (aka:  Climb!)
+  public void retractClimbArms(){
+    extendArmsDouble.set(Value.kOff);
+    extendArmsDouble.set(Value.kReverse);  
+}
 
 // deploy intake
 
   public final void deployIntake(){
-    deployIntakeDouble.set(Value.kForward);
     deployIntakeDouble.set(Value.kOff);
+    deployIntakeDouble.set(Value.kForward);
+    //deployIntakeDouble.set(Value.kOff);
+    System.out.println("Deploying Intake");
   }
 
   public void stowIntake(){
-    deployIntakeDouble.set(Value.kReverse);
     deployIntakeDouble.set(Value.kOff);
+    deployIntakeDouble.set(Value.kReverse);
+    //deployIntakeDouble.set(Value.kOff);
+    System.out.println("Stowing Intake");
   }
 
   
 
-  public void stowArms(){
-    deployArmsDouble.set(Value.kReverse);
-    deployArmsDouble.set(Value.kOff);
-  }
 
 
-  
 
-/*
-  deployDouble.set(kOff);
-  deployDouble.set(kFoward);
-  deployDouble.set(kReverse);
-*/
   public PneumaticSubsystem() {
 
   }
