@@ -153,18 +153,18 @@ public class ShooterSubsystem extends SubsystemBase {
   public void target(){
     if (targetPipeline.filterContoursOutput().isEmpty()) {
       onTarget = false;
-      return;
     }
   
     if (Math.abs(visionSubsystem.targetError) > VisConst.allowableTargetError) {
       rotate(visionSubsystem.targetError);
       onTarget = false;
-      return;
+      SmartDashboard.putBoolean("On Target", onTarget);      
     }
 
     if (Math.abs(visionSubsystem.targetError) < VisConst.allowableTargetError) {
       rotate(0.0);
       onTarget = true;
+      SmartDashboard.putBoolean("On Target", onTarget);
       return;      
     }
 

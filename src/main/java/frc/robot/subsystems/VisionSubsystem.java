@@ -59,15 +59,12 @@ public VisionSubsystem() {
   CvSource outputStream = CameraServer.getInstance().putVideo("Processed in Main", VisConst.TargetCameraFrameWidth, VisConst.TargetCameraFrameHeight);
   
   visionThread = new VisionThread(targetCam, new TargetPipeline(), targetPipeline -> {
-                          
-                 
-      SmartDashboard.putNumber("Contours Found", targetPipeline.findContoursOutput().size());
-                                     
+
+    SmartDashboard.putNumber("Total Contours", targetPipeline.findContoursOutput().size());
+    SmartDashboard.putNumber("Filtered Contours", targetPipeline.filterContoursOutput().size());
+      
       if (!targetPipeline.filterContoursOutput().isEmpty()) {
-        
-        SmartDashboard.putNumber("Filtered Contours", targetPipeline.filterContoursOutput().size());
-  
-          Rect r = Imgproc.boundingRect(targetPipeline.filterContoursOutput().get(0));
+        Rect r = Imgproc.boundingRect(targetPipeline.filterContoursOutput().get(0));
           synchronized (imgLock) {
               centerX = r.x + (r.width / 2);
   
@@ -80,9 +77,9 @@ public VisionSubsystem() {
           outputStream.putFrame(targetPipeline.cvAbsdiffOutput);
       }
     
-    });
+  });
     
-    visionThread.start();   
+  visionThread.start();   
 
 
 }

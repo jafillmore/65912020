@@ -186,7 +186,7 @@ public static final class PnemuaticConst{
         public static final int TargetCameraFrameHeight = 480;
         public static final int TargetCameraFPS = 30;
         public static final int TargetCameraBrightness = 25;
-        public static final int TargetCameraExposure = 3;
+        public static final int TargetCameraExposure = 1;
 
         public static final int DriveCameraPort = 0;
         public static final int DriveCameraFrameWidth = 320;
