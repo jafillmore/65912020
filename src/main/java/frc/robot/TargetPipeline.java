@@ -14,10 +14,7 @@ import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 
-import edu.wpi.cscore.CvSource;
-import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.vision.VisionPipeline;
-import frc.robot.Constants.VisConst;
 
 /**
 * TargetPipeline class.
