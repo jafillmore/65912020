@@ -66,7 +66,7 @@ public class RobotContainer {
     arcadeDriveSubsystem.setDefaultCommand(
       new RunCommand(() -> arcadeDriveSubsystem
           .arcadeDrive(leftJoystick.getY(), 
-                       rightJoystick.getZ()), arcadeDriveSubsystem));
+                       (rightJoystick.getZ())*.6), arcadeDriveSubsystem));
 
     /////////////////////   Intake Stuff   //////////////////////////
     //  Extend / Retract Intake Arms                 

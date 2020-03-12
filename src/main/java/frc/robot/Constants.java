@@ -47,14 +47,14 @@ public final class JoystickConst {
 
 
     //Joystick Button #s for Climbing
-    public static final int deployClimbArm = 5;
-    public static final int stowClimbArm = 6;
+    public static final int deployClimbArm = 6;
+    public static final int stowClimbArm = 9;
     public static final int extendClimbArm = 7;
     public static final int retractClimbArm = 8;
     
     //Joystick Button #s for Shooting
     public static final int autoTarget = 21;
-    public static final int slowFire = 10;
+    public static final int slowFire = 12;
     public static final int fastFire = 11;
     //public static final int rotateLeft = 11;
     //public static final int rotateRight = 12;
