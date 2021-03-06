@@ -155,7 +155,6 @@ public static final class PnemuaticConst{
     //Motor CAN IDs
     public static final int Shooter = 8;
     public static final int Targeting = 7;
-<<<<<<< HEAD
     public static final int primeMotor = 11;
 
 }
@@ -174,50 +173,5 @@ public static final class PnemuaticConst{
    public static final double maxRPM = 5700;
 
     
-=======
-    public static final int primeMotor = 3;
-
-    //Limit Switch DIO Port
-    public static final int LimitSwitchPort = 1;
-}
-
-    public static final class PIDConst{
-
-        public static final double P = 6e-5; 
-        public static final double I = 0;
-        public static final double D = 0; 
-        public static final double Iz = 0; 
-        public static final double FF = 0.000015; 
-        public static final double MaxOutput = 6000; 
-        public static final double MinOutput = 3500;
-        public static final double SlowStartingSpeed = 4500*3;
-        public static final double FastStartingSpeed = 6000*3;
-        public static final double AllowableSpeedError = 600;
-    }    
-
-    public static final class AutoConst{
-        public static final double AutoDriveSpeed = .25;
-        public static final double AutoDriveDistanceInches = 40;
-    }
-
-    public static final class VisConst {
-        public static final int TargetCameraPort = 1;
-        public static final int TargetCameraFrameWidth = 640;
-        public static final int TargetCameraFrameHeight = 480;
-        public static final int TargetCameraFPS = 30;
-        public static final int TargetCameraBrightness = 25;
-        public static final int TargetCameraExposure = 3;
-
-        public static final int DriveCameraPort = 0;
-        public static final int DriveCameraFrameWidth = 320;
-        public static final int DriveCameraFrameHeight = 240;
-        public static final int DriveCameraFPS = 15;
-        public static final int DriveCameraBrightness = 30;
-        public static final int DriveCameraExposure = 75;
-
-        public static final double allowableTargetError = 10;
-        public static final double chaseSpeed = 0.25;
-
->>>>>>> e7fecd843f57c2c8e08667aef263a350ad7210e6
     }
 }
